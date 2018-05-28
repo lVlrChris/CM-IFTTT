@@ -1,0 +1,33 @@
+{
+  "name": "ifttt-cm",
+  "version": "1.0.0",
+  "description": "Shim-API for CM.com and IFTTT",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lVlrChris/IFTTT-CM.git"
+  },
+  "keywords": [
+    "IFTTT",
+    "CM.com",
+    "CM",
+    "NodeJS"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lVlrChris/IFTTT-CM/issues"
+  },
+  "homepage": "https://github.com/lVlrChris/IFTTT-CM#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "mocha": "^5.2.0"
+  }
+}
