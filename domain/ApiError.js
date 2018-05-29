@@ -8,9 +8,9 @@ class ApiError {
     }
 
 
-    toString() {
-        return message + '\nStatus code: ' + code + '\nOccured on : ' + datetime;
-    }
+    // toString() {
+    //     return message + '\nStatus code: ' + code + '\nOccured on : ' + datetime;
+    // }
 }
 
 module.exports = ApiError;

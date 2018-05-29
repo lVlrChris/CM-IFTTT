@@ -12,8 +12,6 @@ app.use('/api/ifttt/v1/actions/sendsms', sms);
 app.use('/api/ifttt/v1/status', status);
 app.use('/api/ifttt/v1/test/setup', test);
 
-const testSmsObject = new Sms(123 , 'Klaas', 'hoi', 'asdf', () =>{});
-
 //Catch all errors
 app.use((err, req, res, next) => {
     console.log("API error occured:");

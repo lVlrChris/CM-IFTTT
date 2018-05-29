@@ -3,7 +3,7 @@ const Sms = require('../domain/sms');
 
 // TODO: create all responses
 module.exports = {
-    sendSms(req, res) {
+    sendSms(req, res, next) {
 
         // Get input from ifttt
         const iftttInput = {
@@ -12,11 +12,18 @@ module.exports = {
             receiver: req.body.actionFields.receiver,
             token: req.body.actionFields.token
         };
-        console.log('Content from CM\n', iftttInput);
+        console.log('Content from IFTTT to CM\n', iftttInput);
 
         // TODO: validate input
         // - Sender and body required
         // - Sender max 11 characters
+
+        try {
+            const testSmsObject = new Sms(123, 'Klaas', 'hoi', 'asdf', () => {
+            });
+        } catch (ApiError) {
+            next(ApiError);
+        }
 
         // TODO: delegate responsibility to other module
         // convert ifttt input to CM SMS
