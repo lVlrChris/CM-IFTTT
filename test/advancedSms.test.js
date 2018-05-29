@@ -7,9 +7,9 @@ var kevin = '0031639023866';
 var rudwan = '0031646227962';
 var jim = '0031630273638'
 
-describe("Sending basic SMS", function() {
-    describe("Invalid JSON", function(){
-        it("errorCode 201", function (done){
+describe("advanced tests", function() {
+    describe("invalid receiver", function(){
+        it("errorCode 201, messageErrorCode 303", function (done){
             // this.timeout(10000);
             const expectedResult = {
                 "details": "Created 0 message(s)",
@@ -38,7 +38,7 @@ describe("Sending basic SMS", function() {
                                 "number": "invalid"
                             }],
                             "body": {
-                                "content": "errorCode 201, messageErrorCode 303"
+                                "content": "errorCode 201"
                             }
                         }
                         ]
