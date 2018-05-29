@@ -5,6 +5,8 @@ const server = require('../index')
 chai.should();
 chai.use(chaiHttp);
 
+
+//TODO: Discuss if we have to make testcases for using special characters in a request
 describe('Validation of sender',()=>{
     it('should throw an error when using an int as sender', (done)=> {
 
@@ -27,6 +29,7 @@ describe('Validation of sender',()=>{
     });
 });
 
+//TODO: Discuss how to validate a mobile phone number
 describe('Validation of receiver',()=>{
     it('should throw an error when using an int as receiver', (done)=> {
 

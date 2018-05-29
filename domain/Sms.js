@@ -1,18 +1,18 @@
 const joi = require('joi');
 
 class Sms{
-    constructor(sender,reciever,message,token,callback){
+    constructor(sender,receiver,message,token,callback){
         //Try to make a sms object
         try {
             //Checks if the sms is valid, according to the joi schema
-            const { error } =   validate(sender,reciever,message,token);
+            const { error } =   validate(sender,receiver,message,token);
 
             //If an error is found, throw the error and jump into catch
             if (error) throw error;
 
             //If no error is found, assign the values to the correct variables
             this.sender = sender;
-            this.reciever = reciever;
+            this.receiver = receiver;
             this.message = message;
             this.token = token;
         }catch (e) {
@@ -24,11 +24,11 @@ class Sms{
 }
 
 //Validate function for a sms object
-function validate(sender, reciever, message, token){
+function validate(sender, receiver, message, token){
     //Sms object, used for checking if the object matches the schema
     const smsObject = {
         sender : sender,
-        reciever: reciever,
+        receiver: receiver,
         message: message,
         token: token
     };
@@ -36,7 +36,7 @@ function validate(sender, reciever, message, token){
     //Schema for a sms, this defines what a sms should look like
     const schema = {
         sender : joi.string().required(),
-        reciever: joi.string().required(),
+        receiver: joi.string().required(),
         message: joi.string().required(),
         token: joi.string().required()
     };
