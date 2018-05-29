@@ -3,7 +3,7 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/', auth, (req, res) => {
+router.get('/', auth, (req, res) => {
 
     res.status(200).send('Valid key');
 
