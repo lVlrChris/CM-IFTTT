@@ -1,4 +1,5 @@
 const request = require('request');
+const Sms = require('../domain/sms');
 
 // TODO: create all responses
 module.exports = {
@@ -12,6 +13,8 @@ module.exports = {
             token: req.body.actionFields.token
         };
         console.log('Content from CM\n', iftttInput);
+
+        const testSmsObject = new Sms(123 , 'Klaas', 'hoi', 'asdf', () =>{});
 
         // TODO: validate input
         // - Sender and body required

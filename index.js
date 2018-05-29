@@ -11,6 +11,15 @@ app.use('/api/ifttt/v1/actions/sendsms', sms);
 app.use('/api/ifttt/v1/status', status);
 app.use('/api/ifttt/v1/test/setup', test);
 
+//Catch all errors
+app.use((err, req, res, next) => {
+    console.log("API error occured:");
+    console.log(err.toString());
+
+    //Send a response with the catched error.
+    res.status(err.status).json(err).end;
+});
+
 // Configure port
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
