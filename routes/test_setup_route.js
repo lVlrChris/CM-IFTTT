@@ -17,7 +17,7 @@ router.post('/', auth, (req, res) => {
                     sendsms: {
                         sender: 'Kek',
                         body: 'Kek2',
-                        receiver: 'Kek3',
+                        reciever: 'Kek3',
                         token: 'Kek4'
                     }
                 }
