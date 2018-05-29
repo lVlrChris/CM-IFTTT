@@ -1,4 +1,5 @@
 const joi = require('joi');
+const ApiError = require('../domain/ApiError');
 
 class Sms{
     constructor(sender,reciever,message,token,callback){
@@ -17,7 +18,8 @@ class Sms{
             this.token = token;
         }catch (e) {
             //TODO: The catch should make a new error and should be thrown to the route to stop the procces
-            console.log(e);
+            //console.log(e);
+            throw (new ApiError(e.details[0].message, 412));
         }
 
     }

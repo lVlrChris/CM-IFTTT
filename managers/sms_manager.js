@@ -14,8 +14,6 @@ module.exports = {
         };
         console.log('Content from CM\n', iftttInput);
 
-        const testSmsObject = new Sms(123 , 'Klaas', 'hoi', 'asdf', () =>{});
-
         // TODO: validate input
         // - Sender and body required
         // - Sender max 11 characters

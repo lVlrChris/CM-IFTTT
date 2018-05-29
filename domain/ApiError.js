@@ -7,6 +7,7 @@ class ApiError {
         this.datetime = Date();
     }
 
+
     toString() {
         return message + '\nStatus code: ' + code + '\nOccured on : ' + datetime;
     }
