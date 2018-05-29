@@ -12,14 +12,14 @@ router.post('/', auth, (req, res) => {
 
     res.status(200).json({
         data: {
-        },
-        samples: {
-            actions: {
-                sendsms: {
-                    sender: 'Kek',
-                    body: 'Kek2',
-                    receiver: 'Kek3',
-                    token: 'Kek4'
+            samples: {
+                actions: {
+                    sendsms: {
+                        sender: 'Kek',
+                        body: 'Kek2',
+                        receiver: 'Kek3',
+                        token: 'Kek4'
+                    }
                 }
             }
         },
