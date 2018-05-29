@@ -1,5 +1,5 @@
 const express = require('express');
-const { sendSms } = require('../managers/Sms_Manager');
+const { sendSms } = require('../managers/sms_manager');
 
 const router = express.Router();
 

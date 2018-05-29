@@ -1,6 +1,6 @@
 const express = require('express');
-const sms = require('./routes/sms');
-const status = require('./routes/status');
+const sms = require('./routes/sms_route');
+const status = require('./routes/status_route');
 
 const app = express();
 app.use(express.json());
