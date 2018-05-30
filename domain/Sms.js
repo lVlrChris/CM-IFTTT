@@ -2,11 +2,11 @@ const joi = require('joi');
 const ApiError = require('../domain/ApiError');
 
 class Sms{
-    constructor(sender, reciever, body, token) {
+    constructor(sender, receiver, body, token) {
         //Try to make a sms object
         try {
             //Checks if the sms is valid, according to the joi schema
-            const { error } =   validate(sender, reciever, body, token);
+            const { error } =   validate(sender, receiver, body, token);
 
             //If an error is found, throw the error and jump into catch
             if (error) throw error;
