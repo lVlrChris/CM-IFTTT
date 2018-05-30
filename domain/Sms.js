@@ -1,18 +1,22 @@
 const joi = require('joi');
 const ApiError = require('../domain/ApiError');
 
+//TODO: Allow whitespaces and specials chars like ?!. in a sender
 class Sms{
     constructor(sender, receiver, body, token) {
         //Try to make a sms object
         try {
+            //The correct sender, checks if sender is valid
+            let correctedSender = correctSender(sender);
+            console.log('The corrected sender is ' + correctedSender );
             //Checks if the sms is valid, according to the joi schema
-            const { error } =   validate(sender, receiver, body, token);
+            const { error } =   validate(correctedSender, receiver, body, token);
 
             //If an error is found, throw the error and jump into catch
             if (error) throw error;
 
             //If no error is found, assign the values to the correct variables
-            this.sender = sender;
+            this.sender = correctedSender
             this.receiver = receiver;
             this.body = body;
             this.token = token;
@@ -23,28 +27,15 @@ class Sms{
 
     }
 }
-
 //Validate function for a sms object
 function validate(sender, receiver, body, token) {
     //Sms object, used for checking if the object matches the schema
-
-    const alphanumericReg = new RegExp('^[a-zA-Z0-9_]*$');
-    const digitReg = new RegExp('^[0-9]+$');
-
     const smsObject = {
         sender : sender,
         receiver: receiver,
         body: body,
         token: token
     };
-    
-    if (digitReg.test(sender)){
-        console.log('The sender is a number');
-    } else if (digitReg.test(sender)) {
-        console.log('The sender is alphanumeric')
-    } else {
-        console.log('Type of sender undefined')
-    }
 
     //Schema for a sms, this defines what a sms should look like
     const schema = {
@@ -56,5 +47,19 @@ function validate(sender, receiver, body, token) {
 
     //Validate sms and return result
     return joi.validate(smsObject,schema);
+}
+
+function correctSender(sender){
+    const alphanumericReg = new RegExp('^[a-zA-Z0-9_]*$');
+    const digitReg = new RegExp('^[0-9]+$');
+    if (digitReg.test(sender)){
+        console.log('The sender is using digits');
+        return sender.substring(0,16);
+    } else if (alphanumericReg.test(sender)) {
+        console.log('The sender is using alphanumeric');
+        return sender.substring(0,11);
+    } else {
+        console.log('Type of sender undefined')
+    }
 }
 module.exports = Sms;
