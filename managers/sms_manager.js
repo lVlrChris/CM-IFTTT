@@ -59,7 +59,12 @@ module.exports = {
             else console.log(body);
         });
         // Return response
-        res.status(200).send('SMS send');
+
+
+        const response = {'message': 'SMS Send'};
+        res.status(200).send(response);
+
+
 
     },
 };
