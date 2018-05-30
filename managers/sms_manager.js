@@ -19,8 +19,10 @@ module.exports = {
         // - Sender and body required
         // - Sender max 11 characters
 
+        let smsObject = null;
+
         try {
-            const testSmsObject = new Sms(iftttInput.sender, iftttInput.receiver, iftttInput.body, iftttInput.token);
+            smsObject = new Sms(iftttInput.sender, iftttInput.receiver, iftttInput.body, iftttInput.token);
         } catch (ApiError) {
             next(ApiError);
             return;
@@ -31,15 +33,15 @@ module.exports = {
         const cmSMS = {
             messages: {
                 authentication: {
-                    producttoken: iftttInput.token
+                    producttoken: smsObject.token
                 },
                 msg: [{
-                    from: iftttInput.sender,
+                    from: smsObject.sender,
                     to: [{
-                        number: iftttInput.receiver
+                        number: smsObject.receiver
                     }],
                     body: {
-                        content: iftttInput.body
+                        content: smsObject.body
                     }
                 }]
             }
