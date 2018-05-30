@@ -8,6 +8,7 @@ class Sms{
         try {
             //The correct sender, checks if sender is valid
             let correctedSender = correctSender(sender);
+
             console.log('The corrected sender is ' + correctedSender );
             //Checks if the sms is valid, according to the joi schema
             const { error } =   validate(correctedSender, receiver, body, token);
@@ -50,16 +51,20 @@ function validate(sender, receiver, body, token) {
 }
 
 function correctSender(sender){
-    const alphanumericReg = new RegExp('^[a-zA-Z0-9_]*$');
-    const digitReg = new RegExp('^[0-9]+$');
-    if (digitReg.test(sender)){
-        console.log('The sender is using digits');
-        return sender.substring(0,16);
-    } else if (alphanumericReg.test(sender)) {
-        console.log('The sender is using alphanumeric');
-        return sender.substring(0,11);
-    } else {
-        console.log('Type of sender undefined')
+    if (sender !== parseInt(sender)) {
+        const alphanumericReg = new RegExp('^[a-zA-Z0-9_]*$');
+        const digitReg = new RegExp('^[0-9]+$');
+        if (digitReg.test(sender)) {
+            console.log('The sender is using digits');
+            return sender.substring(0, 16);
+        } else if (alphanumericReg.test(sender)) {
+            console.log('The sender is using alphanumeric');
+            return sender.substring(0, 11);
+        } else {
+            console.log('Type of sender undefined')
+        }
+    }else {
+        return sender
     }
 }
 module.exports = Sms;
