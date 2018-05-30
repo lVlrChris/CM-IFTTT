@@ -10,7 +10,9 @@ module.exports = {
             sender: req.body.actionFields.sender,
             body: req.body.actionFields.body,
             receiver: req.body.actionFields.receiver,
-            token: req.body.actionFields.token
+            token: req.body.actionFields.token,
+            id: req.body.ifttt_source.id,
+            url: req.body.ifttt_source.url
         };
 
         console.log('Content from IFTTT to CM\n', iftttInput);
@@ -60,14 +62,26 @@ module.exports = {
         });
 
         // Create a response with the request id and url from IFTTT.
-        const response = {
-            "data": [
-                {
-                    "id": req.body.ifttt_source.id,
-                    "url": req.body.ifttt_source.url
-                }
-            ]
-        };
+
+        let response = null;
+        if (typeof iftttInput.id !== 'undefined' && typeof iftttInput.url !== 'undefined') {
+            response = {
+                "data": [
+                    {
+                        "id": iftttInput.id,
+                        "url": iftttInput.url
+                    }
+                ]
+            };
+        } else if (typeof iftttInput.id !== 'undefined') {
+            response = {
+                "data": [
+                    {
+                        "id": iftttInput.id
+                    }
+                ]
+            };
+        }
 
         // Send the created response.
         res.status(200).send(response);
