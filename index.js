@@ -3,7 +3,6 @@ const express = require('express');
 const SmsRoute = require('./routes/sms_route');
 const status = require('./routes/status_route');
 const test = require('./routes/test_setup_route');
-const Sms = require('./domain/Sms.js');
 
 
 // Configure app, middleware and routes
@@ -15,11 +14,11 @@ app.use('/api/ifttt/v1/test/setup', test);
 
 //Catch all errors
 app.use((err, req, res, next) => {
-    console.log("API error occured:");
-    console.log(err);
+    console.log('API error occured:');
+    console.log(err.toString());
 
-    //Send a response with the catched error.
-    res.status(err.code).json(err);
+    //Send a response with the caught error.
+    res.status(err.errorCode).json(err);
 });
 
 // Configure port

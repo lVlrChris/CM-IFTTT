@@ -1,16 +1,16 @@
 class ApiError {
 
     //Creates an API error object with a message, status code and the time of occurance.
-    constructor(message, code) {
-            this.message = message;
-            this.code = code;
-            this.datetime = Date();
-        }
+    constructor(message, errorCode) {
+        this.message = message;
+        this.errorCode = errorCode;
+        this.datetime = Date();
+    }
 
-
-    // toString() {
-    //     return message + '\nStatus code: ' + code + '\nOccured on : ' + datetime;
-    // }
+    //Override toString for clarity.
+    toString() {
+        return 'Error code: ' + this.errorCode + ' Error message: ' + this.message + ' Time of occurance: ' + this.datetime + '.';
+    }
 }
 
 module.exports = ApiError;
