@@ -17,7 +17,7 @@ router.post('/', auth, (req, res) => {
                     sendsms: {
                         sender: "Jan",
                         body: "De man",
-                        receiver: "0031657368335",
+                        receiver: "0031623045730",
                         token: "XeQ9D7IjomnZWMsjuHDgLhyEvYLvwAoAdJRyzF2odxspOvU90ci4lsRijfTAvR9y"
                     }
                 }
