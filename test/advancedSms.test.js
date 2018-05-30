@@ -35,13 +35,99 @@ describe("advanced tests", function() {
                     }
                 })
                 .end(function (err, res) {
-                    console.log(res.body.errorCode);
-                    console.log(res.body.messages[0].messageErrorCode);
+                    console.log('Invalid receiver: ' + res.body.errorCode);
+                    console.log('Invalid receiver: ' + res.body.messages[0].messageErrorCode);
 
                     expect(res.body.errorCode).to.equal(201);
                     expect(res.body.messages[0].messageErrorCode).to.equal(303);
                     done();
                 });
         })
-    })
+    });
+    describe('Validation of token', function(){
+        it('All token errors', function(done){
+            chai.request(app)
+                .post('/v1.0/message')
+                .send({
+                    "messages": {
+                        "authentication": {
+                            "producttoken": 69
+                        },
+                        "msg": [ {
+                            "from": "00316346227962",
+                            "to": [{
+                                "number": "invalid"
+                            }],
+                            "body": {
+                                "content": "Invalid token"
+                            }
+                        }
+                        ]
+                    }
+                })
+                .end(function (err, res) {
+                    console.log('The product token is incorrect: ' + res.body.errorCode);
+                    expect(res.body.errorCode).to.equal(103);
+
+                    done();
+                });
+        });
+        it('No account found for the provided product token.', function(done){
+            chai.request(app)
+                .post('/v1.0/message')
+                .send({
+                    "messages": {
+                        "authentication": {
+                            "producttoken": "3ed143e9-1ed7-4ddf-9eda-a565031de844"
+                        },
+                        "msg": [ {
+                            "from": "00316346227962",
+                            "to": [{
+                                "number": "invalid"
+                            }],
+                            "body": {
+                                "content": "Invalid token"
+                            }
+                        }
+                        ]
+                    }
+                })
+                .end(function (err, res) {
+                    console.log(res.body.details + ': ' + res.body.errorCode);
+
+                    expect(res.body.errorCode).to.equal(101);
+                    done();
+                });
+        });
+
+        it('', function(done){
+            chai.request(app)
+                .post('/v1.0/message')
+                .send({
+                    "messages": {
+                        "authentication": {
+                            "producttoken": "3ed143e9-1ed7-4ddf-9eda-a565031de843"
+                        },
+                        "msg": [ {
+                            "from": "invalid",
+                            "to": [{
+                                "number": "00316346227962"
+                            }],
+                            "body": {
+                                "content": "invalid from"
+                            }
+                        }
+                        ]
+                    }
+                })
+                .end(function (err, res) {
+                    console.log(res.body + ': ' + res.body.errorCode);
+                    done();
+                });
+        });
+    });
+
+
+
+
 });
