@@ -19,10 +19,10 @@ module.exports = {
         // - Sender max 11 characters
 
         try {
-            const testSmsObject = new Sms(123, 'Klaas', 'hoi', 'asdf', () => {
-            });
+            const testSmsObject = new Sms(iftttInput.sender, iftttInput.receiver, iftttInput.body, iftttInput.token);
         } catch (ApiError) {
             next(ApiError);
+            return;
         }
 
         // TODO: delegate responsibility to other module
