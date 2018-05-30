@@ -26,20 +26,32 @@ class Sms{
 }
 
 //Validate function for a sms object
-function validate(sender, receiver, message, token) {
+function validate(sender, receiver, body, token) {
     //Sms object, used for checking if the object matches the schema
+
+    const alphanumericReg = new RegExp('^[a-zA-Z0-9_]*$');
+    const digitReg = new RegExp('^[0-9]+$');
+
     const smsObject = {
         sender : sender,
         receiver: receiver,
         body: body,
         token: token
     };
+    
+    if (digitReg.test(sender)){
+        console.log('The sender is a number');
+    } else if (digitReg.test(sender)) {
+        console.log('The sender is alphanumeric')
+    } else {
+        console.log('Type of sender undefined')
+    }
 
     //Schema for a sms, this defines what a sms should look like
     const schema = {
         sender : joi.string().required(),
         receiver: joi.string().required(),
-        body: joi.string().required(),
+        body: joi.string().max(160).required(),
         token: joi.string().required()
     };
 
