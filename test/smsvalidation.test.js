@@ -36,13 +36,13 @@ describe('Validation of sender',()=>{
             });
     });
 
-    it('should NOT throw an error when using an string longer than 16 digits', (done)=> {
+    it('should NOT throw an error when using an string smaller than 16 digits', (done)=> {
         chai.request(server)
             .post('/api/ifttt/v1/actions/sendsms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
-                    "sender" : '12345678901234567234125234123412341235123',
+                    "sender" : '123',
                     "body" : "testBody",
                     "receiver" : invalidPhonenumber,
                     "token" : "939DA045-26F7-461F-90FF-C41969F81057"
@@ -96,7 +96,7 @@ describe('Validation of sender',()=>{
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
-                    "sender" : '1234567890123456',
+                    "sender" : '1234567890123456789',
                     "body" : "testBody",
                     "receiver" : invalidPhonenumber,
                     "token" : "939DA045-26F7-461F-90FF-C41969F81057"
