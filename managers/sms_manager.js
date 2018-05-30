@@ -1,5 +1,5 @@
 const request = require('request');
-const Sms = require('../domain/sms');
+const Sms = require('../domain/Sms');
 
 // TODO: create all responses
 module.exports = {
