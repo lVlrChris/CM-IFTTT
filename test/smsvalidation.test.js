@@ -4,6 +4,8 @@ const server = require('../index')
 
 //Test constants
 const validIftttKey = '12345';
+const invalidPhonenumber = '0031612345678'
+const phoneNumberKevin = '0031639023866'
 
 chai.should();
 chai.use(chaiHttp);
@@ -11,6 +13,7 @@ chai.use(chaiHttp);
 
 //TODO: Discuss if we have to make testcases for using special characters in a request
 describe('Validation of sender',()=>{
+
     it('should throw an error when using an int as sender', (done)=> {
         chai.request(server)
             .post('/api/ifttt/v1/actions/sendsms')
@@ -19,8 +22,8 @@ describe('Validation of sender',()=>{
                "actionFields" : {
                    "sender" : 1234,
                    "body" : "testBody",
-                   "receiver" : "0031639023866",
-                   "token" : "3ed143e9-1ed7-4ddf-9eda-a565031de843"
+                   "receiver" : invalidPhonenumber,
+                   "token" : "939DA045-26F7-461F-90FF-C41969F81057"
                }
             })
             .end(function (err, res) {
@@ -32,21 +35,135 @@ describe('Validation of sender',()=>{
                 done();
             });
     });
-    it('should throw an error when using an string longer than 16 digits', (done)=> {
 
+    it('should NOT throw an error when using an string longer than 16 digits', (done)=> {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : '12345678901234567234125234123412341235123',
+                    "body" : "testBody",
+                    "receiver" : invalidPhonenumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
     });
-    it('should throw an error when using more than 11 alphanumerical characters', (done)=> {
-
+    it('should NOT throw an error when using more than 11 alphanumerical characters', (done)=> {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : 'abcdefghijklmnopqrstuvwx',
+                    "body" : "testBody",
+                    "receiver" : invalidPhonenumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
     });
     it('should respond status 200 when using 16 digits', (done)=> {
-
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : '1234567890123456',
+                    "body" : "testBody",
+                    "receiver" : invalidPhonenumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
+    });
+    it('should respond status 200 when more than 16 digits', (done)=> {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : '1234567890123456',
+                    "body" : "testBody",
+                    "receiver" : invalidPhonenumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
     });
     it('should respond status 200 when using 11 alphanumeric characters', (done)=> {
-
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : 'abc123abc12',
+                    "body" : "testBody",
+                    "receiver" : invalidPhonenumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
+    });
+    it('should respond status 200 when using more than11 alphanumeric characters', (done)=> {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : 'abc123abc1234567',
+                    "body" : "testBody",
+                    "receiver" : invalidPhonenumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
     });
 
     it('should throw an error when not providing a sender', (done)=> {
-
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "body" : "testBody",
+                    "receiver" : invalidPhonenumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(412);
+                res.should.be.json;
+                res.body.should.have.property('message');
+                res.body.should.have.property('datetime');
+                res.body.should.have.property('errorCode');
+                done();
+            });
     });
 });
 

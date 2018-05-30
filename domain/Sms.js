@@ -7,9 +7,12 @@ class Sms{
         //Try to make a sms object
         try {
             //The correct sender, checks if sender is valid
-            let correctedSender = correctSender(sender);
+            let correctedSender;
+            if (sender !== undefined) {
+                correctedSender = correctSender(sender);
+                console.log('The corrected sender is ' + correctedSender );
+            }else {console.log('The sender is undefined')}
 
-            console.log('The corrected sender is ' + correctedSender );
             //Checks if the sms is valid, according to the joi schema
             const { error } =   validate(correctedSender, receiver, body, token);
 
