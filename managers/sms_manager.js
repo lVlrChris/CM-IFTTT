@@ -58,13 +58,19 @@ module.exports = {
             if (error) console.log(error);
             else console.log(body);
         });
-        // Return response
 
+        // Create a response with the request id and url from IFTTT.
+        const response = {
+            "data": [
+                {
+                    "id": req.body.ifttt_source.id,
+                    "url": req.body.ifttt_source.url
+                }
+            ]
+        };
 
-        const response = {'message': 'SMS Send'};
+        // Send the created response.
         res.status(200).send(response);
-
-
 
     },
 };
