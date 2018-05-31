@@ -13,14 +13,8 @@ module.exports = {
             token: req.body.actionFields.token
         };
 
-        console.log('Content from IFTTT to CM\n', iftttInput);
-
-        // TODO: validate input
-        // - Sender and body required
-        // - Sender max 11 characters
-
         let smsObject = null;
-
+        // Validate input
         try {
             smsObject = new Sms(iftttInput.sender, iftttInput.receiver, iftttInput.body, iftttInput.token);
         } catch (ApiError) {
@@ -28,7 +22,6 @@ module.exports = {
             return;
         }
 
-        // TODO: delegate responsibility to other module
         // convert ifttt input to CM SMS
         const cmSMS = {
             messages: {
@@ -47,8 +40,7 @@ module.exports = {
             }
         };
 
-        // TODO: delegate sending responsibility to manager
-        // Send request to CM
+        // Send post request to CM (sending sms)
         request({
             url: "https://gw.cmtelecom.com/v1.0/message",
             method: "POST",
@@ -58,7 +50,7 @@ module.exports = {
             if (error) console.log(error);
             else console.log(body);
         });
-        // Return response
+        // Return response to ifttt
         res.status(200).send('SMS send');
 
     },
