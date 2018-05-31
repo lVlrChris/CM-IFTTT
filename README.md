@@ -4,14 +4,14 @@ IFTTT integration with CM.com's apps
 ## Developer Documentation IFTTT-CM
 
 ## §1 Introduction
-Welcome to the developer documentation of the project of team IFTTT-CM about certain actions of CM, these actions have been published onto the IFTTT platform. There is also a proxy API that is deployed on Heroku. The goal is to deploy your own API on Heroku, where the data that is received from a IFTTT applet and API will be redirected to CM, via your own API proxy. 
+Welcome to the developer documentation of the project of team IFTTT-CM about certain actions of CM, these actions have been published onto the IFTTT platform. There is also a proxy API that is deployed on Heroku. The goal is to deploy your own API on Heroku, where the data that is received from an IFTTT applet and API, will be redirected to CM, via your own API proxy. 
 
-Via your own API proxy and IFTTT applet, it is possible to publish new actions, since the CM actions that are currently published by the IFTTT-CM team are only the following three:
+Via your own API proxy and IFTTT applet, it is possible to publish new actions, since the CM actions that are currently published by the IFTTT-CM team are the following three actions:
 * Sending an SMS
 * Sending a voice call
 * Sending a payment link
 
-For configuring your own API and an IFTTT applet, you will need the to sign up for an account on the website of [CM](https://www.cm.com/). After signing up, you will receive a unique token, this token is necessary for developing and maintaining certain CM applets that you can develop and publish on the IFTTT platform.
+For configuring your own API and an IFTTT applet, you will need the to sign up for an account on the website of [CM](https://www.cm.com/). After signing up, you will receive an unique token, this token is necessary for developing and maintaining certain CM applets that you can develop and publish on the IFTTT platform.
 
 It is also required to have an account on the IFTTT website, you can easily [sign up](https://ifttt.com/join) on their website.
 
@@ -36,7 +36,7 @@ Or when using Node:
 $ node index.js
 ```
 #### 1.3 Sending your first GET request
-After running the server, you can validate if you are using a correct key by sending the following request:
+After running the server, you can validate the use of a correct key by sending the following request:
 ```
 Method: GET
 Endpoint URL: localhost:3000/api/ifttt/v1/status
@@ -53,7 +53,7 @@ Valid key
 Great, so now that your own server is running, it is time for the real stuff!
 
 ## §2 IFTTT
-If This Then That is a platform where users are able to configure own triggers, if a trigger is valid, a certain action will be performed by the platform. The actions and triggers can be configured by both users and developers of companies. However, developing certain actions will often require more information from a developer of a company.
+If This Then That is a platform where users are able to configure own triggers, if a trigger is valid, a certain action will be performed by the platform. The actions and triggers can be configured by both users and developers of companies. However, developing certain actions will often require more information from a developer of a company, since there is a lot of information that needs to be processed in order to publish an IFTTT applet.
 
 As mentioned in [section 1](https://github.com/lVlrChris/IFTTT-CM/tree/development#1-introduction), make sure that you have successfully signed up for an account on IFTTT, so that you are able to publish your applet on their website.  
 
