@@ -73,6 +73,16 @@ module.exports = {
                     }
                 ]
             };
+        } else if (typeof iftttInput.id === 'undefined' && typeof iftttInput.url === 'undefined') {
+            // TODO: Make this work with IFTTT Tests
+            response = {
+                "data": [
+                    {
+                        "id": iftttInput.id,
+                        "url": iftttInput.url
+                    }
+                ]
+            };
         }
 
         // Send the created response.
