@@ -26,7 +26,7 @@ class Sms{
             this.token = token;
         }catch (e) {
             //TODO: The catch should make a new error and should be thrown to the route to stop the procces
-            throw (new ApiError(e.details[0].message, 412));
+            throw (new ApiError(e.details[0].message, 400));
         }
 
     }

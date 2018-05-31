@@ -5,7 +5,6 @@ const Sms = require('../domain/Sms');
 module.exports = {
     sendSms(req, res, next) {
 
-        console.log("Getting ifttt input");
         // Get input from ifttt
         const iftttInput = {
             sender: req.body.actionFields.sender,
@@ -14,17 +13,18 @@ module.exports = {
             token: req.body.actionFields.token
         };
 
-        console.log("Creating sms object");
         let smsObject = null;
+
         // Validate input
         try {
             smsObject = new Sms(iftttInput.sender, iftttInput.receiver, iftttInput.body, iftttInput.token);
         } catch (ApiError) {
             next(ApiError);
+
+
             return;
         }
 
-        console.log("Converting to CM sms");
         // convert ifttt input to CM SMS
         const cmSMS = {
             messages: {
@@ -78,15 +78,6 @@ module.exports = {
                     ]
                 };
             } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                response = {
-                    "data": [
-                        {
-                            "id": "no id"
-                        }
-                    ]
-                };
-            } else if (typeof req.body.ifttt_source.id === 'undefined' && typeof req.body.ifttt_source.url === 'undefined') {
-                // TODO: Make this work with IFTTT Tests
                 response = {
                     "data": [
                         {
