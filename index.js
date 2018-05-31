@@ -1,16 +1,16 @@
 // Require modules
 const express = require('express');
 const SmsRoute = require('./routes/sms_route');
-const status = require('./routes/status_route');
-const test = require('./routes/test_setup_route');
+const StatusRoute = require('./routes/status_route');
+const TestRoute = require('./routes/test_setup_route');
 
 
 // Configure app, middleware and routes
 const app = express();
 app.use(express.json());
 app.use('/api/ifttt/v1/actions/sendsms', SmsRoute);
-app.use('/api/ifttt/v1/status', status);
-app.use('/api/ifttt/v1/test/setup', test);
+app.use('/api/ifttt/v1/status', StatusRoute);
+app.use('/api/ifttt/v1/test/setup', TestRoute);
 
 //Catch all errors
 app.use((err, req, res, next) => {

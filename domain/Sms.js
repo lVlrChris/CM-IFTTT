@@ -20,7 +20,7 @@ class Sms{
             if (error) throw error;
 
             //If no error is found, assign the values to the correct variables
-            this.sender = correctedSender
+            this.sender = correctedSender;
             this.receiver = receiver;
             this.body = body;
             this.token = token;
@@ -31,6 +31,7 @@ class Sms{
 
     }
 }
+
 //Validate function for a sms object
 function validate(sender, receiver, body, token) {
     //Sms object, used for checking if the object matches the schema
@@ -70,4 +71,5 @@ function correctSender(sender){
         return sender
     }
 }
+
 module.exports = Sms;
