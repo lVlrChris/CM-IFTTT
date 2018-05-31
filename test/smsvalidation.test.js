@@ -1,11 +1,11 @@
-const chai = require('chai')
-const chaiHttp = require('chai-http')
-const server = require('../index')
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const server = require('../index');
 
 //Test constants
 const validIftttKey = '12345';
-const fakePhoneNumber = '0031612345678'
-const phoneNumberKevin = '0031639023866'
+const fakePhoneNumber = '0031612345678';
+const phoneNumberKevin = '0031639023866';
 
 chai.should();
 chai.use(chaiHttp);
