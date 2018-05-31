@@ -63,8 +63,7 @@ module.exports = {
             response = {
                 "data": [
                     {
-                        "id": "no id",
-                        "url": "no url"
+                        "id": "no id"
                     }
                 ]
             };
@@ -91,8 +90,7 @@ module.exports = {
                 response = {
                     "data": [
                         {
-                            "id": "no id",
-                            "url": "no url"
+                            "id": "no id"
                         }
                     ]
                 };
