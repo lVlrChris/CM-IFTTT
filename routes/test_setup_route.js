@@ -15,10 +15,10 @@ router.post('/', auth, (req, res) => {
             samples: {
                 actions: {
                     sendsms: {
-                        sender: "Jan",
-                        body: "De man",
-                        receiver: "0031657368335",
-                        token: "XeQ9D7IjomnZWMsjuHDgLhyEvYLvwAoAdJRyzF2odxspOvU90ci4lsRijfTAvR9y"
+                        sender: 'Jan',
+                        body: 'De man',
+                        receiver: '0031630273638',
+                        token: 'XeQ9D7IjomnZWMsjuHDgLhyEvYLvwAoAdJRyzF2odxspOvU90ci4lsRijfTAvR9y'
                     }
                 }
             }
