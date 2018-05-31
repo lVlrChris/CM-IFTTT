@@ -5,14 +5,16 @@ const server = require('../index');
 //Test constants
 const validIftttKey = '12345';
 const fakePhoneNumber = '0031612345678';
-const phoneNumberKevin = '0031639023866';
+//String of 160chars
 const longString160Chars = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 
+//Using the chai package to call .should on responses
 chai.should();
+
+//Using chaiHttp to make http request to our api
 chai.use(chaiHttp);
 
-
-//TODO: Discuss if we have to make testcases for using special characters in a request
+//Tests for sender input
 describe('Validation of sender',()=>{
     it('should throw an error when using an int as sender', (done)=> {
         chai.request(server)
@@ -197,8 +199,7 @@ describe('Validation of sender',()=>{
             });
     });
 });
-
-//TODO: Discuss how to validate a mobile phone number
+//Tests for receiver input
 describe('Validation of receiver',()=>{
     it('should throw an error when using an int as receiver', (done)=> {
         chai.request(server)
@@ -272,7 +273,7 @@ describe('Validation of receiver',()=>{
             });
     });
 });
-
+//Tests for token input
 describe('Validation of token',()=>{
     it('should throw an error when using an int as token', (done)=> {
         chai.request(server)
@@ -345,8 +346,8 @@ describe('Validation of token',()=>{
             });
     });
 });
-
-describe('Validation of content',()=>{
+//Tests for body input
+describe('Validation of body',()=>{
     it('should throw an error when using an int as body', (done)=> {
         chai.request(server)
             .post('/api/ifttt/v1/actions/sendsms')
