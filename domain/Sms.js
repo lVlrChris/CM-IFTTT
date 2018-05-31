@@ -1,15 +1,16 @@
 const joi = require('joi');
 const ApiError = require('../domain/ApiError');
 
-//TODO: Allow whitespaces and specials chars like ?!. in a sender
 class Sms{
     constructor(sender, receiver, body, token) {
-        //Try to make a sms object
+        //Trying to make an sms object
         try {
-            //The correct sender, checks if sender is valid
             let correctedSender;
+            //This if statement prevents a undefined error, otherwise the correctSender method will be called on a undefined
             if (sender !== undefined) {
+                //This methods returns the corrected sender
                 correctedSender = correctSender(sender);
+                //Logs the sender after it has been corrected to the CM standards
                 console.log('The corrected sender is ' + correctedSender );
             }else {console.log('The sender is undefined')}
 
@@ -25,7 +26,7 @@ class Sms{
             this.body = body;
             this.token = token;
         }catch (e) {
-            //TODO: The catch should make a new error and should be thrown to the route to stop the procces
+            //Throws an new ApiError with the details of a joi error.
             throw (new ApiError(e.details[0].message, 412));
         }
 
@@ -42,7 +43,7 @@ function validate(sender, receiver, body, token) {
         token: token
     };
 
-    //Schema for a sms, this defines what a sms should look like
+    //Schema for a sms, this defines what an sms should look like
     const schema = {
         sender : joi.string().required(),
         receiver: joi.string().required(),
@@ -54,22 +55,38 @@ function validate(sender, receiver, body, token) {
     return joi.validate(smsObject,schema);
 }
 
+//Function to correct a sender to the CM standards
 function correctSender(sender){
+    //Checks if the sender is an int, if so return the sender.
     if (sender !== parseInt(sender)) {
+
+        //Regular expression to check if a sender is using alphanumeric chars
         const alphanumericReg = new RegExp('^[a-zA-Z0-9-_!?\\.,@# ]*$');
+
+        //Regular expression to check if a sender is using only digits
         const digitReg = new RegExp('^[0-9]+$');
+
+        //Tests if the sender is using digits
         if (digitReg.test(sender)) {
             console.log('The sender is using digits');
+            //Returns the first 16 chars of the sender, this is requested by CM
             return sender.substring(0, 16);
-        } else if (alphanumericReg.test(sender)) {
+        }
+        //Tests if the sender is using alphanumeric values
+        else if (alphanumericReg.test(sender)) {
             console.log('The sender is using alphanumeric');
+            //Returns the first 11 chars of the sender, this is requested by CM
             return sender.substring(0, 11);
         } else {
-            console.log('Type of sender undefined')
+            //If the sender is not made of digits or alphanumeric chars, the sender will be undefined.
+            //This prevents special chars to be sent to the CM api
+            console.log('Type of sender undefined');
+            return 'undefinedSender';
         }
     }else {
-        return sender
+        //If the sender is an int, or any other type of value, the sender will not be adjusted.
+        //Since the joi package will detect its not a string
+        return sender;
     }
 }
-
 module.exports = Sms;
