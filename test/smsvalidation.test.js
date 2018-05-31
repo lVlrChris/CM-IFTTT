@@ -19,11 +19,15 @@ describe('Validation of sender',()=>{
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                "actionFields" : {
-                   "sender" : 'test',
+                   "sender" : 123,
                    "body" : "testBody",
                    "receiver" : fakePhoneNumber,
                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
-               }
+               },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
             })
             .end(function (err, res) {
                 res.should.have.status(412);
@@ -44,7 +48,12 @@ describe('Validation of sender',()=>{
                     "body" : "testBody",
                     "receiver" : fakePhoneNumber,
                     "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
                 }
+
             })
             .end(function (err, res) {
                 res.should.have.status(200);
@@ -62,6 +71,10 @@ describe('Validation of sender',()=>{
                     "body" : "testBody",
                     "receiver" : fakePhoneNumber,
                     "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
                 }
             })
             .end(function (err, res) {
@@ -80,6 +93,10 @@ describe('Validation of sender',()=>{
                     "body" : "testBody",
                     "receiver" : fakePhoneNumber,
                     "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
                 }
             })
             .end(function (err, res) {
@@ -98,6 +115,10 @@ describe('Validation of sender',()=>{
                     "body" : "testBody",
                     "receiver" : fakePhoneNumber,
                     "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
                 }
             })
             .end(function (err, res) {
@@ -116,6 +137,10 @@ describe('Validation of sender',()=>{
                     "body" : "testBody",
                     "receiver" : fakePhoneNumber,
                     "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
                 }
             })
             .end(function (err, res) {
@@ -134,6 +159,10 @@ describe('Validation of sender',()=>{
                     "body" : "testBody",
                     "receiver" : fakePhoneNumber,
                     "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
                 }
             })
             .end(function (err, res) {
@@ -151,6 +180,10 @@ describe('Validation of sender',()=>{
                     "body" : "testBody",
                     "receiver" : fakePhoneNumber,
                     "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
                 }
             })
             .end(function (err, res) {
@@ -188,6 +221,10 @@ describe('Validation of token',()=>{
                     "body" : "testBody",
                     "receiver" : fakePhoneNumber,
                     "token" : 0
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
                 }
             })
             .end(function (err, res) {
@@ -209,7 +246,11 @@ describe('Validation of token',()=>{
         //             "body" : "testBody",
         //             "receiver" : invalidPhonenumber,
         //             "token" : "12345678-12345678-12344567-12344566-123323445"
-        //         }
+        //         },
+    //                 "ifttt_source" : {
+    //                     "id" : "test",
+    //                     "url" : "test"
+    //                 }
         //     })
         //     .end(function (err, res) {
         //         res.should.have.status(412);
@@ -230,6 +271,10 @@ describe('Validation of token',()=>{
                     "body" : "testBody",
                     "receiver" : fakePhoneNumber,
                     "token" : '939DA045-26F7-461F-90FF-C41969F81057'
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
                 }
             })
             .end(function (err, res) {
@@ -247,6 +292,10 @@ describe('Validation of token',()=>{
                     "sender" : 'sender',
                     "body" : "testBody",
                     "receiver" : fakePhoneNumber,
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
                 }
             })
             .end(function (err, res) {
