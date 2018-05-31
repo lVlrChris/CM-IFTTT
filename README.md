@@ -1,7 +1,7 @@
 # IFTTT-CM
 IFTTT integration with CM.com's apps
 
-#Developer Documentation IFTTT-CM
+# Developer Documentation IFTTT-CM
 
 # Introduction
 Welcome to the developer documentation of the project of team IFTTT-CM about certain actions of CM, these actions have been published onto the IFTTT platform. Our API is also deployed on Heroku, where the data received from IFTTT will be redirected to CM.
