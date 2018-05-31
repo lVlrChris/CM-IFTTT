@@ -15,10 +15,15 @@ app.use('/api/ifttt/v1/test/setup', test);
 //Catch all errors
 app.use((err, req, res, next) => {
     console.log('API error occured:');
-    console.log(err.toString());
 
-    //Send a response with the caught error.
-    res.status(err.errorCode).json(err);
+    try {
+        console.log(err.toString());
+        console.log(err.errorCode);
+        res.status(err.errorCode).json(err);
+    }catch (e) {
+        console.log(err.toString());
+        res.status(500).json({"error" : "error occured"})
+    }
 });
 
 // Configure port

@@ -19,7 +19,7 @@ describe('Validation of sender',()=>{
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                "actionFields" : {
-                   "sender" : 1234,
+                   "sender" : 'test',
                    "body" : "testBody",
                    "receiver" : fakePhoneNumber,
                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
