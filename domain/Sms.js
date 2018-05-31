@@ -55,7 +55,7 @@ function validate(sender, receiver, body, token) {
 
 function correctSender(sender){
     if (sender !== parseInt(sender)) {
-        const alphanumericReg = new RegExp('^[a-zA-Z0-9_]*$');
+        const alphanumericReg = new RegExp('^[a-zA-Z0-9_!? ]*$');
         const digitReg = new RegExp('^[0-9]+$');
         if (digitReg.test(sender)) {
             console.log('The sender is using digits');
