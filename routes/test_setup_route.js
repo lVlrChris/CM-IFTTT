@@ -4,12 +4,10 @@ const auth = require('../middleware/auth');
 // Get router
 const router = express.Router();
 
-// Test object
-
-
 // Root post endpoint
 router.post('/', auth, (req, res) => {
 
+    // Data that gets returned when the test/setup endpoint test runs on IFTTT.
     res.status(200).json({
         data: {
             samples: {

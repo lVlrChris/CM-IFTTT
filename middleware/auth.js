@@ -2,7 +2,7 @@
 function auth(req, res, next) {
 
     // Get input service key
-    const input_service_key = process.env.IFTTT_SERVICE_KEY || "12345";
+    const input_service_key = process.env.IFTTT_SERVICE_KEY || '12345';
 
     // Get this service's service key
     const service_key = req.header('IFTTT-Service-Key');
@@ -12,7 +12,6 @@ function auth(req, res, next) {
 
     // Next if key is valid
     next();
-
 }
 
 // Export the authentication function
