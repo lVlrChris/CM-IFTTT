@@ -69,7 +69,7 @@ module.exports = {
             response = {
                 "data": [
                     {
-                        "id": iftttInput.id
+                        "id": "no id"
                     }
                 ]
             };
@@ -78,8 +78,8 @@ module.exports = {
             response = {
                 "data": [
                     {
-                        "id": iftttInput.id,
-                        "url": iftttInput.url
+                        "id": "no id",
+                        "url": "no url"
                     }
                 ]
             };
