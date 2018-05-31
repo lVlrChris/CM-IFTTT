@@ -20,7 +20,7 @@ Clone the repository from GitHub by using the following command:
 ```
 $ git clone https://github.com/lVlrChris/IFTTT-CM
 ```
-After succesfully cloning the repository, make sure that you have installed the correct Node packages, by using the following command:
+After successfully cloning the repository, make sure that you have installed the correct Node packages, by using the following command:
 ```
 $ npm install
 ```
@@ -55,11 +55,11 @@ Great, so now that your own server is running, it is time for the real stuff!
 ## §2 IFTTT
 If This Then That is a platform where users are able to configure own triggers, if a trigger is valid, a certain action will be performed by the platform. The actions and triggers can be configured by both users and developers of companies. However, developing certain actions will often require more information from a developer of a company.
 
-As mentioned in [section 1](https://github.com/lVlrChris/IFTTT-CM/tree/development#1-introduction), make sure that you have succesfully signed up for an account on IFTTT, so that you are able to publish your applet on their website.  
+As mentioned in [section 1](https://github.com/lVlrChris/IFTTT-CM/tree/development#1-introduction), make sure that you have successfully signed up for an account on IFTTT, so that you are able to publish your applet on their website.  
 
 #### 2.1 Authentication
 To use the actions that have been published by team IFTTT-CM need certain information to work successful. CM requires a certain amount of data to successfully send a SMS via the Action Send SMS action. IFTTT requires a IFTT-Service-Key to use their API, once you register your own applet, you should recive an unique IFTTT-Service-Key. 
-For local testing, we will use the *12345* IFTTT-Service-Key just like we did in [subsection 1.3](https://github.com/lVlrChris/IFTTT-CM/tree/development#13-sending-your-first-post-request).
+For local testing, we will use the *12345* IFTTT-Service-Key just like we did in [subsection 1.3](https://github.com/lVlrChris/IFTTT-CM/tree/development#13-sending-your-first-get-request).
 
 ##### IFTTT POST request
 In order to test if our API is able to send an IFTTT-like body, we need to verify if it is possible to successfully post a request by using our IFTTT-Service-Key. 
