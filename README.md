@@ -101,7 +101,7 @@ Great, now that we have covered the basic validation of the IFTTT-Service-Key, i
 #### 2.2 Sending an SMS 
 In order to send an SMS, it is necessary that you have an account on CM.com, since this is required to be able to use their API related SMS functions. 
 
-So, when we think about an SMS, it is quite obvious, that we need atleast a sender and a receiver to be able to send and receive a message. However, there is more to that.
+So, when we think about an SMS, it is quite obvious, that we need at least one receiver and a sender, to be able to send and receive a message. However, there is more to that.
  
 Actually, just like we mentioned in [section 1](https://github.com/lVlrChris/IFTTT-CM/tree/development#1-introduction) and [subsection 2.1](https://github.com/lVlrChris/IFTTT-CM/tree/development#21-authentication), we need the IFTTT-Service-Key. Also, it is not really an SMS without actually sending a message, since an empty SMS is actually not an SMS.
 If you think about it, without a body, what really is the point of an SMS? 
