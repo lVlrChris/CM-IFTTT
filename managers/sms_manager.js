@@ -36,6 +36,15 @@ module.exports = {
         }
 
         // convert ifttt input to CM SMS
+        const receiversIFTTT = smsObject.receiver.split(',');
+        const receiversCM = [];
+        let i;
+        for (i = 0; i < receiversIFTTT.length; i++) {
+            receiversCM.push({
+                number: receiversIFTTT[i]
+            });
+        }
+        console.log('Receivers of the message\n', receiversCM);
         const cmSMS = {
             messages: {
                 authentication: {
@@ -43,9 +52,7 @@ module.exports = {
                 },
                 msg: [{
                     from: smsObject.sender,
-                    to: [{
-                        number: smsObject.receiver
-                    }],
+                    to: receiversCM,
                     body: {
                         content: smsObject.body
                     }
