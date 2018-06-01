@@ -1,3 +1,5 @@
+const ApiError = require('../domain/ApiError');
+
 // Authentication function
 function auth(req, res, next) {
 
@@ -8,7 +10,10 @@ function auth(req, res, next) {
     const service_key = req.header('IFTTT-Service-Key');
 
     // Check key and return if not valid
-    if (service_key !== input_service_key) return res.status(401).send('Invalid key');
+    if (service_key !== input_service_key) {
+        const keyError = new ApiError('Invalid channel key', 401);
+        return res.status(401).send(keyError);
+    }
 
     // Next if key is valid
     next();
