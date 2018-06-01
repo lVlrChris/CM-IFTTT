@@ -15,11 +15,12 @@ app.use('/api/ifttt/v1/test/setup', TestRoute);
 //Catch all errors
 app.use((err, req, res, next) => {
 
+    //Check if the caught error is an ApiError
     try {
         console.log('API error occured:');
         console.log(err.toString());
         res.status(err.errorCode).json(err.toJSON());
-    }catch (e) {
+    } catch (e) {
         console.log(err.toString());
         res.status(500).json({"error" : "unknown error occured"})
     }

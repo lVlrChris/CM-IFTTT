@@ -12,6 +12,7 @@ module.exports = {
         let token = null;
 
         // Get input from ifttt
+        // Check if actionFields exists
         if (typeof req.body.actionFields !== 'undefined') {
 
             sender = req.body.actionFields.sender || "";
@@ -24,15 +25,13 @@ module.exports = {
             return;
         }
 
+        // Validate input
         let smsObject = null;
 
-        // Validate input
         try {
             smsObject = new Sms(sender, receiver, body, token);
         } catch (apiError) {
             next(apiError);
-
-
             return;
         }
 
@@ -66,7 +65,7 @@ module.exports = {
             else console.log(body);
         });
 
-        console.log("Creating responses for iftttt");
+        console.log("Creating responses for IFTTT");
         // Create a response with the request id and url from IFTTT.
         let response = null;
         if (!req.body.ifttt_source) {
