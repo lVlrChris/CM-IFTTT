@@ -198,6 +198,117 @@ describe('Validation of sender',()=>{
                 done();
             });
     });
+    it('should respond status 200 when using a question mark', (done)=>{
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : '?',
+                    "body" : "testBody",
+                    "receiver" : fakePhoneNumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
+    });
+    it('should respond status 200 when using a exclamation mark', (done)=>{
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : '!',
+                    "body" : "testBody",
+                    "receiver" : fakePhoneNumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
+    });
+    it('should respond status 200 when using multiple exclamation mark', (done)=>{
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : '!!',
+                    "body" : "testBody",
+                    "receiver" : fakePhoneNumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
+    });
+    it('should respond status 200 when using a space', (done)=>{
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : ' ',
+                    "body" : "testBody",
+                    "receiver" : fakePhoneNumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
+    });
+    it('should respond status 200 when using multiple spaces', (done)=>{
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendsms')
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : '  ',
+                    "body" : "testBody",
+                    "receiver" : fakePhoneNumber,
+                    "token" : "939DA045-26F7-461F-90FF-C41969F81057"
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                done();
+            });
+    });
+
 });
 //Tests for receiver input
 describe('Validation of receiver',()=>{
