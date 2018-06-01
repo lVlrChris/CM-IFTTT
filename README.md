@@ -110,7 +110,7 @@ So to sum things up, we need the following information to actually send an SMS:
 * Sender
 * Body
 * Receiver
-* IFTTT-Service-Key
+* CM token
 
 ##### The SMS POST request
 
@@ -194,12 +194,12 @@ https://ifttt-cm.herokuapp.com/
 ```
 
 ### The Team
-* **Rudwan Akhiat** - *Git Destroyer* - [IFTTT-CM](https://github.com/rudwan97)
-* **Jan Belterman** - *Boss* - [IFTTT-CM](https://github.com/JanBelterman)
-* **Chris Boer** - *CEO of IFTTT-CM/Postmaster* - [IFTTT-CM](https://github.com/lVlrChris)
-* **Floris Botermans** - *Koffiejongen* - [IFTTT-CM](https://github.com/FlorisBotermans)
-* **Floris van Broekhoven** - *Code Wizard* - [IFTTT-CM](https://github.com/Davilicus)
-* **Kevin van Loon** - *Lead Senior Experienced Developer* - [IFTTT-CM](https://github.com/KevinvanLoon)
-* **Jim van Zuidam** - *Executive Executer* - [IFTTT-CM](https://github.com/JvZuidam)
+* **Rudwan Akhiat** - *Git Destroyer* - [Profile](https://github.com/rudwan97)
+* **Jan Belterman** - *Boss* - [Profile](https://github.com/JanBelterman)
+* **Chris Boer** - *CEO* - [Profile](https://github.com/lVlrChris)
+* **Floris Botermans** - *Koffiejongen* - [Profile](https://github.com/FlorisBotermans)
+* **Floris van Broekhoven** - *Code Wizard* - [Profile](https://github.com/Davilicus)
+* **Kevin van Loon** - *Lead Senior Experienced Developer* - [Profile](https://github.com/KevinvanLoon)
+* **Jim van Zuidam** - *Executive Executer* - [Profile](https://github.com/JvZuidam)
 
 See also the list of [contributors](https://github.com/lVlrChris/IFTTT-CM/contributors) who participated in this project.
