@@ -15,7 +15,7 @@ module.exports = {
         };
 
         console.log("Creating sms object");
-        let smsObject = null;
+        let smsObject;
         // Validate input
         try {
             smsObject = new Sms(iftttInput.sender, iftttInput.receiver, iftttInput.body, iftttInput.token);
@@ -57,7 +57,7 @@ module.exports = {
 
         console.log("Creating responses for iftttt");
         // Create a response with the request id and url from IFTTT.
-        let response = null;
+        let response;
         if (!req.body.ifttt_source) {
             console.log("No source");
             response = {
