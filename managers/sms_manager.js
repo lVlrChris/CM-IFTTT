@@ -1,25 +1,36 @@
 const request = require('request');
 const Sms = require('../domain/Sms');
+const ApiError = require('../domain/ApiError');
 
 // TODO: create all responses
 module.exports = {
     sendSms(req, res, next) {
 
+        let sender = null;
+        let body = null;
+        let receiver = null;
+        let token = null;
+
         // Get input from ifttt
-        const iftttInput = {
-            sender: req.body.actionFields.sender,
-            body: req.body.actionFields.body,
-            receiver: req.body.actionFields.receiver,
-            token: req.body.actionFields.token
-        };
+        if (typeof req.body.actionFields !== 'undefined') {
+
+            sender = req.body.actionFields.sender || "";
+            body = req.body.actionFields.body || "";
+            receiver = req.body.actionFields.receiver || "";
+            token  = req.body.actionFields.token || "";
+
+        } else {
+            next(new ApiError('actionFields missing in body.', 400));
+            return;
+        }
 
         let smsObject = null;
 
         // Validate input
         try {
-            smsObject = new Sms(iftttInput.sender, iftttInput.receiver, iftttInput.body, iftttInput.token);
-        } catch (ApiError) {
-            next(ApiError);
+            smsObject = new Sms(sender, receiver, body, token);
+        } catch (apiError) {
+            next(apiError);
 
 
             return;
