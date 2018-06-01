@@ -234,7 +234,7 @@ describe('Validation of receiver',()=>{
                 "actionFields" : {
                     "sender" : '1234567890123456789',
                     "body" : "testBody",
-                    "receiver" : "0031612345678",
+                    "receiver" : fakePhoneNumber,
                     "token" : "939DA045-26F7-461F-90FF-C41969F81057"
                 },
                 "ifttt_source" : {
