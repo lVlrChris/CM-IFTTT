@@ -15,7 +15,7 @@ class Sms{
             }else {console.log('The sender is undefined')}
 
             //Checks if the sms is valid, according to the joi schema
-            const { error } =   validate(correctedSender, receiver, body, token);
+            const { error } = validate(correctedSender, receiver, body, token);
 
             //If an error is found, throw the error and jump into catch
             if (error) throw error;

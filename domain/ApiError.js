@@ -11,6 +11,18 @@ class ApiError {
     toString() {
         return 'Error code: ' + this.errorCode + ' Error message: ' + this.message + ' Time of occurance: ' + this.datetime + '.';
     }
+
+    //JSON resonse body setup for IFTTT
+    toJSON() {
+        return {
+            "errors": [
+                {
+                    "status": "SKIP",
+                    "message": this.message
+                }
+            ]
+        }
+    }
 }
 
 module.exports = ApiError;

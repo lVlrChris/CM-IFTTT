@@ -1,30 +1,40 @@
 const request = require('request');
 const Sms = require('../domain/Sms');
+const ApiError = require('../domain/ApiError');
 
 // TODO: create all responses
 module.exports = {
     sendSms(req, res, next) {
 
-        console.log("Getting ifttt input");
-        // Get input from ifttt
-        const iftttInput = {
-            sender: req.body.actionFields.sender,
-            body: req.body.actionFields.body,
-            receiver: req.body.actionFields.receiver,
-            token: req.body.actionFields.token
-        };
+        let sender = null;
+        let body = null;
+        let receiver = null;
+        let token = null;
 
-        console.log("Creating sms object");
-        let smsObject;
-        // Validate input
-        try {
-            smsObject = new Sms(iftttInput.sender, iftttInput.receiver, iftttInput.body, iftttInput.token);
-        } catch (ApiError) {
-            next(ApiError);
+        // Get input from ifttt
+        // Check if actionFields exists
+        if (typeof req.body.actionFields !== 'undefined') {
+
+            sender = req.body.actionFields.sender || "";
+            body = req.body.actionFields.body || "";
+            receiver = req.body.actionFields.receiver || "";
+            token  = req.body.actionFields.token || "";
+
+        } else {
+            next(new ApiError('actionFields missing in body.', 400));
             return;
         }
 
-        console.log("Converting to CM sms");
+        // Validate input
+        let smsObject = null;
+
+        try {
+            smsObject = new Sms(sender, receiver, body, token);
+        } catch (apiError) {
+            next(apiError);
+            return;
+        }
+
         // convert ifttt input to CM SMS
         const cmSMS = {
             messages: {
@@ -55,7 +65,7 @@ module.exports = {
             else console.log(body);
         });
 
-        console.log("Creating responses for iftttt");
+        console.log("Creating responses for IFTTT");
         // Create a response with the request id and url from IFTTT.
         let response;
         if (!req.body.ifttt_source) {
@@ -78,15 +88,6 @@ module.exports = {
                     ]
                 };
             } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                response = {
-                    "data": [
-                        {
-                            "id": "no id"
-                        }
-                    ]
-                };
-            } else if (typeof req.body.ifttt_source.id === 'undefined' && typeof req.body.ifttt_source.url === 'undefined') {
-                // TODO: Make this work with IFTTT Tests
                 response = {
                     "data": [
                         {
