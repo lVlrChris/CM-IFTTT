@@ -36,7 +36,7 @@ module.exports = {
         }
 
         // convert ifttt input to CM SMS
-        const receiversIFTTT = smsObject.receiver.split(',');
+        const receiversIFTTT = smsObject.receiver.split(', ');
         const receiversCM = [];
         let i;
         for (i = 0; i < receiversIFTTT.length; i++) {
