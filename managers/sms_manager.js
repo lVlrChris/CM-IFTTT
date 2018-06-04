@@ -53,6 +53,7 @@ module.exports = {
                 msg: [{
                     from: smsObject.sender,
                     to: receiversCM,
+                    customGrouping3: "IFTTT",
                     body: {
                         content: smsObject.body
                     }
