@@ -16,7 +16,7 @@ router.post('/', auth, (req, res) => {
                         sender: 'Jan',
                         body: 'De man',
                         receiver: '0031612345678',
-                        token: 'XeQ9D7IjomnZWMsjuHDgLhyEvYLvwAoAdJRyzF2odxspOvU90ci4lsRijfTAvR9y'
+                        token: 'FakeTestKey'
                     }
                 }
             }
