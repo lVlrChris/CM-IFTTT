@@ -2,7 +2,7 @@ const joi = require('joi');
 const ApiError = require('../domain/ApiError');
 
 //Constructor
-class Sms{
+class Voice{
     constructor(receiver, sender, body, language, token) {
         try {
             if (receiver === undefined) {
