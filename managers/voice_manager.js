@@ -27,14 +27,50 @@ module.exports = {
         }
 
         // Validate input
-        let VoiceObject = null;
+        let voiceObject = null;
 
         try {
-            VoiceObject = new Voice(sender, receiver, body, language, token);
+            voiceObject = new Voice(sender, receiver, body, language, token);
         } catch (apiError) {
             next(apiError);
             return;
         }
+
+        // convert ifttt input to CM VOICE
+        const receiversIFTTT = voiceObject.receiver.split(', ');
+        const receiversCM = [];
+        let i;
+        for (i = 0; i < receiversIFTTT.length; i++) {
+            receiversCM.push({
+                number: receiversIFTTT[i]
+            });
+        }
+        console.log('Receivers of the message\n', receiversCM);
+        const cmVOICE = {
+            callee: receiver,
+            caller: sender,
+            anonymous: "false",
+            prompt: body,
+            type: "TTS",
+            voice: {
+                language: language,
+                gender: "Female",
+                number: 1
+            }
+        };
+
+        console.log("Sending post request to CM");
+        // Send post request to CM (sending sms)
+        request({
+            url: "https://voiceapi.cmtelecom.com/v2.0/Notification",
+            headers: "X-CM-PRODUCTTOKEN",
+            method: "POST",
+            json: true,
+            body: cmVOICE
+        }, function (error, response, body){
+            if (error) console.log(error);
+            else console.log(body);
+        });
 
         // Send the created response.
         res.status(200).send(response);
