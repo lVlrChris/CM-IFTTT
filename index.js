@@ -3,6 +3,7 @@ const express = require('express');
 const SmsRoute = require('./routes/sms_route');
 const StatusRoute = require('./routes/status_route');
 const TestRoute = require('./routes/test_setup_route');
+const LanguageRoute = require('./routes/language_route');
 
 
 // Configure app, middleware and routes
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use('/api/ifttt/v1/actions/sendsms', SmsRoute);
 app.use('/api/ifttt/v1/status', StatusRoute);
 app.use('/api/ifttt/v1/test/setup', TestRoute);
+app.use('/api/ifttt/v1/actions/send_voice_message/fields/language/options',LanguageRoute);
 
 //Catch all errors
 app.use((err, req, res, next) => {
