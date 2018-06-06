@@ -12,7 +12,11 @@ chai.use(chaiHttp);
 //Tests for the input from a voice action
 describe('Validation of instruction id', () => {
     //instruction id: alphanumeric, 64 chars, optional
+    //missing values
+    it('should throw an error ')
+    //empty values
     //correct values
+
 });
 
 describe('Validation of callee', () => {
