@@ -59,6 +59,7 @@ function validate(username, key, sender, receiver, body, language, token){
     //Validate voice message and return result
     return joi.validate(voiceObject,schema);
 }
+module.exports = Voice;
 
 
 
