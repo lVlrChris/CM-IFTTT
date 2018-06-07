@@ -1,9 +1,8 @@
 const languages ={
     data:[
         {
-            language : {
-                "value":"Danish (Denmark)"
-            }
+            label : "test",
+            value : "Danish (Denmark)"
         }
     ]
 };
