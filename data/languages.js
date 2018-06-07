@@ -1,10 +1,10 @@
 const languages ={
     data:[
         {
-            "language":"Danish (Denmark)"
+            "value":"Danish (Denmark)"
         },
         {
-            "language":"Dutch (Netherlands)"
+            "value":"Dutch (Netherlands)"
         }
     ]
 };
