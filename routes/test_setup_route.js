@@ -25,7 +25,7 @@ router.post('/', auth, (req, res) => {
                         language:'nl-NL',
                         token: 'FakeTestKey',
                         username: 'CMAvans2',
-                        sharedkey: '472ktDj#GW$5c|BebL8JQ0s)'
+                        key: '472ktDj#GW$5c|BebL8JQ0s)'
                     }
                 }
             }
