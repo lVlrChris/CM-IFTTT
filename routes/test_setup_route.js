@@ -19,7 +19,7 @@ router.post('/', auth, (req, res) => {
                         token: 'FakeTestKey'
                     },
                     send_voice_message:{
-                        sender: 'Jan',
+                        sender: '0031612345678',
                         body: 'De man',
                         receiver: '0031612345678',
                         language:'nl-NL',
