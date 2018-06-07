@@ -51,13 +51,13 @@ module.exports = {
         }
         console.log('Receivers of the message\n', receiversCM);
         const cmVOICE = {
-            callee: receiver,
-            caller: sender,
+            callee: voiceObject.receiver,
+            caller: voiceObject.sender,
             anonymous: "false",
-            prompt: body,
+            prompt: voiceObject.body,
             type: "TTS",
             voice: {
-                language: language,
+                language: voiceObject.language,
                 gender: "Female",
                 number: 1
             }
@@ -68,8 +68,8 @@ module.exports = {
         request({
             url: "https://voiceapi.cmtelecom.com/v2.0/Notification",
             headers:  {
-                "X-CM-PRODUCTTOKEN" : token,
-                "Authorization" : Buffer.from(username + " " + key).toString('base64'),
+                "X-CM-PRODUCTTOKEN" : voiceObject.token,
+                "Authorization" : Buffer.from(voiceObject.username + " " + voiceObject.key).toString('base64'),
             },
             method: "POST",
             json: true,
