@@ -3,15 +3,20 @@ const ApiError = require('../domain/ApiError');
 
 //Constructor
 class Voice{
-    constructor(sender, receiver, body, language, token) {
+    constructor(username, key, sender, receiver, body, language, token) {
         try {
             if (receiver === undefined) {
-                console.log('The receiver is undefined!')
+                console.log('The receiver is undefined!');
+            }else if(sender === undefined){
+                console.log('The sender is undefined!');
             }
 
-            const { error } = validate(sender, receiver, body, language, token);
+            const { error } = validate(username, key, sender, receiver, body, language, token);
 
             if(error) throw error;
+
+            this.username = username;
+            this.key = key;
 
             this.sender = sender;
             this.receiver = receiver;
