@@ -24,7 +24,7 @@ module.exports = {
             url: "https://api.cmtelecom.com/voicesendapi/v1.0/tts/languages",
             method: "get",
             headers: {
-                'X-CM-PRODUCTTOKEN': productToken
+                'X-CM-PRODUCTTOKEN': '139755f7-d92a-4d6b-8105-fd82de35104b'
             }
         }, function (error, response, body){
             console.log(body)
