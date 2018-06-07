@@ -1,16 +1,14 @@
 const languages ={
-    data:[
-        {
-            language : {
-                "value": "Danish (Denmark)"
+    data:{
+        language : [
+            {
+                        "value":"Danish (Denmark)"
+            },
+            {
+                        "value":"Dutch (Netherlands)"
             }
-        },
-        {
-            language : {
-                "value": "Danish (Denmark)"
-            }
-        }
-    ]
+        ]
+    }
 };
 
 module.exports = languages;
