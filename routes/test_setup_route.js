@@ -28,10 +28,11 @@ router.post('/', auth, (req, res) => {
                         key: '472ktDj#GW$5c|BebL8JQ0s)'
                     }
                 }
-            }
-        },
-        code: 200
+            },
+            code: 200
+        }
     });
+
 });
 
 // Export these endpoints
