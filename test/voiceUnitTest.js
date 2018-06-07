@@ -1,5 +1,10 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const server = require('../index');
+
+//Test constants
+const validIftttKey = '12345';
+const fakePhoneNumber = '0031612345678';
 
 //call should function for starting point
 chai.should();
@@ -12,16 +17,25 @@ chai.use(chaiHttp);
 //Tests for the input from a voice action
 describe('Validation of instruction id', () => {
     //instruction id: alphanumeric, 64 chars, optional
-    //missing values
-    it('should throw an error ')
-    //empty values
+    //incorrect values
+    //missing value
+    //missing key
     //correct values
 
 });
 
 describe('Validation of callee', () => {
     //callee: alphanumeric, 24 chars, required, international format
+    //incorrect values
+    //missing value
+    //missing key
     //correct values
+
+    it('should throw an error when not using a string as sender', (done) => {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/sendvoice')
+            .set('IFTTT-Service-Key', validIftttKey)
+    });
 });
 
 describe('Validation of caller', () => {
