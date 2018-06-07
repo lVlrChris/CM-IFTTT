@@ -1,6 +1,7 @@
 // Require modules
 const express = require('express');
 const SmsRoute = require('./routes/sms_route');
+const VoiceRoute = require('./routes/voice_route');
 const StatusRoute = require('./routes/status_route');
 const TestRoute = require('./routes/test_setup_route');
 
@@ -9,6 +10,7 @@ const TestRoute = require('./routes/test_setup_route');
 const app = express();
 app.use(express.json());
 app.use('/api/ifttt/v1/actions/sendsms', SmsRoute);
+app.use('/api/ifttt/v1/actions/sendvoice', VoiceRoute);
 app.use('/api/ifttt/v1/status', StatusRoute);
 app.use('/api/ifttt/v1/test/setup', TestRoute);
 
