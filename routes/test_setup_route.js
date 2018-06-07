@@ -17,12 +17,20 @@ router.post('/', auth, (req, res) => {
                         body: 'De man',
                         receiver: '0031612345678',
                         token: 'FakeTestKey'
+                    },
+                    send_voice_message: {
+                        sender: '0031612345678',
+                        body: 'De man',
+                        receiver: '0031612345678',
+                        language: 'nl-NL',
+                        token: 'FakeTestKey'
                     }
                 }
-            }
-        },
-        code: 200
+            },
+            code: 200
+        }
     });
+
 });
 
 // Export these endpoints
