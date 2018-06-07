@@ -33,9 +33,11 @@ class Voice{
 }
 
 //Validate function for a voice object
-function validate(sender, receiver, body, language, token){
+function validate(username, key, sender, receiver, body, language, token){
     //Voice object, used for checking if the object matches the schema
     const voiceObject = {
+        username: username,
+        key: key,
         sender: sender,
         receiver: receiver,
         body: body,
@@ -45,6 +47,8 @@ function validate(sender, receiver, body, language, token){
 
     //Schema for a voice message, this defines what a voice message should look like
     const schema = {
+        username: joi.string().required(),
+        key: joi.string().required(),
         sender: joi.string().required(),
         receiver: joi.string().required(),
         body: joi.string().max(160).required(),
