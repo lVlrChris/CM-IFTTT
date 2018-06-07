@@ -8,7 +8,7 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 // Configure root post endpoint
-router.post('/',getLanguages);
+router.post('/',auth,getLanguages);
 
 // Export these endpoints
 module.exports = router;

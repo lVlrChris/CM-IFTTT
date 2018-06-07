@@ -20,6 +20,43 @@ function makeIftttResponse(body){
 module.exports = {
     getLanguages(req, res, next) {
 
+        // let response;
+        // if (!req.body.ifttt_source) {
+        //     console.log("No source");
+        //     response = {
+        //         "data": [
+        //             {
+        //                 "id": "no id"
+        //             }
+        //         ]
+        //     };
+        // } else {
+        //     if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
+        //         response = {
+        //             "data": [
+        //                 {
+        //                     "id": req.body.ifttt_source.id,
+        //                     "url": req.body.ifttt_source.url
+        //                 }
+        //             ]
+        //         };
+        //     } else if (typeof req.body.ifttt_source.id !== 'undefined') {
+        //         response = {
+        //             "data": [
+        //                 {
+        //                     "id": "no id"
+        //                 }
+        //             ]
+        //         };
+        //     } else {
+        //         response = languages;
+        //     }
+        // }
+
+        let response;
+
+
+
         try {
             console.log(languages);
             res.status(200).send(languages);
