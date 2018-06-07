@@ -23,7 +23,9 @@ router.post('/', auth, (req, res) => {
                         body: 'De man',
                         receiver: '0031612345678',
                         language:'nl-NL',
-                        token: 'FakeTestKey'
+                        token: 'FakeTestKey',
+                        username: 'CMAvans2',
+                        sharedkey: '472ktDj#GW$5c|BebL8JQ0s)'
                     }
                 }
             }
