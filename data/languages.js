@@ -6,7 +6,7 @@ const languages ={
         },
         {
             value : "nl-NL",
-            label : "nl-NL"
+            label : "Nederlands"
         },
         {
             value : "en-AU",
