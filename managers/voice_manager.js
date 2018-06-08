@@ -64,6 +64,7 @@ module.exports = {
             }
         };
 
+        console.log(cmVOICE);
         console.log("Sending post request to CM");
         // Send post request to CM (sending sms)
         request({
