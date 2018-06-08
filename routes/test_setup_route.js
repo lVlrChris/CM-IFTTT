@@ -12,17 +12,27 @@ router.post('/', auth, (req, res) => {
         data: {
             samples: {
                 actions: {
-                    sendsms: {
+                    send_sms: {
                         sender: 'Jan',
                         body: 'De man',
                         receiver: '0031612345678',
                         token: 'FakeTestKey'
+                    },
+                    send_voice_message:{
+                        sender: '0031612345678',
+                        body: 'De man',
+                        receiver: '0031612345678',
+                        language:'nl-NL',
+                        token: 'FakeTestKey',
+                        username: 'CMAvans2',
+                        key: '472ktDj#GW$5c|BebL8JQ0s)'
                     }
                 }
-            }
-        },
-        code: 200
+            },
+            code: 200
+        }
     });
+
 });
 
 // Export these endpoints
