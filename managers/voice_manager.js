@@ -69,7 +69,7 @@ module.exports = {
             url: "https://voiceapi.cmtelecom.com/v2.0/Notification",
             headers:  {
                 "X-CM-PRODUCTTOKEN" : voiceObject.token,
-                "Authorization" : Buffer.from(voiceObject.username + ":" + voiceObject.key).toString('base64'),
+                "Authorization" : 'Basic ' + Buffer.from(voiceObject.username + ":" + voiceObject.key).toString('base64'),
             },
             method: "POST",
             json: true,
