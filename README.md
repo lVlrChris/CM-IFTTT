@@ -64,15 +64,3 @@ Great, so now that your own server is running, it is time for the real stuff!
 * **Jim van Zuidam** - *Executive Executer* - [Profile](https://github.com/JvZuidam)
 
 See also the list of [contributors](https://github.com/lVlrChris/IFTTT-CM/contributors) who participated in this project.
-
-
-### The Team
-* **Rudwan Akhiat** - *Git Destroyer* - [Profile](https://github.com/rudwan97)
-* **Jan Belterman** - *Boss* - [Profile](https://github.com/JanBelterman)
-* **Chris Boer** - *CEO* - [Profile](https://github.com/lVlrChris)
-* **Floris Botermans** - *Koffiejongen* - [Profile](https://github.com/FlorisBotermans)
-* **Floris van Broekhoven** - *Code Wizard* - [Profile](https://github.com/Davilicus)
-* **Kevin van Loon** - *Lead Senior Experienced Developer* - [Profile](https://github.com/KevinvanLoon)
-* **Jim van Zuidam** - *Executive Executer* - [Profile](https://github.com/JvZuidam)
-
-See also the list of [contributors](https://github.com/lVlrChris/IFTTT-CM/contributors) who participated in this project.
