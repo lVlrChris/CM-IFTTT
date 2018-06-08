@@ -10,7 +10,7 @@ const LanguageRoute = require('./routes/language_route');
 // Configure app, middleware and routes
 const app = express();
 app.use(express.json());
-app.use('/api/ifttt/v1/actions/sendsms', SmsRoute);
+app.use('/api/ifttt/v1/actions/send_sms', SmsRoute);
 app.use('/api/ifttt/v1/actions/send_voice_message', VoiceRoute);
 app.use('/api/ifttt/v1/status', StatusRoute);
 app.use('/api/ifttt/v1/test/setup', TestRoute);
