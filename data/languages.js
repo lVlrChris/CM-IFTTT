@@ -1,96 +1,96 @@
 const languages ={
     data:[
         {
-            label : "da-DK",
-            value : "Danish (Denmark)"
+            value : "da-DK",
+            label : "Danish (Denmark)"
         },
         {
-            label : "nl-NL",
-            value : "Dutch (Netherlands)"
+            value : "nl-NL",
+            label : "Dutch (Netherlands)"
         },
         {
-            label : "en-AU",
-            value : "English (Australia)"
+            value : "en-AU",
+            label : "English (Australia)"
         },
         {
-            label : "en-IN",
-            value : "English (India)"
+            value : "en-IN",
+            label : "English (India)"
         },
         {
-            label : "en-GB",
-            value : "English (United Kingdom)"
+            value : "en-GB",
+            label : "English (United Kingdom)"
         },
         {
-            label : "en-US",
-            value : "English (United States)"
+            value : "en-US",
+            label : "English (United States)"
         },
         {
-            label : "fr-CA",
-            value : "French (Canada)"
+            value : "fr-CA",
+            label : "French (Canada)"
         },
         {
-            label : "fr-FR",
-            value : "French (France)"
+            value : "fr-FR",
+            label : "French (France)"
         },
         {
-            label : "de-DE",
-            value : "German (Germany)"
+            value : "de-DE",
+            label : "German (Germany)"
         },
         {
-            label : "is-IS",
-            value : "Icelandic (Iceland)"
+            value : "is-IS",
+            label : "Icelandic (Iceland)"
         },
         {
-            label : "it-IT",
-            value : "Italian (Italy)"
+            value : "it-IT",
+            label : "Italian (Italy)"
         },
         {
-            label : "ja-JP",
-            value : "Japanese (Japan)"
+            value : "ja-JP",
+            label : "Japanese (Japan)"
         },
         {
-            label : "nb-NO",
-            value : "Norwegian, Bokmål (Norway)"
+            value : "nb-NO",
+            label : "Norwegian, Bokmål (Norway)"
         },
         {
-            label : "pl-PL",
-            value : "Polish (Poland)"
+            value : "pl-PL",
+            label : "Polish (Poland)"
         },
         {
-            label : "pt-BR",
-            value : "Portuguese (Brazil)"
+            value : "pt-BR",
+            label : "Portuguese (Brazil)"
         },
         {
-            label : "pt-PT",
-            value : "Portuguese (Portugal)"
+            value : "pt-PT",
+            label : "Portuguese (Portugal)"
         },
         {
-            label : "ro-RO",
-            value : "Romanian (Romania)"
+            value : "ro-RO",
+            label : "Romanian (Romania)"
         },
         {
-            label : "ru-RU",
-            value : "Russian (Russia)"
+            value : "ru-RU",
+            label : "Russian (Russia)"
         },
         {
-            label : "es-ES",
-            value : "Spanish (Spain, International Sort)"
+            value : "es-ES",
+            label : "Spanish (Spain, International Sort)"
         },
         {
-            label : "es-US",
-            value : "Spanish (United States)"
+            value : "es-US",
+            label : "Spanish (United States)"
         },
         {
-            label : "sv-SE",
-            value : "Swedish (Sweden)"
+            value : "sv-SE",
+            label : "Swedish (Sweden)"
         },
         {
-            label : "tr-TR",
-            value : "Turkish (Turkey)"
+            value : "tr-TR",
+            label : "Turkish (Turkey)"
         },
         {
-            label : "cy-GB",
-            value : "Welsh (United Kingdom)"
+            value : "cy-GB",
+            label : "Welsh (United Kingdom)"
         }
     ]
 };
