@@ -5,8 +5,8 @@ const languages ={
             label : "Danish (Denmark)"
         },
         {
-            value : "nl-NL",
-            label : "Dutch (Netherlands)"
+            value : "Dutch (Netherlands)",
+            label : "nl-NL"
         },
         {
             value : "en-AU",
