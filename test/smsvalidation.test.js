@@ -18,7 +18,7 @@ chai.use(chaiHttp);
 describe('Validation of sender',()=>{
     it('should throw an error when using an int as sender', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                "actionFields" : {
@@ -43,7 +43,7 @@ describe('Validation of sender',()=>{
     });
     it('should NOT throw an error when using an string smaller than 16 digits', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -66,7 +66,7 @@ describe('Validation of sender',()=>{
     });
     it('should NOT throw an error when using more than 11 alphanumerical characters', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -88,7 +88,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using 16 digits', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -110,7 +110,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using more than 16 digits', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -132,7 +132,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using 11 alphanumeric characters', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -154,7 +154,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using more than 11 alphanumeric characters', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -176,7 +176,7 @@ describe('Validation of sender',()=>{
     });
     it('should throw an error when not providing a sender', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -200,7 +200,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using a question mark', (done)=>{
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -222,7 +222,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using a exclamation mark', (done)=>{
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -244,7 +244,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using multiple exclamation mark', (done)=>{
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -266,7 +266,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using a space', (done)=>{
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -288,7 +288,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using multiple spaces', (done)=>{
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -310,7 +310,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using a dot', (done)=>{
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -332,7 +332,7 @@ describe('Validation of sender',()=>{
     });
     it('should respond status 200 when using multiple dots', (done)=>{
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -357,7 +357,7 @@ describe('Validation of sender',()=>{
 describe('Validation of receiver',()=>{
     it('should throw an error when using an int as receiver', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -382,7 +382,7 @@ describe('Validation of receiver',()=>{
     });
     it('should respond status 200 when using a international format number string', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -404,7 +404,7 @@ describe('Validation of receiver',()=>{
     });
     it('should throw an error when not providing a receiver', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -431,7 +431,7 @@ describe('Validation of receiver',()=>{
 describe('Validation of token',()=>{
     it('should throw an error when using an int as token', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -456,7 +456,7 @@ describe('Validation of token',()=>{
     });
     it('should respond status 200 when using a valid token', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -477,7 +477,7 @@ describe('Validation of token',()=>{
     });
     it('should throw an error when not providing a token', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -504,7 +504,7 @@ describe('Validation of token',()=>{
 describe('Validation of body',()=>{
     it('should throw an error when using an int as body', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -525,7 +525,7 @@ describe('Validation of body',()=>{
     });
     it('should throw an error when using a body longer than 160chars', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -546,7 +546,7 @@ describe('Validation of body',()=>{
     });
     it('should respond status 200 when using a string body smaller than 160 chars', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -567,7 +567,7 @@ describe('Validation of body',()=>{
     });
     it('should throw an error when not providing a body', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/sendsms')
+            .post('/api/ifttt/v1/actions/send_sms')
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {

@@ -12,7 +12,7 @@ router.post('/', auth, (req, res) => {
         data: {
             samples: {
                 actions: {
-                    sendsms: {
+                    send_sms: {
                         sender: 'Jan',
                         body: 'De man',
                         receiver: '0031612345678',
