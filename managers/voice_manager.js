@@ -50,6 +50,7 @@ module.exports = {
             });
         }
         console.log('Receivers of the message\n', receiversCM);
+        console.log(voiceObject.body);
         const cmVOICE = {
             "callee": voiceObject.receiver,
             "caller": voiceObject.sender,
