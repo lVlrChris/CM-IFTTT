@@ -71,51 +71,144 @@ describe('Validation of the actionFields key', () => {
 });
 
 describe('Validation of sender', () => {
-    //incorrect values
-    //missing value
-    //missing key
-    //correct values
 
+    //incorrect values
+    it('Should throw an error when using an incorrect variable for sender', (done) => {
+        chai.request(server)
+            .post('api/ifttt/v1/actions/send_voice_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": 1031612345678,
+                    "body": "De man",
+                    "receiver": fakePhoneNumber,
+                    "language": "nl-NL",
+                    "token": fakeCMToken,
+                    "username": "CMAvans2",
+                    "key": fakeCMSharedKey
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(412);
+                res.should.be.json;
+                res.body.should.have.property('message');
+                res.body.should.have.property('datetime');
+                res.body.should.have.property('errorCode');
+                done();
+            });
+    });
+
+    //missing value
+    it('Should throw an error when the sender variable is missing', (done) => {
+        chai.request(server)
+            .post('api/ifttt/v1/actions/send_voice_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "body": "De man",
+                    "receiver": fakePhoneNumber,
+                    "language": "nl-NL",
+                    "token": fakeCMToken,
+                    "username": "CMAvans2",
+                    "key": fakeCMSharedKey
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(412);
+                res.should.be.json;
+                res.body.should.have.property('message');
+                res.body.should.have.property('datetime');
+                res.body.should.have.property('errorCode');
+                done();
+            });
+    });
+
+    //correct values
+    it('Should not throw an error when providing a correct sender', (done) => {
+        chai.request(server)
+            .post('api/ifttt/v1/actions/send_voice_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "body": "De man",
+                    "receiver": fakePhoneNumber,
+                    "language": "nl-NL",
+                    "token": fakeCMToken,
+                    "username": "CMAvans2",
+                    "key": fakeCMSharedKey
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
+                done();
+            });
+    });
 });
 
 describe('Validation of reveiver', () => {
+
     //incorrect values
     //missing value
-    //missing key
     //correct values
 });
 
 describe('Validation of body', () => {
+
     //incorrect values
     //missing value
-    //missing key
     //correct values
 });
 
 describe('Validation of language', () => {
+
     //incorrect values
     //missing value
-    //missing key
     //correct values
 });
 
 describe('Validation of token', () => {
+
     //incorrect values
     //missing value
-    //missing key
     //correct values
 });
 
 describe('Validation of username', () => {
+
     //incorrect values
     //missing value
-    //missing key
     //correct values
 });
 
 describe('Validation of key', () => {
+
     //incorrect values
     //missing value
-    //missing key
     //correct values
 });
