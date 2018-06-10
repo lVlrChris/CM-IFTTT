@@ -1,5 +1,3 @@
-//writing code in different branch
-
 const express = require('express');
 const { getLanguages } = require('../managers/language_manager');
 const auth = require('../middleware/auth');
@@ -7,7 +5,7 @@ const auth = require('../middleware/auth');
 // Get router
 const router = express.Router();
 
-// Configure root post endpoint
+// Configure root language endpoint
 router.post('/',auth,getLanguages);
 
 // Export these endpoints
