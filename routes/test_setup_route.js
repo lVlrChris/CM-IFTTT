@@ -26,6 +26,10 @@ router.post('/', auth, (req, res) => {
                         token: 'FakeTestKey',
                         username: 'CMAvans2',
                         key: '472ktDj#GW$5c|BebL8JQ0s)'
+                    },
+                    number_validation:{
+                        phoneNumber: '0031612345678',
+                        phoneToken: 'FakeTestKey'
                     }
                 }
             },
