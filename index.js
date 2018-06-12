@@ -5,7 +5,6 @@ const VoiceRoute = require('./routes/voice_route');
 const StatusRoute = require('./routes/status_route');
 const TestRoute = require('./routes/test_setup_route');
 const LanguageRoute = require('./routes/language_route');
-const numberRoute = require('./routes/validation_route');
 
 
 // Configure app, middleware and routes
@@ -16,7 +15,6 @@ app.use('/api/ifttt/v1/actions/send_voice_message', VoiceRoute);
 app.use('/api/ifttt/v1/status', StatusRoute);
 app.use('/api/ifttt/v1/test/setup', TestRoute);
 app.use('/api/ifttt/v1/actions/send_voice_message/fields/language/options',LanguageRoute);
-app.use('/api/ifttt/v1/actions/number_validation',numberRoute);
 
 //Catch all errors
 app.use((err, req, res, next) => {
