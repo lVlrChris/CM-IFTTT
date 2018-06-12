@@ -1,29 +1,25 @@
 const request = require('request');
-const Voice = require("../domain/Voice");
+const Hybrid = require('../domain/Hybrid');
 const ApiError = require('../domain/ApiError');
 
 module.exports = {
-    sendVoice(req, res, next) {
+    sendHybrid(req, res, next) {
 
-        let username = null;
-        let key = null;
         let sender = null;
         let receiver = null;
         let body = null;
-        let language = null;
         let token = null;
+        let appKey = null;
 
         // Get input from ifttt
         // Check if actionFields exists
         if (typeof req.body.actionFields !== 'undefined') {
 
-            username = req.body.actionFields.username || "";
-            key = req.body.actionFields.key || "";
             sender = req.body.actionFields.sender || "";
             receiver = req.body.actionFields.receiver || "";
             body = req.body.actionFields.body || "";
-            language = req.body.actionFields.language || "";
-            token  = req.body.actionFields.token || "";
+            token = req.body.actionFields.token || "";
+            appKey = req.body.actionFields.appKey || "";
 
         } else {
             next(new ApiError('actionFields missing in body.', 400));
@@ -31,17 +27,17 @@ module.exports = {
         }
 
         // Validate input
-        let voiceObject = null;
+        let hybridObject = null;
 
         try {
-            voiceObject = new Voice(username, key, sender, receiver, body, language, token);
+            hybridObject = new Hybrid(sender, receiver, body, token, appKey);
         } catch (apiError) {
             next(apiError);
             return;
         }
 
-        // convert ifttt input to CM VOICE
-        const receiversIFTTT = voiceObject.receiver.split(', ');
+        // convert ifttt input to CM HYBRID
+        const receiversIFTTT = hybridObject.receiver.split(', ');
         const receiversCM = [];
         let i;
         for (i = 0; i < receiversIFTTT.length; i++) {
@@ -49,39 +45,45 @@ module.exports = {
                 number: receiversIFTTT[i]
             });
         }
-
+        
+        //
         console.log('Receivers of the message\n', receiversCM);
-        console.log(voiceObject.body);
-        const cmVOICE = {
-            "callee": voiceObject.receiver,
-            "caller": voiceObject.sender,
-            "anonymous": "false",
-            "prompt": voiceObject.body,
-            "prompt-type": "TTS",
-            "voice": {
-                "language": voiceObject.language,
-                "gender": "Female",
-                "number": 1
+        console.log(hybridObject.body);
+        const cmHYBRID = {
+            messages: {
+                authentication: {
+                    producttoken: hybridObject.token
+                },
+                msg: [ {
+                    from: hybridObject.sender,
+                    to: [{
+                        number: hybridObject.receiver
+                    }],
+                    body: {
+                        content: hybridObject.body
+                    },
+                    appmessagetype: "default",
+                    appKey: hybridObject.appKey
+                }
+                ]
             }
         };
-
-        console.log(cmVOICE);
+        
+        //Send post request to CM
+        console.log(cmHYBRID);
         console.log("Sending post request to CM");
         // Send post request to CM (sending sms)
         request({
-            url: "https://voiceapi.cmtelecom.com/v2.0/Notification",
-            headers:  {
-                "X-CM-PRODUCTTOKEN" : voiceObject.token,
-                "Authorization" : 'Basic ' + Buffer.from(voiceObject.username + ":" + voiceObject.key).toString('base64'),
-            },
+            url: "https://gw.cmtelecom.com/v1.0/message",
             method: "POST",
             json: true,
-            body: cmVOICE
+            body: cmHYBRID
         }, function (error, response, body){
             if (error) console.log(error);
             else console.log(body);
         });
 
+        //Create response for IFTTT
         console.log("Creating responses for IFTTT");
         // Create a response with the request id and url from IFTTT.
         let response;
@@ -118,4 +120,5 @@ module.exports = {
         // Send the created response.
         res.status(200).send(response);
     }
+
 };
