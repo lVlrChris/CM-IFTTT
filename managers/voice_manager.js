@@ -49,6 +49,7 @@ module.exports = {
                 number: receiversIFTTT[i]
             });
         }
+
         console.log('Receivers of the message\n', receiversCM);
         console.log(voiceObject.body);
         const cmVOICE = {
