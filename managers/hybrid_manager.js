@@ -8,7 +8,7 @@ module.exports = {
         let sender = null;
         let receiver = null;
         let body = null;
-        let productToken = null;
+        let token = null;
         let appKey = null;
 
         // Get input from ifttt
@@ -18,7 +18,7 @@ module.exports = {
             sender = req.body.actionFields.sender || "";
             receiver = req.body.actionFields.receiver || "";
             body = req.body.actionFields.body || "";
-            productToken = req.body.actionFields.productToken || "";
+            token = req.body.actionFields.token || "";
             appKey = req.body.actionFields.appKey || "";
 
         } else {
@@ -30,7 +30,7 @@ module.exports = {
         let hybridObject = null;
 
         try {
-            hybridObject = new Hybrid(sender, receiver, body, productToken, appKey);
+            hybridObject = new Hybrid(sender, receiver, body, token, appKey);
         } catch (apiError) {
             next(apiError);
             return;
@@ -52,7 +52,7 @@ module.exports = {
         const cmHYBRID = {
             messages: {
                 authentication: {
-                    productToken: hybridObject.productToken
+                    producttoken: hybridObject.token
                 },
                 msg: [ {
                     from: hybridObject.sender,
