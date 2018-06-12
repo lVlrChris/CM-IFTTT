@@ -15,6 +15,7 @@ module.exports = {
         // Check if actionFields exists
         if (typeof req.body.actionFields !== 'undefined') {
 
+
             sender = req.body.actionFields.sender || "";
             receiver = req.body.actionFields.receiver || "";
             body = req.body.actionFields.body || "";
