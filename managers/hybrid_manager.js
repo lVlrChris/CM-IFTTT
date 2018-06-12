@@ -62,7 +62,7 @@ module.exports = {
                     body: {
                         content: hybridObject.body
                     },
-                    appmessagetype: "default",
+                    appmessagetype: "critical",
                     appKey: hybridObject.appKey
                 }
                 ]
