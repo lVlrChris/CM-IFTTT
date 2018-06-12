@@ -35,9 +35,9 @@ describe('Validation of sender',()=>{
             .end(function (err, res) {
                 res.should.have.status(412);
                 res.should.be.json;
-                res.body.should.have.property('message');
-                res.body.should.have.property('datetime');
-                res.body.should.have.property('errorCode');
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
                 done();
             });
     });
@@ -192,9 +192,9 @@ describe('Validation of sender',()=>{
             .end(function (err, res) {
                 res.should.have.status(412);
                 res.should.be.json;
-                res.body.should.have.property('message');
-                res.body.should.have.property('datetime');
-                res.body.should.have.property('errorCode');
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
                 done();
             });
     });
@@ -373,9 +373,9 @@ describe('Validation of receiver',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(412);
-                res.body.should.have.property('message');
-                res.body.should.have.property('datetime');
-                res.body.should.have.property('errorCode');
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
                 res.should.be.json;
                 done();
             });
@@ -419,9 +419,9 @@ describe('Validation of receiver',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(412);
-                res.body.should.have.property('message');
-                res.body.should.have.property('datetime');
-                res.body.should.have.property('errorCode');
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
                 res.should.be.json;
                 done();
             });
@@ -448,9 +448,9 @@ describe('Validation of token',()=>{
             .end(function (err, res) {
                 res.should.have.status(412);
                 res.should.be.json;
-                res.body.should.have.property('message');
-                res.body.should.have.property('datetime');
-                res.body.should.have.property('errorCode');
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
                 done();
             });
     });
@@ -493,9 +493,9 @@ describe('Validation of token',()=>{
             .end(function (err, res) {
                 res.should.have.status(412);
                 res.should.be.json;
-                res.body.should.have.property('message');
-                res.body.should.have.property('datetime');
-                res.body.should.have.property('errorCode');
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
                 done();
             });
     });
