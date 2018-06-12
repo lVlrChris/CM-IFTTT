@@ -5,8 +5,8 @@ const ApiError = require('../domain/ApiError');
 module.exports = {
     sendVoice(req, res, next) {
 
-        let username = null;
-        let key = null;
+
+
         let sender = null;
         let receiver = null;
         let body = null;
@@ -17,8 +17,7 @@ module.exports = {
         // Check if actionFields exists
         if (typeof req.body.actionFields !== 'undefined') {
 
-            username = req.body.actionFields.username || "";
-            key = req.body.actionFields.key || "";
+
             sender = req.body.actionFields.sender || "";
             receiver = req.body.actionFields.receiver || "";
             body = req.body.actionFields.body || "";
@@ -34,7 +33,7 @@ module.exports = {
         let voiceObject = null;
 
         try {
-            voiceObject = new Voice(username, key, sender, receiver, body, language, token);
+            voiceObject = new Voice(sender, receiver, body, language, token);
         } catch (apiError) {
             next(apiError);
             return;
@@ -71,7 +70,7 @@ module.exports = {
             url: "https://voiceapi.cmtelecom.com/v2.0/Notification",
             headers:  {
                 "X-CM-PRODUCTTOKEN" : voiceObject.token,
-                "Authorization" : 'Basic ' + Buffer.from(voiceObject.username + ":" + voiceObject.key).toString('base64'),
+
             },
             method: "POST",
             json: true,
