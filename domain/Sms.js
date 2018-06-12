@@ -1,5 +1,6 @@
 const joi = require('joi');
 const ApiError = require('../domain/ApiError');
+const ValidateNumber = require('../managers/numberValidation_manager');
 
 class Sms{
     constructor(sender, receiver, body, token) {
@@ -20,6 +21,10 @@ class Sms{
             //If an error is found, throw the error and jump into catch
             if (error) throw error;
 
+            if(!ValidateNumber.checkNumber(receiver, token)){
+                throw new ApiError('Invalid number!', 400);
+            }
+
             //If no error is found, assign the values to the correct variables
             this.sender = correctedSender;
             this.receiver = receiver;
@@ -27,7 +32,7 @@ class Sms{
             this.token = token;
         }catch (e) {
             //Throws an new ApiError with the details of a joi error.
-            throw (new ApiError(e.details[0].message, 400));
+            throw (new ApiError(e.details[0].message, 412));
         }
 
     }

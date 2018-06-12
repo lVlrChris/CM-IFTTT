@@ -1,7 +1,6 @@
 const request = require('request');
 const Sms = require('../domain/Sms');
 const ApiError = require('../domain/ApiError');
-const validateNumber = require('../managers/numberValidation_manager');
 
 // TODO: create all responses
 module.exports = {
@@ -30,11 +29,7 @@ module.exports = {
         let smsObject = null;
 
         try {
-            if(validateNumber.checkNumber(receiver, token)) {
-                smsObject = new Sms(sender, receiver, body, token);
-            } else{
-                throw new ApiError('Receiver is not valid!', 400);
-            }
+            smsObject = new Sms(sender, receiver, body, token);
         } catch (apiError) {
             next(apiError);
             return;
