@@ -67,7 +67,7 @@ module.exports = {
         console.log("Sending post request to CM");
         // Send post request to CM (sending sms)
         request({
-            url: "https://voiceapi.cmtelecom.com/v2.0/Notification",
+            url: "https://api.cmtelecom.com/voiceapi/v2/Notification",
             headers:  {
                 "X-CM-PRODUCTTOKEN" : voiceObject.token,
 
