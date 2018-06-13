@@ -32,7 +32,7 @@ class Sms{
             this.token = token;
         }catch (e) {
             //Throws an new ApiError with the details of a joi error.
-            throw (new ApiError(e.details[0].message, 412));
+            throw (new ApiError(e.details[0].message, 400));
         }
 
     }
