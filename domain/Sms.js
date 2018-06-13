@@ -21,6 +21,7 @@ class Sms{
             //If an error is found, throw the error and jump into catch
             if (error) throw error;
 
+            //Checks if number is valid or not
             if(!ValidateNumber.checkNumber(receiver, token)){
                 throw new ApiError('Invalid number!', 400);
             }
