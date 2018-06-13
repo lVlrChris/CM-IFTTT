@@ -76,8 +76,9 @@ module.exports = {
             json: true,
             body: cmVOICE
         }, function (error, response, body){
-            if (error) console.log(error);
-            else console.log(body);
+            console.log('response status : ' + response.statusCode);
+            if (error) console.log('error : ' + error);
+            else console.log('response : ' +  body);
         });
 
         console.log("Creating responses for IFTTT");
