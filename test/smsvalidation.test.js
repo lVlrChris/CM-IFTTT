@@ -33,7 +33,7 @@ describe('Validation of sender',()=>{
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -190,7 +190,7 @@ describe('Validation of sender',()=>{
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -372,7 +372,7 @@ describe('Validation of receiver',()=>{
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
@@ -418,7 +418,7 @@ describe('Validation of receiver',()=>{
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
@@ -446,7 +446,7 @@ describe('Validation of token',()=>{
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -491,7 +491,7 @@ describe('Validation of token',()=>{
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -519,7 +519,7 @@ describe('Validation of body',()=>{
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 done();
             });
     });
@@ -540,7 +540,7 @@ describe('Validation of body',()=>{
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 done();
             });
     });
@@ -581,7 +581,7 @@ describe('Validation of body',()=>{
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 done();
             });
     });
