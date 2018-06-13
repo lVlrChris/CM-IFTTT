@@ -1,6 +1,7 @@
 const request = require('request');
 const Hybrid = require('../domain/Hybrid');
 const ApiError = require('../domain/ApiError');
+const Config = require('../config');
 
 module.exports = {
     sendHybrid(req, res, next) {
@@ -19,7 +20,7 @@ module.exports = {
             receiver = req.body.actionFields.receiver || "";
             body = req.body.actionFields.body || "";
             token = req.body.actionFields.token || "";
-            appKey = req.body.actionFields.appKey || "";
+            appKey = req.body.actionFields.appKey || process.env.APPKEY_NOTIFIRE || Config.appKey;
 
         } else {
             next(new ApiError('actionFields missing in body.', 400));
@@ -48,7 +49,7 @@ module.exports = {
         
         //
         console.log('Receivers of the message\n', receiversCM);
-        console.log(hybridObject.body);
+     //   console.log(hybridObject.body);
         const cmHYBRID = {
             messages: {
                 authentication: {
@@ -70,7 +71,7 @@ module.exports = {
         };
         
         //Send post request to CM
-        console.log(cmHYBRID);
+        console.log(JSON.stringify(cmHYBRID));
         console.log("Sending post request to CM");
         // Send post request to CM (sending sms)
         request({
