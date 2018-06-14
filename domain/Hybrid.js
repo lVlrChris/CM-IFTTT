@@ -1,5 +1,6 @@
 const joi = require('joi');
 const ApiError = require('../domain/ApiError');
+const ValidateNumber = require('../managers/numberValidation_manager');
 
 class Hybrid{
     constructor(sender, receiver, body, token, appKey) {
@@ -19,6 +20,11 @@ class Hybrid{
 
             //If an error is found, throw the error and jump into catch
             if (error) throw error;
+
+            //Checks if number is valid or not
+            if(!ValidateNumber.checkNumber(receiver, token)){
+                throw new ApiError('Invalid number!', 400);
+            }
 
             //If no error is found, assign the values to the correct variables
             this.sender = correctedSender;

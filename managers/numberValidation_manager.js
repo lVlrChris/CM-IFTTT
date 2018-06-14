@@ -1,8 +1,5 @@
 const request = require('request');
-const CMNumber = require('../domain/CMNumber');
-const ApiError = require('../domain/ApiError');
 
-//ToDo: Make function
 module.exports = {
     //Method checks if number is valid and uses promise to wait on result
     checkNumber(number, token) {
