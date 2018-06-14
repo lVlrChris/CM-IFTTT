@@ -16,17 +16,23 @@ function searchContact(queryString, accountID, groupID, token) {
             method: "GET"
         }, (error, response, body) => {
 
-            const jsonBody = JSON.parse(body);
-            if (error) console.log(error);
+            try {
 
-            console.log('Contacts found : ',jsonBody.length);
-            if (jsonBody.length < 1){
-                console.log('rejecting search promise');
-                reject();
-            }  else {
-                console.log('resolving search promise');
-                console.log('id', jsonBody[0].id);
-                resolve(jsonBody[0].id);
+
+                const jsonBody = JSON.parse(body);
+                if (error) console.log(error);
+
+                console.log('Contacts found : ', jsonBody.length);
+                if (jsonBody.length < 1) {
+                    console.log('rejecting search promise');
+                    reject();
+                } else {
+                    console.log('resolving search promise');
+                    console.log('id', jsonBody[0].id);
+                    resolve(jsonBody[0].id);
+                }
+            }catch (e) {
+                console.log('Jumped in catch in search function')
             }
         });
 
