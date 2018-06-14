@@ -16,7 +16,7 @@ class Contact{
             this.phoneNumber = phoneNumber;
 
         } catch (e) {
-            console.log(e);
+            //console.log(e);
             throw (new ApiError(e.details[0].message, 400));
         }
     }

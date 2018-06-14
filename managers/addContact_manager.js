@@ -5,7 +5,9 @@ const ApiError = require('../domain/ApiError');
 function searchContact(queryString, accountID, groupID, token) {
     return new Promise((resolve, reject) => {
 
+
         // Check if a contact with this phoneNumber exists in the group
+        console.log('Making get request to cm.');
         request({
             url: `https://api.cmtelecom.com/addressbook/v2/accounts/${accountID}/groups/${groupID}/search?query=${queryString}`,
             headers: {
@@ -13,21 +15,28 @@ function searchContact(queryString, accountID, groupID, token) {
             },
             method: "GET"
         }, (error, response, body) => {
+
+            const jsonBody = JSON.parse(body);
             if (error) console.log(error);
 
-            console.log(body);
-
-            // Check if a contact is found
-            resolve();
-
+            console.log('Contacts found : ',jsonBody.length);
+            if (body.length < 1){
+                console.log('rejecting search promise');
+                reject();
+            }  else {
+                console.log('resolving search promise');
+                console.log('id', jsonBody[0].id);
+                resolve(jsonBody[0].id);
+            }
         });
 
     });
 }
 
-function updateContact(contact, contactID, accountID, token) {
+function updateContact(contact, contactID, accountID, groupID, token) {
 
     // Send put request to CM (updating contact)
+    console.log('Starting updating contact');
     request({
         url: `https://api.cmtelecom.com/addressbook/v2/accounts/${accountID}/contacts/${contactID}`,
         headers: {
@@ -37,10 +46,17 @@ function updateContact(contact, contactID, accountID, token) {
         json: true,
         body: contact
     }, (error, response, body) => {
-        if (error) console.log(error);
 
-        else console.log(body);
 
+        console.log('Update request finished');
+        if (error){
+           // console.log(error);
+            console.log('error occured while updating')
+        } else {
+            console.log('status : ' + response.statusCode);
+            console.log('body from cm ' + JSON.stringify(body));
+            console.log('update succesfull')
+        }
     });
 
 }
