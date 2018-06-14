@@ -2,34 +2,37 @@ const request = require('request');
 const Contact = require('../domain/Contact');
 const ApiError = require('../domain/ApiError');
 
-function searchContact(queryString, accountID, groupID) {
+function searchContact(queryString, accountID, groupID, token) {
     return new Promise((resolve, reject) => {
 
-        // Checking if contact already exists
+        // Check if a contact with this phoneNumber exists in the group
         request({
             url: `https://api.cmtelecom.com/addressbook/v2/accounts/${accountID}/groups/${groupID}/search?query=${queryString}`,
+            headers: {
+                "X-CM-PRODUCTTOKEN": token,
+            },
             method: "GET"
         }, (error, response, body) => {
             if (error) console.log(error);
 
-            console.log("Response: ", response);
-            console.log("Body: ", body);
+            console.log(body);
 
             // Check if a contact is found
             resolve();
-
-            reject();
 
         });
 
     });
 }
 
-function updateContact(contact, contactID, accountID, groupID) {
+function updateContact(contact, contactID, accountID, token) {
 
     // Send put request to CM (updating contact)
     request({
         url: `https://api.cmtelecom.com/addressbook/v2/accounts/${accountID}/contacts/${contactID}`,
+        headers: {
+            "X-CM-PRODUCTTOKEN": token,
+        },
         method: "PUT",
         json: true,
         body: contact
@@ -42,11 +45,14 @@ function updateContact(contact, contactID, accountID, groupID) {
 
 }
 
-function createContact(contact, accountID, groupID) {
+function createContact(contact, accountID, groupID, token) {
 
     // Send post request to CM (adding contact)
     request({
         url: `https://api.cmtelecom.com/addressbook/v2/accounts/${accountID}/groups/${groupID}/contacts`,
+        headers: {
+            "X-CM-PRODUCTTOKEN": token,
+        },
         method: "POST",
         json: true,
         body: cmContact
@@ -56,12 +62,6 @@ function createContact(contact, accountID, groupID) {
         else console.log(body);
 
     });
-
-}
-
-function getIFTTTInput(requestBody) {
-
-
 
 }
 
@@ -108,6 +108,7 @@ module.exports = {
         // Get input from IFTTT
         let accountID = null;
         let groupID = null;
+        let token = null;
         let contactIFTTT = {
             email: null,
             firstName: null,
@@ -121,10 +122,11 @@ module.exports = {
 
             accountID = req.body.actionFields.accountID || "";
             groupID = req.body.actionFields.groupID || "";
+            token = req.body.actionFields.token || "";
             contactIFTTT = {
                 email: req.body.actionFields.email || "",
                 firstName: req.body.actionFields.firstName|| "",
-                lastName: req.body.actionFields.lastName | "",
+                lastName: req.body.actionFields.lastName || "",
                 insertion: req.body.actionFields.insertion || "",
                 phoneNumber: req.body.actionFields.phoneNumber || ""
             };
@@ -159,18 +161,16 @@ module.exports = {
             phoneNumber: contact.phoneNumber
         };
 
-        let counter = 0;
-
         // Look contact
-        searchContact(cmContact.phoneNumber, accountID, groupID).then((contactID) => {
+        searchContact(cmContact.phoneNumber, accountID, groupID, token).then((contactID) => {
 
             // If contact does exist: UPDATE
-            updateContact(contact, contactID, accountID, groupID);
+            updateContact(cmContact, contactID, accountID, groupID, token);
 
         }).catch((rejectMessage) => {
 
             // If contact does not exists: CREATE
-            createContact(contact, accountID, groupID);
+            createContact(cmContact, accountID, groupID, token);
 
         });
 

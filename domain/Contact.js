@@ -16,6 +16,7 @@ class Contact{
             this.phoneNumber = phoneNumber;
 
         } catch (e) {
+            console.log(e);
             throw (new ApiError(e.details[0].message, 400));
         }
     }
@@ -43,6 +44,6 @@ function validate(email, firstName, lastName, insertion, groupId, phoneNumber){
     };
 
     //Validate contact and return result
-    return joi.validate(hybridObject,schema);
+    return joi.validate(contactObject, schema);
 }
 module.exports = Contact;
