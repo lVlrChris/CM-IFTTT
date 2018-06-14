@@ -17,7 +17,7 @@ app.use('/api/ifttt/v1/status', StatusRoute);
 app.use('/api/ifttt/v1/test/setup', TestRoute);
 app.use('/api/ifttt/v1/actions/send_voice_message/fields/language/options',LanguageRoute);
 app.use('/api/ifttt/v1/actions/send_hybrid_message', hybridMessageRoute);
-app.use('/api/ifttt/v1/actions/addContact', addContactRoute);
+app.use('/api/ifttt/v1/actions/add_contact', addContactRoute);
 
 //Catch all errors
 app.use((err, req, res, next) => {
