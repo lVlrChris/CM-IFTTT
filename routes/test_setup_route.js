@@ -34,6 +34,16 @@ router.post('/', auth, (req, res) => {
                         token: 'FakeTestKey',
                         appKey: '472ktDj#GW$5c|BebL8JQ0s)'
                     },
+                    add_contact : {
+                        "email" : "fake",
+                        "firstName" : "fake",
+                        "lastName" : "fake",
+                        "insertion" : "fake",
+                        "groupID" : "fake",
+                        "phoneNumber" : "0031612345678",
+                        "accountID" : "fake",
+                        "token" : "fake"
+                    },
                     number_validation:{
                         phoneNumber: '0031612345678',
                         phoneToken: 'FakeTestKey'
