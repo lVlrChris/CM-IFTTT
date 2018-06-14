@@ -20,7 +20,7 @@ function searchContact(queryString, accountID, groupID, token) {
             if (error) console.log(error);
 
             console.log('Contacts found : ',jsonBody.length);
-            if (body.length < 1){
+            if (jsonBody.length < 1){
                 console.log('rejecting search promise');
                 reject();
             }  else {
@@ -64,6 +64,7 @@ function updateContact(contact, contactID, accountID, groupID, token) {
 function createContact(contact, accountID, groupID, token) {
 
     // Send post request to CM (adding contact)
+    console.log('creating new contact')
     request({
         url: `https://api.cmtelecom.com/addressbook/v2/accounts/${accountID}/groups/${groupID}/contacts`,
         headers: {
@@ -71,11 +72,17 @@ function createContact(contact, accountID, groupID, token) {
         },
         method: "POST",
         json: true,
-        body: cmContact
+        body: contact
     }, (error, response, body) => {
-        if (error) console.log(error);
-
-        else console.log(body);
+        console.log('post request to cm completed')
+        if (error) {
+            console.log(error);
+            console.log('error occured when making contact')
+        }else {
+            console.log('created succesfully');
+            console.log('statuscode : ' + response.statusCode);
+            console.log(body)
+        }
 
     });
 
