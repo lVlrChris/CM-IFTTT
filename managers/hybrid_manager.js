@@ -1,25 +1,26 @@
 const request = require('request');
-const Sms = require('../domain/Sms');
+const Hybrid = require('../domain/Hybrid');
 const ApiError = require('../domain/ApiError');
+const Config = require('../config');
 
-
-// TODO: create all responses
 module.exports = {
-    sendSms(req, res, next) {
+    sendHybrid(req, res, next) {
 
         let sender = null;
-        let body = null;
         let receiver = null;
+        let body = null;
         let token = null;
+        let appKey = null;
 
         // Get input from ifttt
         // Check if actionFields exists
         if (typeof req.body.actionFields !== 'undefined') {
 
             sender = req.body.actionFields.sender || "";
-            body = req.body.actionFields.body || "";
             receiver = req.body.actionFields.receiver || "";
-            token  = req.body.actionFields.token || "";
+            body = req.body.actionFields.body || "";
+            token = req.body.actionFields.token || "";
+            appKey = req.body.actionFields.appKey || process.env.APPKEY_NOTIFIRE || Config.appKey;
 
         } else {
             next(new ApiError('actionFields missing in body.', 400));
@@ -27,17 +28,17 @@ module.exports = {
         }
 
         // Validate input
-        let smsObject = null;
+        let hybridObject = null;
 
         try {
-            smsObject = new Sms(sender, receiver, body, token);
+            hybridObject = new Hybrid(sender, receiver, body, token, appKey);
         } catch (apiError) {
             next(apiError);
             return;
         }
 
-        // convert ifttt input to CM SMS
-        const receiversIFTTT = smsObject.receiver.split(', ');
+        // convert ifttt input to CM HYBRID
+        const receiversIFTTT = hybridObject.receiver.split(', ');
         const receiversCM = [];
         let i;
         for (i = 0; i < receiversIFTTT.length; i++) {
@@ -45,35 +46,45 @@ module.exports = {
                 number: receiversIFTTT[i]
             });
         }
+        
+        //
         console.log('Receivers of the message\n', receiversCM);
-        const cmSMS = {
+     //   console.log(hybridObject.body);
+        const cmHYBRID = {
             messages: {
                 authentication: {
-                    producttoken: smsObject.token
+                    producttoken: hybridObject.token
                 },
-                msg: [{
-                    from: smsObject.sender,
-                    to: receiversCM,
-                    customGrouping3: "IFTTT",
+                msg: [ {
+                    from: hybridObject.sender,
+                    to: [{
+                        number: hybridObject.receiver
+                    }],
                     body: {
-                        content: smsObject.body
-                    }
-                }]
+                        content: hybridObject.body
+                    },
+                    appmessagetype: "critical",
+                    appKey: hybridObject.appKey
+                }
+                ]
             }
         };
-
+        
+        //Send post request to CM
+        console.log(JSON.stringify(cmHYBRID));
         console.log("Sending post request to CM");
         // Send post request to CM (sending sms)
         request({
             url: "https://gw.cmtelecom.com/v1.0/message",
             method: "POST",
             json: true,
-            body: cmSMS
+            body: cmHYBRID
         }, function (error, response, body){
             if (error) console.log(error);
             else console.log(body);
         });
 
+        //Create response for IFTTT
         console.log("Creating responses for IFTTT");
         // Create a response with the request id and url from IFTTT.
         let response;
@@ -109,6 +120,6 @@ module.exports = {
 
         // Send the created response.
         res.status(200).send(response);
-
     }
+
 };

@@ -1,24 +1,27 @@
 const request = require('request');
-const Sms = require('../domain/Sms');
+const Voice = require("../domain/Voice");
 const ApiError = require('../domain/ApiError');
 
-
-// TODO: create all responses
 module.exports = {
-    sendSms(req, res, next) {
+    sendVoice(req, res, next) {
+
+
 
         let sender = null;
-        let body = null;
         let receiver = null;
+        let body = null;
+        let language = null;
         let token = null;
 
         // Get input from ifttt
         // Check if actionFields exists
         if (typeof req.body.actionFields !== 'undefined') {
 
+
             sender = req.body.actionFields.sender || "";
-            body = req.body.actionFields.body || "";
             receiver = req.body.actionFields.receiver || "";
+            body = req.body.actionFields.body || "";
+            language = req.body.actionFields.language || "";
             token  = req.body.actionFields.token || "";
 
         } else {
@@ -27,17 +30,17 @@ module.exports = {
         }
 
         // Validate input
-        let smsObject = null;
+        let voiceObject = null;
 
         try {
-            smsObject = new Sms(sender, receiver, body, token);
+            voiceObject = new Voice(sender, receiver, body, language, token);
         } catch (apiError) {
             next(apiError);
             return;
         }
 
-        // convert ifttt input to CM SMS
-        const receiversIFTTT = smsObject.receiver.split(', ');
+        // convert ifttt input to CM VOICE
+        const receiversIFTTT = voiceObject.receiver.split(', ');
         const receiversCM = [];
         let i;
         for (i = 0; i < receiversIFTTT.length; i++) {
@@ -45,33 +48,41 @@ module.exports = {
                 number: receiversIFTTT[i]
             });
         }
+
         console.log('Receivers of the message\n', receiversCM);
-        const cmSMS = {
-            messages: {
-                authentication: {
-                    producttoken: smsObject.token
-                },
-                msg: [{
-                    from: smsObject.sender,
-                    to: receiversCM,
-                    customGrouping3: "IFTTT",
-                    body: {
-                        content: smsObject.body
-                    }
-                }]
+        console.log(voiceObject.body);
+        const cmVOICE = {
+            "callee": voiceObject.receiver,
+            "caller": voiceObject.sender,
+            "anonymous": "false",
+            "prompt": voiceObject.body,
+            "prompt-type": "TTS",
+            "voice": {
+                "language": voiceObject.language,
+                "gender": "Female",
+                "number": 1
             }
         };
 
+        console.log(cmVOICE);
         console.log("Sending post request to CM");
         // Send post request to CM (sending sms)
         request({
-            url: "https://gw.cmtelecom.com/v1.0/message",
+            url: "https://api.cmtelecom.com/voiceapi/v2/Notification",
+            headers:  {
+                "X-CM-PRODUCTTOKEN" : voiceObject.token,
+
+            },
             method: "POST",
             json: true,
-            body: cmSMS
+            body: cmVOICE
         }, function (error, response, body){
-            if (error) console.log(error);
-            else console.log(body);
+            console.log('response status : ' + response.statusCode);
+            if (error) {
+                console.log('error : ' + error);
+            } else {
+                console.log(body);
+            }
         });
 
         console.log("Creating responses for IFTTT");
@@ -109,6 +120,5 @@ module.exports = {
 
         // Send the created response.
         res.status(200).send(response);
-
     }
 };

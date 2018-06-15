@@ -2,9 +2,9 @@ const joi = require('joi');
 const ApiError = require('../domain/ApiError');
 const ValidateNumber = require('../managers/numberValidation_manager');
 
-class Sms{
-    constructor(sender, receiver, body, token) {
-        //Trying to make an sms object
+class Hybrid{
+    constructor(sender, receiver, body, token, appKey) {
+        //Trying to make a hybrid object
         try {
             let correctedSender;
             //This if statement prevents a undefined error, otherwise the correctSender method will be called on a undefined
@@ -15,8 +15,8 @@ class Sms{
                 console.log('The corrected sender is ' + correctedSender );
             }else {console.log('The sender is undefined')}
 
-            //Checks if the sms is valid, according to the joi schema
-            const { error } = validate(correctedSender, receiver, body, token);
+            //Checks if the hybrid message is valid, according to the joi schema
+            const { error } = validate(correctedSender, receiver, body, token, appKey);
 
             //If an error is found, throw the error and jump into catch
             if (error) throw error;
@@ -31,34 +31,36 @@ class Sms{
             this.receiver = receiver;
             this.body = body;
             this.token = token;
+            this.appKey = appKey;
         }catch (e) {
-            //Throws an new ApiError with the details of a joi error.
+            //Throws a new ApiError with the details of a joi error.
             throw (new ApiError(e.details[0].message, 400));
         }
 
     }
 }
 
-//Validate function for a sms object
-function validate(sender, receiver, body, token) {
-    //Sms object, used for checking if the object matches the schema
-    const smsObject = {
-        sender : sender,
+function validate(sender, receiver, body, token, appKey){
+    //Hybrid object, used for checking if the object matches the schema
+    const hybridObject = {
+        sender: sender,
         receiver: receiver,
         body: body,
-        token: token
+        token: token,
+        appKey: appKey
     };
 
-    //Schema for a sms, this defines what an sms should look like
+    //Schema for a hybrid message, this defines what a hybrid message should look like
     const schema = {
-        sender : joi.string().required(),
+        sender: joi.string().required(),
         receiver: joi.string().required(),
         body: joi.string().max(160).required(),
-        token: joi.string().required()
+        token: joi.string().required(),
+        appKey: joi.string().required()
     };
 
-    //Validate sms and return result
-    return joi.validate(smsObject,schema);
+    //Validate hybrid message and return result
+    return joi.validate(hybridObject,schema);
 }
 
 //Function to correct a sender to the CM standards
@@ -95,4 +97,4 @@ function correctSender(sender){
         return sender;
     }
 }
-module.exports = Sms;
+module.exports = Hybrid;
