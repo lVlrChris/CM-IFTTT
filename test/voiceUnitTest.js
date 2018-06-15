@@ -199,17 +199,3 @@ describe('Validation of token', () => {
     //missing value
     //correct values
 });
-
-describe('Validation of username', () => {
-
-    //incorrect values
-    //missing value
-    //correct values
-});
-
-describe('Validation of key', () => {
-
-    //incorrect values
-    //missing value
-    //correct values
-});
