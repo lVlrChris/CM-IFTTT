@@ -22,7 +22,10 @@ function searchContact(queryString, accountID, groupID, token) {
                 const jsonBody = JSON.parse(body);
                 if (error) console.log(error);
 
+                console.log(jsonBody);
+                console.log(response.statusCode);
                 console.log('Contacts found : ', jsonBody.length);
+
                 if (jsonBody.length < 1) {
                     console.log('rejecting search promise');
                     reject();
@@ -31,8 +34,9 @@ function searchContact(queryString, accountID, groupID, token) {
                     console.log('id', jsonBody[0].id);
                     resolve(jsonBody[0].id);
                 }
-            }catch (e) {
-                console.log('Jumped in catch in search function')
+            }
+            catch (e) {
+                console.log('No contact found');
             }
         });
 
@@ -89,7 +93,6 @@ function createContact(contact, accountID, groupID, token) {
             console.log('statuscode : ' + response.statusCode);
             console.log(body)
         }
-
     });
 
 }
