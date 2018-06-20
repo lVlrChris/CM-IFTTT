@@ -38,7 +38,7 @@ function validate(email, firstName, lastName, insertion, groupId, phoneNumber){
         email: joi.string().required(),
         firstName: joi.string().required(),
         lastName: joi.string().required(),
-        insertion: joi.string().required(),
+        insertion: joi.string().allow(''),
         groupId: joi.string().required(),
         phoneNumber: joi.string().required()
     };

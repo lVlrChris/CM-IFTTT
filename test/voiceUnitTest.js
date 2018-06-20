@@ -171,31 +171,3 @@ describe('Validation of sender', () => {
             });
     });
 });
-
-describe('Validation of reveiver', () => {
-
-    //incorrect values
-    //missing value
-    //correct values
-});
-
-describe('Validation of body', () => {
-
-    //incorrect values
-    //missing value
-    //correct values
-});
-
-describe('Validation of language', () => {
-
-    //incorrect values
-    //missing value
-    //correct values
-});
-
-describe('Validation of token', () => {
-
-    //incorrect values
-    //missing value
-    //correct values
-});

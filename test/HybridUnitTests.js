@@ -48,7 +48,7 @@ describe('Validation of the actionFields key', () => {
                     "receiver": fakePhoneNumber,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -79,11 +79,11 @@ describe('Validation of sender', () => {
             .set('IFTTT-Service-Key', localIftttKey)
             .send({
                 "actionFields": {
-                    "sender": "0031687654321",
+                    "sender": 87654321,
                     "receiver": fakePhoneNumber,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -94,7 +94,7 @@ describe('Validation of sender', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -113,7 +113,7 @@ describe('Validation of sender', () => {
                     "receiver": fakePhoneNumber,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -124,7 +124,7 @@ describe('Validation of sender', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -144,7 +144,7 @@ describe('Validation of sender', () => {
                     "receiver": fakePhoneNumber,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -175,10 +175,10 @@ describe('Validation of reveiver', () => {
             .send({
                 "actionFields": {
                     "sender": fakePhoneNumber,
-                    "receiver": "0031687654321",
+                    "receiver": 87654321,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -189,7 +189,7 @@ describe('Validation of reveiver', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -208,7 +208,7 @@ describe('Validation of reveiver', () => {
                     "sender": fakePhoneNumber,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -219,7 +219,7 @@ describe('Validation of reveiver', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -239,7 +239,7 @@ describe('Validation of reveiver', () => {
                     "receiver": fakePhoneNumber,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -273,7 +273,7 @@ describe('Validation of body', () => {
                     "receiver": "0031687654321",
                     "body": 123456,
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -284,7 +284,7 @@ describe('Validation of body', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -303,7 +303,7 @@ describe('Validation of body', () => {
                     "sender": fakePhoneNumber,
                     "receiver": fakePhoneNumber,
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -314,7 +314,7 @@ describe('Validation of body', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -334,7 +334,7 @@ describe('Validation of body', () => {
                     "receiver": fakePhoneNumber,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -368,7 +368,7 @@ describe('Validation of token', () => {
                     "receiver": "0031687654321",
                     "body": "This is a test message",
                     "token": 123456,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -379,7 +379,7 @@ describe('Validation of token', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -398,7 +398,7 @@ describe('Validation of token', () => {
                     "sender": fakePhoneNumber,
                     "receiver": fakePhoneNumber,
                     "body": "This is a test message",
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -409,7 +409,7 @@ describe('Validation of token', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -429,7 +429,7 @@ describe('Validation of token', () => {
                     "receiver": fakePhoneNumber,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -464,7 +464,7 @@ describe('Validation of key', () => {
                     "receiver": "0031687654321",
                     "body": "This is a test message",
                     "token": fakeCMToken,
-                    "key": 123456
+                    "appKey": 123456
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -475,7 +475,7 @@ describe('Validation of key', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -505,7 +505,7 @@ describe('Validation of key', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(412);
+                res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
@@ -525,7 +525,7 @@ describe('Validation of key', () => {
                     "receiver": fakePhoneNumber,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "key": fakeAppKey
+                    "appKey": fakeAppKey
                 },
                 "ifttt_source": {
                     "id": "test",
