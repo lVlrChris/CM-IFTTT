@@ -55,6 +55,8 @@ module.exports = {
                     from: smsObject.sender,
                     to: receiversCM,
                     customGrouping3: "IFTTT",
+                    minimumNumberOfMessageParts: 1,
+                    maximumNumberOfMessageParts: 8,
                     body: {
                         type: "AUTO",
                         content: smsObject.body
