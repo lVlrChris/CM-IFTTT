@@ -24,15 +24,15 @@ router.post('/', auth, (req, res) => {
                         receiver: '0031612345678',
                         language:'nl-NL',
                         token: 'FakeTestKey',
-                        username: 'CMAvans2',
-                        key: '472ktDj#GW$5c|BebL8JQ0s)'
+                        username: 'IFTTTVoiceAccount',
+                        key: 'fakepassword123'
                     },
                     send_hybrid_message : {
                         sender: '0031612345678',
                         body: 'De man',
                         receiver: '0031612345678',
                         token: 'FakeTestKey',
-                        appKey: '472ktDj#GW$5c|BebL8JQ0s)'
+                        appKey: 'fakepassword123'
                     },
                     add_contact : {
                         "email" : "fake",
