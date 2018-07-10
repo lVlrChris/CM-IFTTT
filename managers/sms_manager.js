@@ -56,6 +56,7 @@ module.exports = {
                     to: receiversCM,
                     customGrouping3: "IFTTT",
                     body: {
+                        type: "AUTO",
                         content: smsObject.body
                     }
                 }]
