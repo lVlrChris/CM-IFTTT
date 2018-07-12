@@ -4,6 +4,16 @@ const auth = require('../middleware/auth');
 // Get router
 const router = express.Router();
 
+// Fake values
+const fakeSender = "John";
+const fakeReceiver = "0031612345678";
+const fakeBody = "This is the body of an IFTTT test message.";
+const fakeMessagingToken = "FakeSMSKey";
+const fakeVoiceToken = "FakeVoiceKey";
+const fakeVoiceUser = "FakeVoiceUser";
+const fakeVoicePassword = "FakeVoicePassword";
+const fakeNotifireKey = "FakeNotifireKey";
+
 // Root post endpoint
 router.post('/', auth, (req, res) => {
 
@@ -13,47 +23,46 @@ router.post('/', auth, (req, res) => {
             samples: {
                 actions: {
                     send_sms: {
-                        sender: 'Jan',
-                        body: 'De man',
-                        receiver: '0031612345678',
-                        token: 'FakeTestKey'
+                        sender: fakeSender,
+                        body: fakeBody,
+                        receiver: fakeReceiver,
+                        token: fakeMessagingToken
                     },
                     send_voice_message:{
-                        sender: '0031612345678',
-                        body: 'De man',
-                        receiver: '0031612345678',
+                        sender: fakeSender,
+                        body: fakeBody,
+                        receiver: fakeReceiver,
                         language:'nl-NL',
-                        token: 'FakeTestKey',
-                        username: 'IFTTTVoiceAccount',
-                        key: 'fakepassword123'
+                        token: fakeVoiceToken,
+                        username: fakeVoiceUser,
+                        key: fakeVoicePassword
                     },
                     send_hybrid_message : {
-                        sender: '0031612345678',
-                        body: 'De man',
-                        receiver: '0031612345678',
-                        token: 'FakeTestKey',
-                        appKey: 'fakepassword123'
+                        sender: fakeSender,
+                        body: fakeBody,
+                        receiver: fakeReceiver,
+                        token: fakeMessagingToken,
+                        appKey: fakeNotifireKey
                     },
                     add_contact : {
-                        "email" : "fake",
-                        "firstName" : "fake",
-                        "lastName" : "fake",
-                        "insertion" : "fake",
-                        "groupID" : "fake",
-                        "phoneNumber" : "0031612345678",
-                        "accountID" : "fake",
-                        "token" : "fake"
+                        email : "fake",
+                        firstName : "fake",
+                        lastName : "fake",
+                        insertion : "fake",
+                        groupID : "fake",
+                        phoneNumber : fakeReceiver,
+                        accountID : "fake",
+                        token : fakeMessagingToken
                     },
                     number_validation:{
-                        phoneNumber: '0031612345678',
-                        phoneToken: 'FakeTestKey'
+                        phoneNumber: fakeReceiver,
+                        phoneToken: 'FakePhoneToken'
                     }
                 }
             },
             code: 200
         }
     });
-
 });
 
 // Export these endpoints

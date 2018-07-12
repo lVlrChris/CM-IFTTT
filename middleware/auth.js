@@ -1,10 +1,11 @@
 const ApiError = require('../domain/ApiError');
+const config = require('../config/config');
 
 // Authentication function
 function auth(req, res, next) {
 
     // Get input service key
-    const input_service_key = process.env.IFTTT_SERVICE_KEY || '12345';
+    const input_service_key = config.iftttServiceKey;
 
     // Get this service's service key
     const service_key = req.header('IFTTT-Service-Key');
