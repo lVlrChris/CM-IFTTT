@@ -34,6 +34,9 @@ describe('Validation of sender',()=>{
                 }
             })
             .end(function (err, res) {
+                if(err) {
+                    console.log(err);
+                }
                 res.should.have.status(400);
                 res.should.be.json;
                 res.body.should.have.property('errors');
