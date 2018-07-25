@@ -261,7 +261,7 @@ describe('Validation of sender',()=>{
                 done();
             });
     });
-    it('should respond status 200 when using 11 aplhanumeric sender', (done)=> {
+    it('should respond status 200 when using 11 alphanumeric sender', (done)=> {
         chai.request(server)
             .post(smsEndpoint)
             .set('IFTTT-Service-Key', validIftttKey)
