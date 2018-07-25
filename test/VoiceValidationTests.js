@@ -15,7 +15,7 @@ chai.should();
 chai.use(chaiHttp);
 
 describe('Validation of the actionFields key', () => {
-    it('should throw an error when the actionFields key is not provided', (done) => {
+    it('should respond status 400 when the actionFields key is not provided', (done) => {
         chai.request(server)
             .post('/api/ifttt/v1/actions/send_voice_message')
             .set('IFTTT-Service-Key', localIftttKey)
@@ -34,11 +34,12 @@ describe('Validation of the actionFields key', () => {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('actionFields key not provided.')
                 done();
             });
     });
 
-    it('should not throw an error when actionFields is provided', (done) => {
+    it('should respond status 200 when actionFields is provided', (done) => {
         chai.request(server)
             .post('/api/ifttt/v1/actions/send_voice_message')
             .set('IFTTT-Service-Key', localIftttKey)
@@ -73,8 +74,75 @@ describe('Validation of the actionFields key', () => {
 
 describe('Validation of sender', () => {
 
-    //incorrect values
-    it('Should throw an error when using an incorrect variable for sender', (done) => {
+    //Check if field is empty
+    it('should throw an error when the sender field is empty', (done) => {
+        chai.request(server)
+            .post('api/ifttt/v1/actions/send_voice_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": "",
+                    "body": "De man",
+                    "receiver": fakePhoneNumber,
+                    "language": "nl-NL",
+                    "token": fakeCMToken,
+                    "username": "CMAvans2",
+                    "key": fakeCMSharedKey
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(412);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+            })
+    });
+
+    //Check if field is present
+    it('Should throw an error when the sender field is missing', (done) => {
+        chai.request(server)
+            .post('api/ifttt/v1/actions/send_voice_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "body": "De man",
+                    "receiver": fakePhoneNumber,
+                    "language": "nl-NL",
+                    "token": fakeCMToken,
+                    "username": "CMAvans2",
+                    "key": fakeCMSharedKey
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(412);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('Sender is empty.');
+                done();
+            });
+    });
+
+    //Check if single field
+
+    //Check for datatype
+    it('Should throw an error when using an incorrect field for sender', (done) => {
         chai.request(server)
             .post('api/ifttt/v1/actions/send_voice_message')
             .set('IFTTT-Service-Key', localIftttKey)
@@ -106,39 +174,7 @@ describe('Validation of sender', () => {
             });
     });
 
-    //missing value
-    it('Should throw an error when the sender variable is missing', (done) => {
-        chai.request(server)
-            .post('api/ifttt/v1/actions/send_voice_message')
-            .set('IFTTT-Service-Key', localIftttKey)
-            .send({
-                "actionFields": {
-                    "body": "De man",
-                    "receiver": fakePhoneNumber,
-                    "language": "nl-NL",
-                    "token": fakeCMToken,
-                    "username": "CMAvans2",
-                    "key": fakeCMSharedKey
-                },
-                "user": {
-                    "timezone": "America/Los_Angeles"
-                },
-                "ifttt_source": {
-                    "id": "test",
-                    "url": "test"
-                }
-            })
-            .end(function (err, res) {
-                res.should.have.status(412);
-                res.should.be.json;
-                res.body.should.have.property('errors');
-                res.body.errors[0].should.have.property('status');
-                res.body.errors[0].should.have.property('message');
-                done();
-            });
-    });
-
-    //correct values
+    //Check for only digids (correct input)
     it('Should not throw an error when providing a correct sender', (done) => {
         chai.request(server)
             .post('api/ifttt/v1/actions/send_voice_message')
