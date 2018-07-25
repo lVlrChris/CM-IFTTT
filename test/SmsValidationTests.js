@@ -15,6 +15,56 @@ chai.should();
 //Using chaiHttp to make http request to our api
 chai.use(chaiHttp);
 
+
+describe('Validation of the actionFields key', () => {
+    it('should respond status 400 when the actionFields key is not provided', (done) => {
+        chai.request(server)
+            .post(smsEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "ifttt_source": {
+                    "id": "2",
+                    "url": "https://ifttt.com/myrecipes/personal/2"
+                },
+                "user": {
+                    "timezone": "Pacific Time (US & Canada)"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('actionFields missing in body.')
+                done();
+            });
+    });
+    it('should respond status 200 when actionFields is provided', (done) => {
+        chai.request(server)
+            .post(smsEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : fakePhoneNumber,
+                    "body" : fakeBody,
+                    "receiver" : fakePhoneNumber,
+                    "token" : fakeToken
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
+                done();
+            });
+    });
+});
 //Tests for sender input
 describe('Validation of sender',()=>{
     it('should respond status 400 when using an "" as sender', (done)=> {
@@ -35,6 +85,10 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"sender" is not allowed to be empty');
                 done();
             });
     });
@@ -58,6 +112,7 @@ describe('Validation of sender',()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"sender" is not allowed to be empty');
                 done();
             });
     });
@@ -79,6 +134,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -100,8 +158,10 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(400);
+                res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"sender" must be a string');
                 done();
             });
     });
@@ -123,6 +183,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -144,6 +207,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -165,6 +231,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -186,6 +255,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -207,6 +279,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -228,6 +303,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -249,6 +327,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -270,6 +351,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -291,6 +375,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -312,6 +399,9 @@ describe('Validation of sender',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -339,6 +429,7 @@ describe('Validation of receiver',()=> {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"receiver" is not allowed to be empty');
                 done();
             });
 
@@ -364,6 +455,7 @@ describe('Validation of receiver',()=> {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"receiver" is not allowed to be empty');
                 done();
             });
     });
@@ -385,6 +477,9 @@ describe('Validation of receiver',()=> {
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -409,6 +504,7 @@ describe('Validation of receiver',()=> {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"receiver" must be a string');
                 done();
             });
     });
@@ -433,6 +529,7 @@ describe('Validation of receiver',()=> {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"receiver" must be a number');
                 done();
             });
     });
@@ -454,6 +551,9 @@ describe('Validation of receiver',()=> {
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -475,6 +575,9 @@ describe('Validation of receiver',()=> {
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -483,7 +586,7 @@ describe('Validation of receiver',()=> {
 describe('Validation of token',()=>{
     it('should respond status 400 when using an "" as token', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/send_sms')
+            .post(smsEndpoint)
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -502,12 +605,13 @@ describe('Validation of token',()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"token" is not allowed to be empty');
                 done();
             });
     });
     it('should respond status 400 when using an empty token', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/send_sms')
+            .post(smsEndpoint)
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -525,12 +629,13 @@ describe('Validation of token',()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"token" is not allowed to be empty');
                 done();
             });
     });
     it('should respond status 400 when using an integer as token', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/send_sms')
+            .post(smsEndpoint)
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -549,12 +654,13 @@ describe('Validation of token',()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"token" must be a string');
                 done();
             });
     });
     it('should respond status 200 when using a string as token', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/send_sms')
+            .post(smsEndpoint)
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -570,6 +676,9 @@ describe('Validation of token',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -578,7 +687,7 @@ describe('Validation of token',()=>{
 describe('Validation of body',()=>{
     it('should respond status 400 when using an "" as body', (done)=> {
         chai.request(server)
-            .post('/api/ifttt/v1/actions/send_sms')
+            .post(smsEndpoint)
             .set('IFTTT-Service-Key', validIftttKey)
             .send({
                 "actionFields" : {
@@ -597,6 +706,7 @@ describe('Validation of body',()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"body" is not allowed to be empty');
                 done();
             });
     });
@@ -620,6 +730,7 @@ describe('Validation of body',()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"body" is not allowed to be empty');
                 done();
             });
     });
@@ -641,6 +752,9 @@ describe('Validation of body',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
@@ -665,6 +779,7 @@ describe('Validation of body',()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"body" must be a string');
                 done();
             });
     });
@@ -695,6 +810,7 @@ describe('Validation of body',()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"body" length must be less than or equal to 1000 characters long');
                 done();
             });
     });
@@ -722,12 +838,10 @@ describe('Validation of body',()=>{
             })
             .end(function (err, res) {
                 res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
-
-
-
-
-
 });
