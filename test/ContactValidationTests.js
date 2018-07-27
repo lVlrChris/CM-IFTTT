@@ -644,39 +644,8 @@ describe('Validation of email', ()=>{
     });
 });
 
-it('should respond status 400 when using an "" as accountid', (done)=>  {
-    chai.request(server)
-        .post(contactEndpoint)
-        .set('IFTTT-Service-Key', validIftttKey)
-        .send({
-            "actionFields": {
-                "email": fakeMAil,
-                "firstName": fakeFirstname,
-                "lastName": fakeLastname,
-                "insertion": fakeInsertion,
-                "groupID": fakeGroupId,
-                "phoneNumber": fakePhoneNumber,
-                "accountID": "",
-                "token": fakeToken
-            },
-            "user": {
-                "timezone": "America/Los_Angeles"
-            },
-            "ifttt_source": {
-                "id": "test",
-                "url": "test"
-            }
-        })
-        .end(function (err, res) {
-            res.should.have.status(400);
-            res.body.should.have.property('errors');
-            res.body.errors[0].should.have.property('status');
-            res.body.errors[0].should.have.property('message');
-            res.body.errors[0].message.should.equal('"accountid" is not allowed to be empty');
-            done();
-        });
-
-    it('should respond status 400 when using an empty accountid', (done)=>  {
+describe('Validation of account id', ()=> {
+    it('should respond status 400 when using an "" as accountid', (done) => {
         chai.request(server)
             .post(contactEndpoint)
             .set('IFTTT-Service-Key', validIftttKey)
@@ -688,7 +657,7 @@ it('should respond status 400 when using an "" as accountid', (done)=>  {
                     "insertion": fakeInsertion,
                     "groupID": fakeGroupId,
                     "phoneNumber": fakePhoneNumber,
-                    "accountID": fakeAccountId,
+                    "accountID": "",
                     "token": fakeToken
                 },
                 "user": {
@@ -708,4 +677,348 @@ it('should respond status 400 when using an "" as accountid', (done)=>  {
                 done();
             });
     });
+    it('should respond status 400 when using an empty accountid', (done) => {
+            chai.request(server)
+                .post(contactEndpoint)
+                .set('IFTTT-Service-Key', validIftttKey)
+                .send({
+                    "actionFields": {
+                        "email": fakeMAil,
+                        "firstName": fakeFirstname,
+                        "lastName": fakeLastname,
+                        "insertion": fakeInsertion,
+                        "groupID": fakeGroupId,
+                        "phoneNumber": fakePhoneNumber,
+                        "token": fakeToken
+                    },
+                    "user": {
+                        "timezone": "America/Los_Angeles"
+                    },
+                    "ifttt_source": {
+                        "id": "test",
+                        "url": "test"
+                    }
+                })
+                .end(function (err, res) {
+                    res.should.have.status(400);
+                    res.body.should.have.property('errors');
+                    res.body.errors[0].should.have.property('status');
+                    res.body.errors[0].should.have.property('message');
+                    res.body.errors[0].message.should.equal('"accountid" is not allowed to be empty');
+                    done();
+                });
+        });
+    it('should respond status 400 when using an integer accountid', (done) => {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "groupID": fakeGroupId,
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": 1234,
+                    "token": fakeToken
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"accountid" must be a string');
+                done();
+            });
+    });
+    it('should respond status 200 when using an string as accountid', (done) => {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "groupID": fakeGroupId,
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": "string",
+                    "token": fakeToken
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                done();
+            });
+    });
 });
+
+describe('Validation of group id', ()=>{
+    it('should respond status 400 when using an "" as groupid', (done)=>  {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "groupID": "",
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": fakeAccountId,
+                    "token": fakeToken
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"groupId" is not allowed to be empty');
+                done();
+            });
+    });
+    it('should respond status 400 when using an empty groupid',  (done)=> {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": fakeAccountId,
+                    "token": fakeToken
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"groupId" is not allowed to be empty');
+                done();
+            });
+    });
+    it('should respond status 400 when using an integer as groupid',  (done)=> {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": fakeAccountId,
+                    "groupID" : 1234,
+                    "token": fakeToken
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"groupId" must be a string');
+                done();
+            });
+    });
+    it('should respond status 200 when using an string as groupid',  (done)=> {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": fakeAccountId,
+                    "groupID" : "string",
+                    "token": fakeToken
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                done();
+            });
+    });
+});
+
+describe('Validation of token', ()=>{
+    it('should respond status 400 when using an "" as token', (done)=>  {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "groupID": fakeGroupId,
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": fakeAccountId,
+                    "token": ""
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"token" is not allowed to be empty');
+                done();
+            });
+    });
+    it('should respond status 400 when using an empty token',  (done)=> {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": fakeAccountId,
+                    "groupid" : fakeGroupId
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"token" is not allowed to be empty');
+                done();
+            });
+    });
+    it('should respond status 400 when using an integer as token',  (done)=> {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": fakeAccountId,
+                    "groupID" : fakeGroupId,
+                    "token": 1234
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"token" must be a string');
+                done();
+            });
+    });
+    it('should respond status 200 when using an string as token',  (done)=> {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": fakeAccountId,
+                    "groupID" : fakeGroupId,
+                    "token": "string"
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                done();
+            });
+    });
+});
+
