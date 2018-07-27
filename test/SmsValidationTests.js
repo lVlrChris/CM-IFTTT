@@ -35,7 +35,7 @@ describe('Validation of the actionFields key', () => {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('actionFields missing in body.')
+                res.body.errors[0].message.should.equal('actionFields missing in body.');
                 done();
             });
     });
