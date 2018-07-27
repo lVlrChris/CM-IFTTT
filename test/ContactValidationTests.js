@@ -21,6 +21,60 @@ chai.should();
 //Use chaiHttp to make request to this API
 chai.use(chaiHttp);
 
+describe('Validation of the actionFields key', () => {
+    it('should respond status 400 when the actionFields key is not provided', (done) => {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "ifttt_source": {
+                    "id": "2",
+                    "url": "https://ifttt.com/myrecipes/personal/2"
+                },
+                "user": {
+                    "timezone": "Pacific Time (US & Canada)"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('actionFields missing in body.');
+                done();
+            });
+    });
+    it('should respond status 200 when actionFields is provided', (done) => {
+        chai.request(server)
+            .post(contactEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields": {
+                    "email": fakeMAil,
+                    "firstName": fakeFirstname,
+                    "lastName": fakeLastname,
+                    "insertion": fakeInsertion,
+                    "groupID": fakeGroupId,
+                    "phoneNumber": fakePhoneNumber,
+                    "accountID": fakeAccountId,
+                    "token": fakeToken
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
+                done();
+            });
+    });
+});
+
 describe('Validation of firstname', ()=>{
     it('should respond status 400 when using an "" as firstname', (done)=>  {
         chai.request(server)
