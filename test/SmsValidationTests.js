@@ -35,7 +35,7 @@ describe('Validation of the actionFields key', () => {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('actionFields missing in body.')
+                res.body.errors[0].message.should.equal('actionFields missing in body.');
                 done();
             });
     });
@@ -261,7 +261,7 @@ describe('Validation of sender',()=>{
                 done();
             });
     });
-    it('should respond status 200 when using 11 aplhanumeric sender', (done)=> {
+    it('should respond status 200 when using 11 alphanumeric sender', (done)=> {
         chai.request(server)
             .post(smsEndpoint)
             .set('IFTTT-Service-Key', validIftttKey)

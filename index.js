@@ -34,7 +34,8 @@ app.use((err, req, res, next) => {
 });
 
 // Configure port
-const port = process.env.PORT || 3000;
+let port = process.env.PORT || 3000;
+port = (typeof port === "number") ? port : 3000;
 app.listen(port, () => {
     console.log(`Listening on port ${port}..`);
 });
