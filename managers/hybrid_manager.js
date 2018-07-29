@@ -20,7 +20,7 @@ module.exports = {
             receiver = req.body.actionFields.receiver || "";
             body = req.body.actionFields.body || "";
             token = req.body.actionFields.token || "";
-            appKey = config.notifireAppkey;
+            appKey = req.body.actionFields.appKey || config.notifireAppkey;
 
         } else {
             next(new ApiError('actionFields missing in body.', 400));

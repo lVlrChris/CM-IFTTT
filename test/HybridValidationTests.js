@@ -1,4 +1,3 @@
-
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../index');
@@ -375,27 +374,57 @@ describe('Validation of reveiver', () => {
             });
     });
 
-
-
-    //correct values
-    it('Should not throw an error when providing a correct reveiver', (done) => {
+    //Check if field has only digits
+    it('Should respond with status 400 when the receiver something other than digits in the receiver', (done) => {
         chai.request(server)
             .post('/api/ifttt/v1/actions/send_hybrid_message')
             .set('IFTTT-Service-Key', localIftttKey)
             .send({
                 "actionFields": {
                     "sender": fakePhoneNumber,
-                    "receiver": fakePhoneNumber,
+                    "receiver": "0031612345678abc",
                     "body": "This is a sample message",
                     "token": fakeCMToken,
                     "appKey": fakeAppKey
                 },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
                 "ifttt_source": {
                     "id": "test",
                     "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"receiver" with value "0031612345678abc" fails to match the required pattern: /([+]?[0-9]+)$/');
+                done();
+            });
+    });
+
+    //Check if field has digits and a + sign
+    it('Should respond with status 200 when providing a number with a + sign as receiver', (done) => {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "receiver": "+31612345678",
+                    "body": "This is a sample message",
+                    "token": fakeCMToken,
+                    "appKey": fakeAppKey
                 },
                 "user": {
-                    "timezone": "Pacific Time (US & Canada)"
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
                 }
             })
             .end(function (err, res) {
@@ -411,8 +440,71 @@ describe('Validation of reveiver', () => {
 
 describe('Validation of body', () => {
 
-    //incorrect values
-    it('Should throw an error when using an incorrect variable for body', (done) => {
+    //Check if field is empty
+    it('Should respond with status 400 when the body field is empty', (done) => {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "receiver": fakePhoneNumber,
+                    "body": "",
+                    "token": fakeCMToken,
+                    "appKey": fakeAppKey
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"body" is not allowed to be empty');
+                done();
+            });
+    });
+
+    //Check if field is missing
+    it('Should respond with status 400 when the body field is missing', (done) => {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "receiver": fakePhoneNumber,
+                    "token": fakeCMToken,
+                    "appKey": fakeAppKey
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                },
+                "user": {
+                    "timezone": "Pacific Time (US & Canada)"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"body" is not allowed to be empty');
+                done();
+            });
+    });
+
+    //Check if field has correct datatype
+    it('Should respond with status 400 when body has an incorrect datatype', (done) => {
         chai.request(server)
             .post('/api/ifttt/v1/actions/send_hybrid_message')
             .set('IFTTT-Service-Key', localIftttKey)
@@ -438,12 +530,20 @@ describe('Validation of body', () => {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"body" must be a string');
                 done();
             });
     });
 
-    //missing value
-    it('Should throw an error when the body variable is missing', (done) => {
+    //Check if field had a 500 character limit
+    it('Should respond with status 400 when the body is larger than 1000 characters', (done) => {
+
+        let longCharString = "";
+
+        for (let i = 0; i < 1001; i++) {
+            longCharString += "a";
+        }
+
         chai.request(server)
             .post('/api/ifttt/v1/actions/send_hybrid_message')
             .set('IFTTT-Service-Key', localIftttKey)
@@ -451,15 +551,16 @@ describe('Validation of body', () => {
                 "actionFields": {
                     "sender": fakePhoneNumber,
                     "receiver": fakePhoneNumber,
+                    "body": longCharString,
                     "token": fakeCMToken,
                     "appKey": fakeAppKey
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
                 },
                 "ifttt_source": {
                     "id": "test",
                     "url": "test"
-                },
-                "user": {
-                    "timezone": "Pacific Time (US & Canada)"
                 }
             })
             .end(function (err, res) {
@@ -468,12 +569,18 @@ describe('Validation of body', () => {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"body" length must be less than or equal to 1000 characters long');
                 done();
             });
     });
+    it('Should respond with status 400 when the body is exactly 1000 characters', (done) => {
 
-    //correct values
-    it('Should not throw an error when providing a correct body', (done) => {
+        let longCharString = "";
+
+        for (let i = 0; i < 1000; i++) {
+            longCharString += "a";
+        }
+
         chai.request(server)
             .post('/api/ifttt/v1/actions/send_hybrid_message')
             .set('IFTTT-Service-Key', localIftttKey)
@@ -481,16 +588,52 @@ describe('Validation of body', () => {
                 "actionFields": {
                     "sender": fakePhoneNumber,
                     "receiver": fakePhoneNumber,
-                    "body": "This is a sample message",
+                    "body": longCharString,
                     "token": fakeCMToken,
                     "appKey": fakeAppKey
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
                 },
                 "ifttt_source": {
                     "id": "test",
                     "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.should.be.json;
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
+                done();
+            });
+    });
+    it('Should respond with status 400 when the body is less than 1000 characters', (done) => {
+
+        let longCharString = "";
+
+        for (let i = 0; i < 999; i++) {
+            longCharString += "a";
+        }
+
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "receiver": fakePhoneNumber,
+                    "body": longCharString,
+                    "token": fakeCMToken,
+                    "appKey": fakeAppKey
                 },
                 "user": {
-                    "timezone": "Pacific Time (US & Canada)"
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
                 }
             })
             .end(function (err, res) {
@@ -506,69 +649,8 @@ describe('Validation of body', () => {
 
 describe('Validation of token', () => {
 
-    //incorrect values
-    it('Should throw an error when using an incorrect variable for token', (done) => {
-        chai.request(server)
-            .post('/api/ifttt/v1/actions/send_hybrid_message')
-            .set('IFTTT-Service-Key', localIftttKey)
-            .send({
-                "actionFields": {
-                    "sender": fakePhoneNumber,
-                    "receiver": "0031687654321",
-                    "body": "This is a test message",
-                    "token": 123456,
-                    "appKey": fakeAppKey
-                },
-                "ifttt_source": {
-                    "id": "test",
-                    "url": "test"
-                },
-                "user": {
-                    "timezone": "Pacific Time (US & Canada)"
-                }
-            })
-            .end(function (err, res) {
-                res.should.have.status(400);
-                res.should.be.json;
-                res.body.should.have.property('errors');
-                res.body.errors[0].should.have.property('status');
-                res.body.errors[0].should.have.property('message');
-                done();
-            });
-    });
-
-    //missing value
-    it('Should throw an error when the token variable is missing', (done) => {
-        chai.request(server)
-            .post('/api/ifttt/v1/actions/send_hybrid_message')
-            .set('IFTTT-Service-Key', localIftttKey)
-            .send({
-                "actionFields": {
-                    "sender": fakePhoneNumber,
-                    "receiver": fakePhoneNumber,
-                    "body": "This is a test message",
-                    "appKey": fakeAppKey
-                },
-                "ifttt_source": {
-                    "id": "test",
-                    "url": "test"
-                },
-                "user": {
-                    "timezone": "Pacific Time (US & Canada)"
-                }
-            })
-            .end(function (err, res) {
-                res.should.have.status(400);
-                res.should.be.json;
-                res.body.should.have.property('errors');
-                res.body.errors[0].should.have.property('status');
-                res.body.errors[0].should.have.property('message');
-                done();
-            });
-    });
-
-    //correct values
-    it('Should not throw an error when providing a correct token', (done) => {
+    //Check if field is empty
+    it('Should respond with status 400 when the token field is empty', (done) => {
         chai.request(server)
             .post('/api/ifttt/v1/actions/send_hybrid_message')
             .set('IFTTT-Service-Key', localIftttKey)
@@ -577,7 +659,38 @@ describe('Validation of token', () => {
                     "sender": fakePhoneNumber,
                     "receiver": fakePhoneNumber,
                     "body": "This is a sample message",
-                    "token": fakeCMToken,
+                    "token": "",
+                    "appKey": fakeAppKey
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"token" is not allowed to be empty');
+                done();
+            });
+    });
+
+    //Check if field is missing
+    it('Should respond with status 400 when the token field is missing', (done) => {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "receiver": fakePhoneNumber,
+                    "body": "This is a sample message",
                     "appKey": fakeAppKey
                 },
                 "ifttt_source": {
@@ -589,11 +702,44 @@ describe('Validation of token', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(200);
+                res.should.have.status(400);
                 res.should.be.json;
-                res.body.should.have.property('data');
-                res.body.data[0].should.have.property('id');
-                res.body.data[0].should.have.property('url');
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"token" is not allowed to be empty');
+                done();
+            });
+    });
+
+    //Check if field has correct datatype
+    it('Should respond with status 400 when token has an incorrect datatype', (done) => {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "receiver": "0031687654321",
+                    "body": "This is a sample message",
+                    "token": 12345,
+                    "appKey": fakeAppKey
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                },
+                "user": {
+                    "timezone": "Pacific Time (US & Canada)"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"token" must be a string');
                 done();
             });
     });
@@ -601,69 +747,8 @@ describe('Validation of token', () => {
 
 describe('Validation of appKey', () => {
 
-    //incorrect values
-    it('Should throw an error when using an incorrect variable for key', (done) => {
-        chai.request(server)
-            .post('/api/ifttt/v1/actions/send_hybrid_message')
-            .set('IFTTT-Service-Key', localIftttKey)
-            .send({
-                "actionFields": {
-                    "sender": fakePhoneNumber,
-                    "receiver": "0031687654321",
-                    "body": "This is a test message",
-                    "token": fakeCMToken,
-                    "appKey": 123456
-                },
-                "ifttt_source": {
-                    "id": "test",
-                    "url": "test"
-                },
-                "user": {
-                    "timezone": "Pacific Time (US & Canada)"
-                }
-            })
-            .end(function (err, res) {
-                res.should.have.status(400);
-                res.should.be.json;
-                res.body.should.have.property('errors');
-                res.body.errors[0].should.have.property('status');
-                res.body.errors[0].should.have.property('message');
-                done();
-            });
-    });
-
-    //missing value
-    it('Should throw an error when the key variable is missing', (done) => {
-        chai.request(server)
-            .post('/api/ifttt/v1/actions/send_hybrid_message')
-            .set('IFTTT-Service-Key', localIftttKey)
-            .send({
-                "actionFields": {
-                    "sender": fakePhoneNumber,
-                    "receiver": fakePhoneNumber,
-                    "body": "This is a test message",
-                    "token": fakeCMToken,
-                },
-                "ifttt_source": {
-                    "id": "test",
-                    "url": "test"
-                },
-                "user": {
-                    "timezone": "Pacific Time (US & Canada)"
-                }
-            })
-            .end(function (err, res) {
-                res.should.have.status(400);
-                res.should.be.json;
-                res.body.should.have.property('errors');
-                res.body.errors[0].should.have.property('status');
-                res.body.errors[0].should.have.property('message');
-                done();
-            });
-    });
-
-    //correct values
-    it('Should not throw an error when providing a correct key', (done) => {
+    //Check if field is empty
+    it('Should respond with status 400 when the appKey field is empty', (done) => {
         chai.request(server)
             .post('/api/ifttt/v1/actions/send_hybrid_message')
             .set('IFTTT-Service-Key', localIftttKey)
@@ -673,7 +758,38 @@ describe('Validation of appKey', () => {
                     "receiver": fakePhoneNumber,
                     "body": "This is a sample message",
                     "token": fakeCMToken,
-                    "appKey": fakeAppKey
+                    "appKey": ""
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"appKey" is required');
+                done();
+            });
+    });
+
+    //Check if field is missing
+    it('Should respond with status 400 when the appKey field is missing', (done) => {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "receiver": fakePhoneNumber,
+                    "body": "This is a sample message",
+                    "token": fakeCMToken
                 },
                 "ifttt_source": {
                     "id": "test",
@@ -684,11 +800,44 @@ describe('Validation of appKey', () => {
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(200);
+                res.should.have.status(400);
                 res.should.be.json;
-                res.body.should.have.property('data');
-                res.body.data[0].should.have.property('id');
-                res.body.data[0].should.have.property('url');
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"appKey" is required');
+                done();
+            });
+    });
+
+    //Check if field has correct datatype
+    it('Should respond with status 400 when appKey has an incorrect datatype', (done) => {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "receiver": "0031687654321",
+                    "body": "This is a sample message",
+                    "token": fakeCMToken,
+                    "appKey": 12345
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                },
+                "user": {
+                    "timezone": "Pacific Time (US & Canada)"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"appKey" must be a string');
                 done();
             });
     });
