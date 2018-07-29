@@ -60,7 +60,11 @@ module.exports = {
                     to: [{
                         number: hybridObject.receiver
                     }],
+                    customGrouping3: "IFTTT",
+                    minimumNumberOfMessageParts: 1,
+                    maximumNumberOfMessageParts: 8,
                     body: {
+                        type: "AUTO",
                         content: hybridObject.body
                     },
                     appmessagetype: "critical",
