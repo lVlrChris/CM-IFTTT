@@ -4,5 +4,5 @@ const envNotifireAppkey = process.env.APPKEY_NOTIFIRE;
 
 module.exports = {
     iftttServiceKey: envIftttServiceKey,
-    notifireAppkey: envNotifireAppkey
+    notifireAppkey: envNotifireAppkey || '12345'
 };
