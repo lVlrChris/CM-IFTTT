@@ -169,7 +169,8 @@ module.exports = {
                 contactIFTTT.insertion,
                 groupID,
                 contactIFTTT.phoneNumber,
-                accountID);
+                accountID,
+                token);
         } catch (apiError) {
             next(apiError);
             return;
