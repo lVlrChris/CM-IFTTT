@@ -169,7 +169,7 @@ describe('Validation of sender', () => {
     });
 
     //Check for correct datatype
-    it('Should respond with status 400 when the sender has an icorrect datatype', (done) => {
+    it('Should respond with status 400 when the sender has an incorrect datatype', (done) => {
         chai.request(server)
             .post('/api/ifttt/v1/actions/send_hybrid_message')
             .set('IFTTT-Service-Key', localIftttKey)
@@ -196,6 +196,83 @@ describe('Validation of sender', () => {
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
                 res.body.errors[0].message.should.equal('"sender" must be a string');
+                done();
+            });
+    });
+
+    //Check for special characters
+    it('should respond status 200 when using an approved special character as sender', (done)=> {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : "!#$%&'()*+,./:;<=>?@[]^_`{|}~",
+                    "receiver": fakePhoneNumber,
+                    "body": "This is a sample message",
+                    "token": fakeCMToken,
+                    "appKey": fakeAppKey
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
+                done();
+            });
+    });
+    it('should respond status 200 when using an approved special character as sender 2', (done)=> {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : ",./:;<=>?@[",
+                    "receiver": fakePhoneNumber,
+                    "body": "This is a sample message",
+                    "token": fakeCMToken,
+                    "appKey": fakeAppKey
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
+                done();
+            });
+    });
+    it('should respond status 200 when using an approved special character as sender 3', (done)=> {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : "]^_`{|}~",
+                    "receiver": fakePhoneNumber,
+                    "body": "This is a sample message",
+                    "token": fakeCMToken,
+                    "appKey": fakeAppKey
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(200);
+                res.body.should.have.property('data');
+                res.body.data[0].should.have.property('id');
+                res.body.data[0].should.have.property('url');
                 done();
             });
     });
