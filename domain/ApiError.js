@@ -13,7 +13,9 @@ class ApiError {
     }
 
     //JSON resonse body setup for IFTTT
-    toJSON() {
+
+    iftttResponse() {
+        console.log("toJSON works.");
         return {
             "errors": [
                 {

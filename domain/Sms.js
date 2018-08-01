@@ -27,6 +27,9 @@ class Sms{
             this.body = body;
             this.token = token;
         }catch (e) {
+            if(e instanceof ApiError) {
+                throw e;
+            }
             //Throws an new ApiError with the details of a joi error.
             throw (new ApiError(e.details[0].message, 400));
         }
@@ -83,7 +86,7 @@ function correctSender(sender){
             //If the sender is not made of digits or alphanumeric chars, the sender will be undefined.
             //This prevents special chars to be sent to the CM api
             console.log('Type of sender undefined');
-            throw new ApiError('Sender is using not allowed chars', 400)
+            throw (new ApiError('Sender is using not allowed chars', 400));
         }
     }else {
         //If the sender is an int, or any other type of value, the sender will not be adjusted.

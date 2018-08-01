@@ -25,7 +25,7 @@ app.use((err, req, res, next) => {
     //Check if the caught error is an ApiError
     try {
         console.log('API error occured:');
-        res.status(err.errorCode).json(err.toJSON());
+        res.status(err.errorCode).json(err.iftttResponse());
         console.log(err.toString());
     } catch (e) {
         console.log(err);
