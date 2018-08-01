@@ -724,7 +724,7 @@ describe('Validation of account id', ()=> {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('"accountid" is not allowed to be empty');
+                res.body.errors[0].message.should.equal('"accountId" is not allowed to be empty');
                 done();
             });
     });
@@ -755,7 +755,7 @@ describe('Validation of account id', ()=> {
                     res.body.should.have.property('errors');
                     res.body.errors[0].should.have.property('status');
                     res.body.errors[0].should.have.property('message');
-                    res.body.errors[0].message.should.equal('"accountid" is not allowed to be empty');
+                    res.body.errors[0].message.should.equal('"accountId" is not allowed to be empty');
                     done();
                 });
         });
@@ -787,7 +787,7 @@ describe('Validation of account id', ()=> {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('"accountid" must be a string');
+                res.body.errors[0].message.should.equal('"accountId" must be a string');
                 done();
             });
     });
@@ -992,7 +992,7 @@ describe('Validation of token', ()=>{
                     "insertion": fakeInsertion,
                     "phoneNumber": fakePhoneNumber,
                     "accountID": fakeAccountId,
-                    "groupid" : fakeGroupId
+                    "groupID" : "string"
                 },
                 "user": {
                     "timezone": "America/Los_Angeles"
