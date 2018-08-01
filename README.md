@@ -1,7 +1,7 @@
 # IFTTT-CM
 IFTTT integration with CM.com's apps
 
-[![Build Status](https://travis-ci.com/lVlrChris/CM-IFTTT.svg?branch=development)](https://travis-ci.com/lVlrChris/CM-IFTTT)
+[![Build Status](https://travis-ci.com/lVlrChris/CM-IFTTT.svg?branch=master)](https://travis-ci.com/lVlrChris/CM-IFTTT)
 
 ## Developer Documentation IFTTT-CM
 
