@@ -467,7 +467,7 @@ describe('Validation of receiver',()=> {
                 "actionFields": {
                     "sender": fakePhoneNumber,
                     "body": fakeBody,
-                    "receiver": "String",
+                    "receiver": fakePhoneNumber,
                     "token": fakeToken
                 },
                 "ifttt_source": {
@@ -529,7 +529,7 @@ describe('Validation of receiver',()=> {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('"receiver" must be a number');
+                res.body.errors[0].message.should.equal('"receiver" with value "abcdefg" fails to match the required pattern: /([+]?[0-9]+)$/');
                 done();
             });
     });

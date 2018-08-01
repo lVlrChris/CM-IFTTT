@@ -21,10 +21,9 @@ app.use('/api/ifttt/v1/actions/add_contact', addContactRoute);
 
 //Catch all errors
 app.use((err, req, res, next) => {
-
+    console.log('API error occured:');
     //Check if the caught error is an ApiError
     try {
-        console.log('API error occured:');
         res.status(err.errorCode).json(err.iftttResponse());
         console.log(err.toString());
     } catch (e) {

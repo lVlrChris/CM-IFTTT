@@ -66,7 +66,7 @@ function correctSender(sender){
     if (sender !== parseInt(sender)) {
 
         //Regular expression to check if a sender is using alphanumeric chars
-        const alphanumericReg = new RegExp('^[a-zA-Z0-9-_!?\\.,@# ]*$');
+        const alphanumericReg = new RegExp('^[a-zA-Z0-9 !#$%&\'"()*+,.:;<=>?@[/\\]^_`{|}~]*$');
 
         //Regular expression to check if a sender is using only digits
         const digitReg = new RegExp('^[0-9]+$');

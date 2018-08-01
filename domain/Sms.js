@@ -47,11 +47,14 @@ function validate(sender, receiver, body, token) {
         token: token
     };
 
+    //Regular expression for the + in a phone number
+    const regex = new RegExp('([+]?[0-9]+)$');
+
     //Schema for a sms, this defines what an sms should look like
     //Body limit is set to 1000 characters, messages above 153 characters the message will be broken up in parts.
     const schema = {
         sender : joi.string().required(),
-        receiver: joi.string().required(),
+        receiver: joi.string().regex(regex).required(),
         body: joi.string().max(1000).required(),
         token: joi.string().required()
     };
@@ -66,7 +69,7 @@ function correctSender(sender){
     if (sender !== parseInt(sender)) {
 
         //Regular expression to check if a sender is using alphanumeric chars
-        const alphanumericReg = new RegExp('^[a-zA-Z0-9 !#$%&\'"()*+,.:;<=>?@[\\]^_`{|}~]+$');
+        const alphanumericReg = new RegExp('^[a-zA-Z0-9 !#$%&\'"()*+,.:;<=>?@[/\\]^_`{|}~]*$');
 
         //Regular expression to check if a sender is using only digits
         const digitReg = new RegExp('^[0-9]+$');
