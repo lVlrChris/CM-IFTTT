@@ -17,7 +17,6 @@ module.exports = {
         // Check if actionFields exists
         if (typeof req.body.actionFields !== 'undefined') {
 
-
             sender = req.body.actionFields.sender || "";
             receiver = req.body.actionFields.receiver || "";
             body = req.body.actionFields.body || "";
@@ -25,7 +24,7 @@ module.exports = {
             token  = req.body.actionFields.token || "";
 
         } else {
-            next(new ApiError('actionFields missing in body.', 400));
+            next(new ApiError('actionFields key not provided.', 400));
             return;
         }
 

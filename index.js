@@ -25,16 +25,17 @@ app.use((err, req, res, next) => {
     //Check if the caught error is an ApiError
     try {
         console.log('API error occured:');
-        console.log(err.toString());
         res.status(err.errorCode).json(err.toJSON());
-    } catch (e) {
         console.log(err.toString());
+    } catch (e) {
+        console.log(err);
         res.status(500).json({"error" : "unknown error occured"})
     }
 });
 
 // Configure port
-const port = process.env.PORT || 3000;
+let port = process.env.PORT || 3000;
+port = (typeof port === "number") ? port : 3000;
 app.listen(port, () => {
     console.log(`Listening on port ${port}..`);
 });
