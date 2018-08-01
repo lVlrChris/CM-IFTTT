@@ -88,7 +88,7 @@ function correctSender(sender){
             //If the sender is not made of digits or alphanumeric chars, the sender will be undefined.
             //This prevents special chars to be sent to the CM api
             console.log('Type of sender undefined');
-            return 'undefinedSender';
+            throw new ApiError('Sender is using not allowed chars', 400)
         }
     }else {
         //If the sender is an int, or any other type of value, the sender will not be adjusted.
