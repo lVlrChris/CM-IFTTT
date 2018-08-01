@@ -12,8 +12,9 @@ function auth(req, res, next) {
 
     // Check key and return if not valid
     if (service_key !== input_service_key) {
-        const keyError = new ApiError('Invalid channel key', 401);
-        return res.status(401).send(keyError);
+        const apiError = new ApiError('Invalid channel key', 401);
+        next(apiError)
+        return
     }
 
     // Next if key is valid
