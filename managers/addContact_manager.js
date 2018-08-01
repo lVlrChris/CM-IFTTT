@@ -4,8 +4,6 @@ const ApiError = require('../domain/ApiError');
 
 function searchContact(queryString, accountID, groupID, token) {
     return new Promise((resolve, reject) => {
-
-
         // Check if a contact with this phoneNumber exists in the group
         console.log('Making get request to cm.');
         request({
@@ -39,12 +37,10 @@ function searchContact(queryString, accountID, groupID, token) {
                 console.log('No contact found');
             }
         });
-
     });
 }
 
 function updateContact(contact, contactID, accountID, groupID, token) {
-
     // Send put request to CM (updating contact)
     console.log('Starting updating contact');
     request({
@@ -56,8 +52,6 @@ function updateContact(contact, contactID, accountID, groupID, token) {
         json: true,
         body: contact
     }, (error, response, body) => {
-
-
         console.log('Update request finished');
         if (error){
            // console.log(error);
@@ -68,11 +62,9 @@ function updateContact(contact, contactID, accountID, groupID, token) {
             console.log('update succesfull')
         }
     });
-
 }
 
 function createContact(contact, accountID, groupID, token) {
-
     // Send post request to CM (adding contact)
     console.log('creating new contact')
     request({
@@ -94,7 +86,6 @@ function createContact(contact, accountID, groupID, token) {
             console.log(body)
         }
     });
-
 }
 
 function createResponsesForIFTTT(requestBody) {
@@ -177,7 +168,9 @@ module.exports = {
                 contactIFTTT.lastName,
                 contactIFTTT.insertion,
                 groupID,
-                contactIFTTT.phoneNumber);
+                contactIFTTT.phoneNumber,
+                accountID,
+                token);
         } catch (apiError) {
             next(apiError);
             return;
@@ -212,6 +205,5 @@ module.exports = {
 
         // Send the created response.
         res.status(200).send(response);
-
     }
 };

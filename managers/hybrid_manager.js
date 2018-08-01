@@ -1,7 +1,7 @@
 const request = require('request');
 const Hybrid = require('../domain/Hybrid');
 const ApiError = require('../domain/ApiError');
-const Config = require('../config');
+const config = require('../config/config');
 
 module.exports = {
     sendHybrid(req, res, next) {
@@ -20,7 +20,7 @@ module.exports = {
             receiver = req.body.actionFields.receiver || "";
             body = req.body.actionFields.body || "";
             token = req.body.actionFields.token || "";
-            appKey = req.body.actionFields.appKey || process.env.APPKEY_NOTIFIRE || Config.appKey;
+            appKey = req.body.actionFields.appKey || config.notifireAppkey;
 
         } else {
             next(new ApiError('actionFields missing in body.', 400));
@@ -60,7 +60,11 @@ module.exports = {
                     to: [{
                         number: hybridObject.receiver
                     }],
+                    customGrouping3: "IFTTT",
+                    minimumNumberOfMessageParts: 1,
+                    maximumNumberOfMessageParts: 8,
                     body: {
+                        type: "AUTO",
                         content: hybridObject.body
                     },
                     appmessagetype: "critical",

@@ -21,20 +21,19 @@ app.use('/api/ifttt/v1/actions/add_contact', addContactRoute);
 
 //Catch all errors
 app.use((err, req, res, next) => {
-
+    console.log('API error occured:');
     //Check if the caught error is an ApiError
     try {
-        console.log('API error occured:');
+        res.status(err.errorCode).json(err.iftttResponse());
         console.log(err.toString());
-        res.status(err.errorCode).json(err.toJSON());
     } catch (e) {
-        console.log(err.toString());
+        console.log(err);
         res.status(500).json({"error" : "unknown error occured"})
     }
 });
 
 // Configure port
-const port = process.env.PORT || 3000;
+let port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Listening on port ${port}..`);
 });

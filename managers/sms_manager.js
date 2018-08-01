@@ -2,8 +2,6 @@ const request = require('request');
 const Sms = require('../domain/Sms');
 const ApiError = require('../domain/ApiError');
 
-
-// TODO: create all responses
 module.exports = {
     sendSms(req, res, next) {
 
@@ -55,7 +53,10 @@ module.exports = {
                     from: smsObject.sender,
                     to: receiversCM,
                     customGrouping3: "IFTTT",
+                    minimumNumberOfMessageParts: 1,
+                    maximumNumberOfMessageParts: 8,
                     body: {
+                        type: "AUTO",
                         content: smsObject.body
                     }
                 }]

@@ -13,7 +13,8 @@ class ApiError {
     }
 
     //JSON resonse body setup for IFTTT
-    toJSON() {
+
+    iftttResponse() {
         return {
             "errors": [
                 {

@@ -1,6 +1,5 @@
 const joi = require('joi');
 const ApiError = require('../domain/ApiError');
-const ValidateNumber = require('../managers/numberValidation_manager');
 
 class Hybrid{
     constructor(sender, receiver, body, token, appKey) {
@@ -20,11 +19,6 @@ class Hybrid{
 
             //If an error is found, throw the error and jump into catch
             if (error) throw error;
-
-            //Checks if number is valid or not
-            if(!ValidateNumber.checkNumber(receiver, token)){
-                throw new ApiError('Invalid number!', 400);
-            }
 
             //If no error is found, assign the values to the correct variables
             this.sender = correctedSender;
@@ -50,11 +44,14 @@ function validate(sender, receiver, body, token, appKey){
         appKey: appKey
     };
 
+    //Regular expression for the + in a phone number
+    const regex = new RegExp('([+]?[0-9]+)$');
+
     //Schema for a hybrid message, this defines what a hybrid message should look like
     const schema = {
         sender: joi.string().required(),
-        receiver: joi.string().required(),
-        body: joi.string().max(160).required(),
+        receiver: joi.string().regex(regex).required(),
+        body: joi.string().max(1000).required(),
         token: joi.string().required(),
         appKey: joi.string().required()
     };
@@ -69,7 +66,7 @@ function correctSender(sender){
     if (sender !== parseInt(sender)) {
 
         //Regular expression to check if a sender is using alphanumeric chars
-        const alphanumericReg = new RegExp('^[a-zA-Z0-9-_!?\\.,@# ]*$');
+        const alphanumericReg = new RegExp('^[a-zA-Z0-9 !#$%&\'"()*+,.:;<=>?@[/\\]^_`{|}~]*$');
 
         //Regular expression to check if a sender is using only digits
         const digitReg = new RegExp('^[0-9]+$');
