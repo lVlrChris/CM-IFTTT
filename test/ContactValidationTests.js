@@ -976,7 +976,7 @@ describe('Validation of token', ()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('"token" is not allowsadfasdfed to be empty');
+                res.body.errors[0].message.should.equal('"token" is not allowed to be empty');
                 done();
             });
     });
@@ -1007,7 +1007,7 @@ describe('Validation of token', ()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('"token" is not allosadfasdfwed to be empty');
+                res.body.errors[0].message.should.equal('"token" is not allowed to be empty');
                 done();
             });
     });
@@ -1039,7 +1039,7 @@ describe('Validation of token', ()=>{
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('"token" mustsadfasdf be a string');
+                res.body.errors[0].message.should.equal('"token" must be a string');
                 done();
             });
     });
