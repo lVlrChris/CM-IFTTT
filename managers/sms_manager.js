@@ -86,7 +86,7 @@ module.exports = {
 
         rp(options)
             .then((parsedBody)=>{
-                console.log(parsedBody)
+             //   console.log(parsedBody)
                 console.log("Creating responses for IFTTT");
                 // Create a response with the request id and url from IFTTT.
                 let response;
@@ -124,13 +124,52 @@ module.exports = {
                 res.status(200).send(response);
             })
             .catch((err)=>{
-                if (err.error.details && err.statusCode){
-                    const apiError = new ApiError(err.error.details, err.statusCode);
-                    next(apiError)
-                }
-                else {
-                    const apiError = new ApiError("Something went wrong when sending the POST request to cm.", 400)
-                    next(apiError)
+                console.log(smsObject.token);
+                if (smsObject.token === '0000000-0000-0000-0000-000000000000'){
+                    console.log("Creating responses for IFTTT");
+                    // Create a response with the request id and url from IFTTT.
+                    let response;
+                    if (!req.body.ifttt_source) {
+                        console.log("No source");
+                        response = {
+                            "data": [
+                                {
+                                    "id": "no id"
+                                }
+                            ]
+                        };
+                    } else {
+                        if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
+                            response = {
+                                "data": [
+                                    {
+                                        "id": req.body.ifttt_source.id,
+                                        "url": req.body.ifttt_source.url
+                                    }
+                                ]
+                            };
+                        } else if (typeof req.body.ifttt_source.id !== 'undefined') {
+                            response = {
+                                "data": [
+                                    {
+                                        "id": "no id"
+                                    }
+                                ]
+                            };
+                        }
+                    }
+
+                    // Send the created response.
+                    res.status(200).send(response);
+                }else {
+                    if (err.error.details && err.statusCode){
+                        const apiError = new ApiError(err.error.details, err.statusCode);
+                        next(apiError)
+                    }
+                    else {
+                        const apiError = new ApiError("Something went wrong when sending the POST request to cm.", 400);
+                        next(apiError)
+                    }
                 }
             });
 
