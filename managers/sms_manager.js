@@ -1,4 +1,5 @@
 const request = require('request');
+const rp = require('request-promise');
 const Sms = require('../domain/Sms');
 const ApiError = require('../domain/ApiError');
 
@@ -65,51 +66,74 @@ module.exports = {
 
         console.log("Sending post request to CM");
         // Send post request to CM (sending sms)
-        request({
+        // request({
+        //     url: "https://gw.cmtelecom.com/v1.0/message",
+        //     method: "POST",
+        //     json: true,
+        //     body: cmSMS
+        // }, function (error, response, body){
+        //     if (error) console.log(error);
+        //     if (response) console.log(response.statusCode);
+        //     else console.log(body);
+        // });
+
+        const options = {
             url: "https://gw.cmtelecom.com/v1.0/message",
             method: "POST",
             json: true,
             body: cmSMS
-        }, function (error, response, body){
-            if (error) console.log(error);
-            else console.log(body);
-        });
+        };
 
-        console.log("Creating responses for IFTTT");
-        // Create a response with the request id and url from IFTTT.
-        let response;
-        if (!req.body.ifttt_source) {
-            console.log("No source");
-            response = {
-                "data": [
-                    {
-                        "id": "no id"
+        rp(options)
+            .then((parsedBody)=>{
+                console.log(parsedBody)
+                console.log("Creating responses for IFTTT");
+                // Create a response with the request id and url from IFTTT.
+                let response;
+                if (!req.body.ifttt_source) {
+                    console.log("No source");
+                    response = {
+                        "data": [
+                            {
+                                "id": "no id"
+                            }
+                        ]
+                    };
+                } else {
+                    if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
+                        response = {
+                            "data": [
+                                {
+                                    "id": req.body.ifttt_source.id,
+                                    "url": req.body.ifttt_source.url
+                                }
+                            ]
+                        };
+                    } else if (typeof req.body.ifttt_source.id !== 'undefined') {
+                        response = {
+                            "data": [
+                                {
+                                    "id": "no id"
+                                }
+                            ]
+                        };
                     }
-                ]
-            };
-        } else {
-            if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
-                response = {
-                    "data": [
-                        {
-                            "id": req.body.ifttt_source.id,
-                            "url": req.body.ifttt_source.url
-                        }
-                    ]
-                };
-            } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                response = {
-                    "data": [
-                        {
-                            "id": "no id"
-                        }
-                    ]
-                };
-            }
-        }
+                }
 
-        // Send the created response.
-        res.status(200).send(response);
+                // Send the created response.
+                res.status(200).send(response);
+            })
+            .catch((err)=>{
+                if (err.error.details && err.statusCode){
+                    const apiError = new ApiError(err.error.details, err.statusCode);
+                    next(apiError)
+                }
+                else {
+                    const apiError = new ApiError("Something went wrong when sending the POST request to cm.", 400)
+                    next(apiError)
+                }
+            });
+
 
     }
 };
