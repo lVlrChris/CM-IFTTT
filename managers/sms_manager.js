@@ -163,7 +163,8 @@ module.exports = {
 
                     // Send the created response.
                     res.status(200).send(response);
-                }else {
+                }
+                else {
                     if (err.error.details && err.statusCode){
                         const apiError = new ApiError(err.error.details, 400);
                         next(apiError)
