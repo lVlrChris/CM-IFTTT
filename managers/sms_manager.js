@@ -127,7 +127,7 @@ module.exports = {
 
                 //TODO: Een generieke token nodig om door de auth van cm te komen
                 console.log(smsObject.token);
-                if (smsObject.token === '0000000-0000-0000-0000-000000000011100'){
+                if (smsObject.token === '0000000-0000-0000-0000-000000000000'){
                     console.log("Creating responses for IFTTT");
                     // Create a response with the request id and url from IFTTT.
                     let response;
@@ -165,7 +165,7 @@ module.exports = {
                     res.status(200).send(response);
                 }else {
                     if (err.error.details && err.statusCode){
-                        const apiError = new ApiError(err.error.details, err.statusCode);
+                        const apiError = new ApiError(err.error.details, 400);
                         next(apiError)
                     }
                     else {
