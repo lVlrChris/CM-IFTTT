@@ -5,9 +5,6 @@ const rp = require('request-promise');
 
 module.exports = {
     sendVoice(req, res, next) {
-
-
-
         let sender = null;
         let receiver = null;
         let body = null;

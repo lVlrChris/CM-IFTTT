@@ -5,7 +5,6 @@ const ApiError = require('../domain/ApiError');
 
 module.exports = {
     sendSms(req, res, next) {
-
         let sender = null;
         let body = null;
         let receiver = null;
