@@ -5,10 +5,10 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 // Fake values
-const fakeSender = "John";
+const fakeSender = "0031512345678";
 const fakeReceiver = "0031612345678";
 const fakeBody = "This is the body of an IFTTT test message.";
-const fakeMessagingToken = "FakeSMSKey";
+const fakeMessagingToken = "0000000-0000-0000-0000-000000000000";
 const fakeVoiceToken = "FakeVoiceKey";
 const fakeVoiceUser = "FakeVoiceUser";
 const fakeVoicePassword = "FakeVoicePassword";
