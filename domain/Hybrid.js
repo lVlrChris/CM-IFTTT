@@ -45,7 +45,7 @@ function validate(sender, receiver, body, token, appKey){
     };
 
     //Regular expression for the + in a phone number
-    const regex = new RegExp('([+]?[0-9]+)$');
+    const regex = new RegExp('^([+]?[0-9]+)$');
 
     //Schema for a hybrid message, this defines what a hybrid message should look like
     const schema = {

@@ -31,7 +31,7 @@ module.exports = {
             smsObject = new Sms(sender, receiver, body, token);
         } catch (apiError) {
             next(apiError);
-            return;
+            return
         }
 
         // convert ifttt input to CM SMS
