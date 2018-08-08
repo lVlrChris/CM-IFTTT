@@ -2,6 +2,7 @@ const request = require('request');
 const rp = require('request-promise');
 const Sms = require('../domain/Sms');
 const ApiError = require('../domain/ApiError');
+const IFTTTFormatter = require('../domain/IFTTTFormatter');
 
 module.exports = {
     sendSms(req, res, next) {
@@ -64,17 +65,6 @@ module.exports = {
         };
 
         console.log("Sending post request to CM");
-        // Send post request to CM (sending sms)
-        // request({
-        //     url: "https://gw.cmtelecom.com/v1.0/message",
-        //     method: "POST",
-        //     json: true,
-        //     body: cmSMS
-        // }, function (error, response, body){
-        //     if (error) console.log(error);
-        //     if (response) console.log(response.statusCode);
-        //     else console.log(body);
-        // });
 
         const options = {
             url: "https://gw.cmtelecom.com/v1.0/message",
@@ -88,36 +78,8 @@ module.exports = {
              //   console.log(parsedBody)
                 console.log("Creating responses for IFTTT");
                 // Create a response with the request id and url from IFTTT.
-                let response;
-                if (!req.body.ifttt_source) {
-                    console.log("No source");
-                    response = {
-                        "data": [
-                            {
-                                "id": "no id"
-                            }
-                        ]
-                    };
-                } else {
-                    if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
-                        response = {
-                            "data": [
-                                {
-                                    "id": req.body.ifttt_source.id,
-                                    "url": req.body.ifttt_source.url
-                                }
-                            ]
-                        };
-                    } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                        response = {
-                            "data": [
-                                {
-                                    "id": "no id"
-                                }
-                            ]
-                        };
-                    }
-                }
+                const formatter = new IFTTTFormatter(req.body.ifttt_source, req.body.ifttt_source.id, req.body.ifttt_source.url);
+                let response = formatter.iftttResponse();
 
                 // Send the created response.
                 res.status(200).send(response);
@@ -128,36 +90,8 @@ module.exports = {
                 if (smsObject.token === '0000000-0000-0000-0000-000000000000'){
                     console.log("Creating responses for IFTTT");
                     // Create a response with the request id and url from IFTTT.
-                    let response;
-                    if (!req.body.ifttt_source) {
-                        console.log("No source");
-                        response = {
-                            "data": [
-                                {
-                                    "id": "no id"
-                                }
-                            ]
-                        };
-                    } else {
-                        if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
-                            response = {
-                                "data": [
-                                    {
-                                        "id": req.body.ifttt_source.id,
-                                        "url": req.body.ifttt_source.url
-                                    }
-                                ]
-                            };
-                        } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                            response = {
-                                "data": [
-                                    {
-                                        "id": "no id"
-                                    }
-                                ]
-                            };
-                        }
-                    }
+                    const formatter = new IFTTTFormatter(req.body.ifttt_source, req.body.ifttt_source.id, req.body.ifttt_source.url);
+                    let response = formatter.iftttResponse();
 
                     // Send the created response.
                     res.status(200).send(response);

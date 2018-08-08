@@ -1,4 +1,4 @@
-const request = require('request');
+const IFTTTFormatter = require('../domain/IFTTTFormatter');
 const Hybrid = require('../domain/Hybrid');
 const ApiError = require('../domain/ApiError');
 const config = require('../config/config');
@@ -78,16 +78,6 @@ module.exports = {
         //Send post request to CM
         console.log(JSON.stringify(cmHYBRID));
         console.log("Sending post request to CM");
-        // Send post request to CM (sending sms)
-        // request({
-        //     url: "https://gw.cmtelecom.com/v1.0/message",
-        //     method: "POST",
-        //     json: true,
-        //     body: cmHYBRID
-        // }, function (error, response, body){
-        //     if (error) console.log(error);
-        //     else console.log(body);
-        // });
 
         const options = {
             url: "https://gw.cmtelecom.com/v1.0/message",
@@ -102,36 +92,8 @@ module.exports = {
                 //Create response for IFTTT
                 console.log("Creating responses for IFTTT");
                 // Create a response with the request id and url from IFTTT.
-                let response;
-                if (!req.body.ifttt_source) {
-                    console.log("No source");
-                    response = {
-                        "data": [
-                            {
-                                "id": "no id"
-                            }
-                        ]
-                    };
-                } else {
-                    if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
-                        response = {
-                            "data": [
-                                {
-                                    "id": req.body.ifttt_source.id,
-                                    "url": req.body.ifttt_source.url
-                                }
-                            ]
-                        };
-                    } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                        response = {
-                            "data": [
-                                {
-                                    "id": "no id"
-                                }
-                            ]
-                        };
-                    }
-                }
+                const iftttFormat = new IFTTTFormatter(req.body.ifttt_source, req.body.ifttt_source.id, req.body.ifttt_source.url);
+                let response = iftttFormat.iftttResponse();
 
                 // Send the created response.
                 res.status(200).send(response);
@@ -143,36 +105,8 @@ module.exports = {
                     //Create response for IFTTT
                     console.log("Creating responses for IFTTT");
                     // Create a response with the request id and url from IFTTT.
-                    let response;
-                    if (!req.body.ifttt_source) {
-                        console.log("No source");
-                        response = {
-                            "data": [
-                                {
-                                    "id": "no id"
-                                }
-                            ]
-                        };
-                    } else {
-                        if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
-                            response = {
-                                "data": [
-                                    {
-                                        "id": req.body.ifttt_source.id,
-                                        "url": req.body.ifttt_source.url
-                                    }
-                                ]
-                            };
-                        } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                            response = {
-                                "data": [
-                                    {
-                                        "id": "no id"
-                                    }
-                                ]
-                            };
-                        }
-                    }
+                    const iftttFormat = new IFTTTFormatter(req.body.ifttt_source, req.body.ifttt_source.id, req.body.ifttt_source.url);
+                    let response = iftttFormat.iftttResponse();
 
                     // Send the created response.
                     res.status(200).send(response);
