@@ -2,6 +2,7 @@ const request = require('request');
 const rp = require('request-promise');
 const Contact = require('../domain/Contact');
 const ApiError = require('../domain/ApiError');
+const IFTTTFormatter = require('../domain/IFTTTFormatter');
 
 function searchContact(queryString, accountID, groupID, token) {
     return new Promise((resolve, reject) => {
@@ -14,10 +15,7 @@ function searchContact(queryString, accountID, groupID, token) {
             },
             method: "GET"
         }, (error, response, body) => {
-
             try {
-
-
                 const jsonBody = JSON.parse(body);
                 if (error) console.log(error);
 
@@ -58,36 +56,8 @@ function updateContact(contact, contactID, accountID, groupID, token, res ,req, 
     rp(options)
         .then((parsedBody)=>{
             // Create a response with the request id and url from IFTTT.
-            let response;
-            if (!req.body.ifttt_source) {
-                console.log("No source");
-                response = {
-                    "data": [
-                        {
-                            "id": "no id"
-                        }
-                    ]
-                };
-            } else {
-                if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
-                    response = {
-                        "data": [
-                            {
-                                "id": req.body.ifttt_source.id,
-                                "url": req.body.ifttt_source.url
-                            }
-                        ]
-                    };
-                } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                    response = {
-                        "data": [
-                            {
-                                "id": "no id"
-                            }
-                        ]
-                    };
-                }
-            }
+            const iftttFormatter = new IFTTTFormatter(req.body.ifttt_source, req.body.ifttt_source.id, req.body.ifttt_source.url);
+            let response = iftttFormatter.iftttResponse();
 
             // Send the created response.
             res.status(200).send(response);
@@ -96,37 +66,10 @@ function updateContact(contact, contactID, accountID, groupID, token, res ,req, 
             console.log(err)
             if (token === '0000000-0000-0000-0000-000000000000') {
                 console.log("Creating responses for IFTTT");
+
                 // Create a response with the request id and url from IFTTT.
-                let response;
-                if (!req.body.ifttt_source) {
-                    console.log("No source");
-                    response = {
-                        "data": [
-                            {
-                                "id": "no id"
-                            }
-                        ]
-                    };
-                } else {
-                    if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
-                        response = {
-                            "data": [
-                                {
-                                    "id": req.body.ifttt_source.id,
-                                    "url": req.body.ifttt_source.url
-                                }
-                            ]
-                        };
-                    } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                        response = {
-                            "data": [
-                                {
-                                    "id": "no id"
-                                }
-                            ]
-                        };
-                    }
-                }
+                const iftttFormatter = new IFTTTFormatter(req.body.ifttt_source, req.body.ifttt_source.id, req.body.ifttt_source.url);
+                let response = iftttFormatter.iftttResponse();
 
                 // Send the created response.
                 res.status(200).send(response);
@@ -164,36 +107,8 @@ function createContact(contact, accountID, groupID, token, res, req, next) {
     rp(options)
         .then((parsedBody)=>{
             // Create a response with the request id and url from IFTTT.
-            let response;
-            if (!req.body.ifttt_source) {
-                console.log("No source");
-                response = {
-                    "data": [
-                        {
-                            "id": "no id"
-                        }
-                    ]
-                };
-            } else {
-                if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
-                    response = {
-                        "data": [
-                            {
-                                "id": req.body.ifttt_source.id,
-                                "url": req.body.ifttt_source.url
-                            }
-                        ]
-                    };
-                } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                    response = {
-                        "data": [
-                            {
-                                "id": "no id"
-                            }
-                        ]
-                    };
-                }
-            }
+            const iftttFormatter = new IFTTTFormatter(req.body.ifttt_source, req.body.ifttt_source.id, req.body.ifttt_source.url);
+            let response = iftttFormatter.iftttResponse();
 
             // Send the created response.
             res.status(200).send(response);
@@ -202,36 +117,8 @@ function createContact(contact, accountID, groupID, token, res, req, next) {
             if (token === '0000000-0000-0000-0000-000000000000') {
                 console.log("Creating responses for IFTTT");
                 // Create a response with the request id and url from IFTTT.
-                let response;
-                if (!req.body.ifttt_source) {
-                    console.log("No source");
-                    response = {
-                        "data": [
-                            {
-                                "id": "no id"
-                            }
-                        ]
-                    };
-                } else {
-                    if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
-                        response = {
-                            "data": [
-                                {
-                                    "id": req.body.ifttt_source.id,
-                                    "url": req.body.ifttt_source.url
-                                }
-                            ]
-                        };
-                    } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                        response = {
-                            "data": [
-                                {
-                                    "id": "no id"
-                                }
-                            ]
-                        };
-                    }
-                }
+                const iftttFormat = new IFTTTFormatter(req.body.ifttt_source, req.body.ifttt_source.id, req.body.ifttt_source.url);
+                let response = iftttFormat.iftttResponse();
 
                 // Send the created response.
                 res.status(200).send(response);
