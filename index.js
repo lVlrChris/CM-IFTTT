@@ -1,5 +1,7 @@
 // Require modules
 const express = require('express');
+const bodyParser = require('body-parser');
+const OAuth2Route = require('./routes/oauth2_route');
 const SmsRoute = require('./routes/sms_route');
 const VoiceRoute = require('./routes/voice_route');
 const StatusRoute = require('./routes/status_route');
@@ -11,6 +13,8 @@ const addContactRoute = require('./routes/addContact_route');
 // Configure app, middleware and routes
 const app = express();
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api/ifttt/v1/oauth2', OAuth2Route);
 app.use('/api/ifttt/v1/actions/send_sms', SmsRoute);
 app.use('/api/ifttt/v1/actions/send_voice_message', VoiceRoute);
 app.use('/api/ifttt/v1/status', StatusRoute);
