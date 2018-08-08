@@ -86,7 +86,6 @@ module.exports = {
             })
             .catch((err)=>{
                 //TODO: Een generieke token nodig om door de auth van cm te komen
-                console.log(smsObject.token);
                 if (smsObject.token === '0000000-0000-0000-0000-000000000000'){
                     console.log("Creating responses for IFTTT");
                     // Create a response with the request id and url from IFTTT.

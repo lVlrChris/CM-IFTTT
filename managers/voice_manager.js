@@ -87,7 +87,6 @@ module.exports = {
             })
             .catch((err)=>{
                 //TODO: Een generieke token nodig om door de auth van cm te komen
-                console.log(voiceObject.token);
                 if (voiceObject.token === '0000000-0000-0000-0000-000000000000'){
                     console.log("Creating responses for IFTTT");
                     // Create a response with the request id and url from IFTTT.
@@ -98,7 +97,7 @@ module.exports = {
                     res.status(200).send(response);
                 }
                 else {
-                    if (err.error.message){
+                    if (err.error){
                         const apiError = new ApiError(err.error.message, 400);
                         next(apiError)
                     }

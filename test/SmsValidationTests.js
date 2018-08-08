@@ -6,7 +6,7 @@ const server = require('../index');
 const smsEndpoint = "/api/ifttt/v1/actions/send_sms";
 const validIftttKey = '12345';
 const fakePhoneNumber = '0031612345678';
-const fakeToken = '0000000-0000-0000-0000-000000000000';
+const fakeToken = process.env.TEST_KEY_TOKEN || '0000000-0000-0000-0000-000000000000';
 const fakeBody = "Testeroni";
 
 //Using the chai package to call .should on responses

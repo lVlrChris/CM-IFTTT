@@ -76,7 +76,6 @@ module.exports = {
         };
         
         //Send post request to CM
-        console.log(JSON.stringify(cmHYBRID));
         console.log("Sending post request to CM");
 
         const options = {
@@ -101,6 +100,7 @@ module.exports = {
 
             //TODO: Een generieke token nodig om door de auth van cm te komen
             .catch((err)=>{
+                console.log(hybridObject.token, hybridObject.appKey);
                 if (hybridObject.token === '0000000-0000-0000-0000-000000000000'){
                     //Create response for IFTTT
                     console.log("Creating responses for IFTTT");
