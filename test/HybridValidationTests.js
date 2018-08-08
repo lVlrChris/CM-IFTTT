@@ -401,7 +401,7 @@ describe('Validation of reveiver', () => {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('"receiver" with value "0031612345678abc" fails to match the required pattern: /([+]?[0-9]+)$/');
+                res.body.errors[0].message.should.equal('"receiver" with value "0031612345678abc" fails to match the required pattern: /^([+]?[0-9]+)$/');
                 done();
             });
     });

@@ -1056,7 +1056,7 @@ describe('Validation of token', ()=>{
                     "phoneNumber": fakePhoneNumber,
                     "accountID": fakeAccountId,
                     "groupID" : fakeGroupId,
-                    "token": "string"
+                    "token": fakeToken
                 },
                 "user": {
                     "timezone": "America/Los_Angeles"
