@@ -2,22 +2,23 @@ const config = require('../config/config');
 
 
 module.exports = {
+    //This method provides an access token when the IFTTT user connects with the CM service
     authorize(req, res, next) {
 
         //Save IFTTT state
         const iftttState = req.query.state;
 
+        //The client is the IFTTT platform
         //Check Client ID match
         let clientMatch = false;
         if(req.query.client_id === config.oAuthID) {
             clientMatch = true;
         }
 
-        //User login
-        //Prompt user for IFTTT access
-        let iftttAuthorized = true;
-
+        //Base redirect URI
         let redirectURI = req.query.redirect_uri;
+
+        let iftttAuthorized = true;
         if(iftttAuthorized && clientMatch) {
             //Generate authorization token
 
