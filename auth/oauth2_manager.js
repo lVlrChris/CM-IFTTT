@@ -1,6 +1,5 @@
 const config = require('../config/config');
 
-let authToken;
 
 module.exports = {
     authorize(req, res, next) {
@@ -21,11 +20,13 @@ module.exports = {
         let redirectURI = req.query.redirect_uri;
         if(iftttAuthorized && clientMatch) {
             //Generate authorization token
-            authToken = 'notSoSecretToken';
-            redirectURI += '?code=' + authToken + '&state=' + iftttState;
+
+            redirectURI += '?code=' + config.oAuthTToken + '&state=' + iftttState;
+            console.log(redirectURI);
             res.redirect(redirectURI);
         } else {
             redirectURI += '?error=access_denied';
+            console.log(redirectURI);
             res.redirect(redirectURI)
         }
     },
@@ -41,18 +42,22 @@ module.exports = {
             redirectURI: req.body.redirect_uri
         };
 
+        console.log(requestData);
+
         //Check grant type
         let isCorrectGrantType = false;
         if(requestData.grantType === 'authorization_code') isCorrectGrantType = true;
         //Check authorization token
         let isCorrectToken = false;
-        if(requestData.code === authToken) isCorrectToken = true;
+        if(requestData.code === config.oAuthTToken) isCorrectToken = true;
         //Check client id
         let isCorrectClientID = false;
         if(requestData.clientId === config.oAuthID) isCorrectClientID = true;
         //Check client secret
         let isCorrectClientSecret = false;
-        if(requestData.clientSecret === config.oAuthID) isCorrectClientSecret = true;
+        if(requestData.clientSecret === config.oAuthSecret) isCorrectClientSecret = true;
+
+        console.log(`granttype = ${isCorrectGrantType}, token = ${isCorrectToken}, clientId = ${isCorrectClientID}, clientSecret = ${isCorrectClientSecret}`);
 
         //Respond with token type and token
         if(isCorrectGrantType && isCorrectToken && isCorrectClientID && isCorrectClientSecret) {
