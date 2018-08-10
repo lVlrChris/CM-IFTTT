@@ -29,7 +29,7 @@ router.post('/', auth, (req, res) => {
                         token: fakeMessagingToken
                     },
                     send_voice_message:{
-                        sender: fakeSender,
+                        sender: fakeReceiver,
                         body: fakeBody,
                         receiver: fakeReceiver,
                         language:'nl-NL',
