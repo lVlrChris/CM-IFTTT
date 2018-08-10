@@ -718,7 +718,7 @@ describe('Validation of token',()=>{
                     "sender" : fakePhoneNumber,
                     "body" : fakeBody,
                     "receiver" : fakePhoneNumber,
-                    "token" : 'a'
+                    "token" : fakeCMToken
                 },
                 "ifttt_source" : {
                     "id" : "test",
