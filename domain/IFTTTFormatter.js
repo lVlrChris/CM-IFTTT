@@ -1,8 +1,6 @@
 class IFTTTFormatter {
-    constructor(source,id,url){
+    constructor(source){
         this.source = source;
-        this.id = id;
-        this.url = url;
     }
 
     iftttResponse(){
@@ -17,16 +15,16 @@ class IFTTTFormatter {
                 ]
             };
         } else {
-            if (typeof this.id !== 'undefined' && typeof this.url !== 'undefined') {
+            if (typeof this.source.id !== 'undefined' && typeof this.source.url !== 'undefined') {
                 response = {
                     "data": [
                         {
-                            "id": this.id,
-                            "url": this.url
+                            "id": this.source.id,
+                            "url": this.source.url
                         }
                     ]
                 };
-            } else if (typeof this.id !== 'undefined') {
+            } else if (typeof this.source.id !== 'undefined') {
                 response = {
                     "data": [
                         {

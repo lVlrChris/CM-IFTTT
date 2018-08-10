@@ -79,8 +79,8 @@ module.exports = {
             .then((parsedBody)=>{
                 console.log("Creating responses for IFTTT");
                 // Create a response with the request id and url from IFTTT.
-                const iftttFormat = new IFTTTFormatter(req.body.ifttt_source, req.body.ifttt_source.id, req.body.ifttt_source.url);
-                let response = iftttFormat.iftttResponse();
+                const formatter = new IFTTTFormatter(req.body.ifttt_source);
+                let response = formatter.iftttResponse();
 
                 // Send the created response.
                 res.status(200).send(response);
@@ -90,8 +90,8 @@ module.exports = {
                 if (voiceObject.token === '0000000-0000-0000-0000-000000000000'){
                     console.log("Creating responses for IFTTT");
                     // Create a response with the request id and url from IFTTT.
-                    const iftttFormat = new IFTTTFormatter(req.body.ifttt_source, req.body.ifttt_source.id, req.body.ifttt_source.url);
-                    let response = iftttFormat.iftttResponse();
+                    const formatter = new IFTTTFormatter(req.body.ifttt_source);
+                    let response = formatter.iftttResponse();
 
                     // Send the created response.
                     res.status(200).send(response);
