@@ -31,6 +31,7 @@ class Sms{
                 throw e;
             }
             //Throws an new ApiError with the details of a joi error.
+            console.log("domain throws error");
             throw (new ApiError(e.details[0].message, 400));
         }
 
@@ -48,7 +49,7 @@ function validate(sender, receiver, body, token) {
     };
 
     //Regular expression for the + in a phone number
-    const regex = new RegExp('([+]?[0-9]+)$');
+    const regex = new RegExp('^([+]?[0-9]+)$');
 
     //Schema for a sms, this defines what an sms should look like
     //Body limit is set to 1000 characters, messages above 153 characters the message will be broken up in parts.

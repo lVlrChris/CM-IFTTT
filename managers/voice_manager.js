@@ -1,12 +1,10 @@
-const request = require('request');
 const Voice = require("../domain/Voice");
 const ApiError = require('../domain/ApiError');
+const rp = require('request-promise');
+const IFTTTFormatter = require('../domain/IFTTTFormatter');
 
 module.exports = {
     sendVoice(req, res, next) {
-
-
-
         let sender = null;
         let receiver = null;
         let body = null;
@@ -63,61 +61,52 @@ module.exports = {
             }
         };
 
+
         console.log(cmVOICE);
         console.log("Sending post request to CM");
-        // Send post request to CM (sending sms)
-        request({
-            url: "https://api.cmtelecom.com/voiceapi/v2/Notification",
-            headers:  {
-                "X-CM-PRODUCTTOKEN" : voiceObject.token,
 
-            },
+        const options = {
+            url: "https://api.cmtelecom.com/voiceapi/v2/Notification",
             method: "POST",
+            headers: {
+                'X-CM-PRODUCTTOKEN': voiceObject.token,
+            },
             json: true,
             body: cmVOICE
-        }, function (error, response, body){
-            console.log('response status : ' + response.statusCode);
-            if (error) {
-                console.log('error : ' + error);
-            } else {
-                console.log(body);
-            }
-        });
+        };
 
-        console.log("Creating responses for IFTTT");
-        // Create a response with the request id and url from IFTTT.
-        let response;
-        if (!req.body.ifttt_source) {
-            console.log("No source");
-            response = {
-                "data": [
-                    {
-                        "id": "no id"
+        rp(options)
+            .then((parsedBody)=>{
+                console.log("Creating responses for IFTTT");
+                // Create a response with the request id and url from IFTTT.
+                const formatter = new IFTTTFormatter(req.body.ifttt_source);
+                let response = formatter.iftttResponse();
+
+                // Send the created response.
+                res.status(200).send(response);
+            })
+            .catch((err)=>{
+                //TODO: Een generieke token nodig om door de auth van cm te komen
+                if (voiceObject.token === '0000000-0000-0000-0000-000000000000'){
+                    console.log("Creating responses for IFTTT");
+                    // Create a response with the request id and url from IFTTT.
+                    const formatter = new IFTTTFormatter(req.body.ifttt_source);
+                    let response = formatter.iftttResponse();
+
+                    // Send the created response.
+                    res.status(200).send(response);
+                }
+                else {
+                    if (err.error){
+                        const apiError = new ApiError(err.error.message, 400);
+                        next(apiError)
                     }
-                ]
-            };
-        } else {
-            if (typeof req.body.ifttt_source.id !== 'undefined' && typeof req.body.ifttt_source.url !== 'undefined') {
-                response = {
-                    "data": [
-                        {
-                            "id": req.body.ifttt_source.id,
-                            "url": req.body.ifttt_source.url
-                        }
-                    ]
-                };
-            } else if (typeof req.body.ifttt_source.id !== 'undefined') {
-                response = {
-                    "data": [
-                        {
-                            "id": "no id"
-                        }
-                    ]
-                };
-            }
-        }
+                    else {
+                        const apiError = new ApiError("Something went wrong when sending the POST request to cm.", 400);
+                        next(apiError)
+                    }
+                }
+            });
 
-        // Send the created response.
-        res.status(200).send(response);
     }
 };

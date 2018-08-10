@@ -5,7 +5,7 @@ const server = require('../index');
 //Test constants
 const localIftttKey = '12345';
 const fakePhoneNumber = '0031612345678';
-const fakeCMToken = '1t2o3k4e5n';
+const fakeCMToken = '0000000-0000-0000-0000-000000000000';
 
 //call should function for starting point
 chai.should();

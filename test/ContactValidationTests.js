@@ -6,12 +6,12 @@ const server = require('../index');
 const validIftttKey = '12345';
 const contactEndpoint = '/api/ifttt/v1/actions/add_contact';
 const fakePhoneNumber = '0031612345678';
-const fakeToken = '0000000-0000-0000-0000-000000000000';
+const fakeToken = process.env.TEST_KEY_TOKEN || '0000000-0000-0000-0000-000000000000';
 const fakeMAil = "Testeroni@test.test";
 const fakeLastname = "Klaas";
 const fakeFirstname = "Jan-Peter";
-const fakeAccountId = '0000000-0000-0000-0000-000000000000';
-const fakeGroupId = '0000000-0000-0000-0000-000000000000';
+const fakeAccountId = process.env.TEST_ACCOUNTID || '0000000-0000-0000-0000-000000000000';
+const fakeGroupId = process.env.TEST_GROUPID ||  '0000000-0000-0000-0000-000000000000';
 const fakeInsertion = "van";
 
 
@@ -54,9 +54,9 @@ describe('Validation of the actionFields key', () => {
                     "firstName": fakeFirstname,
                     "lastName": fakeLastname,
                     "insertion": fakeInsertion,
-                    "groupID": fakeGroupId,
                     "phoneNumber": fakePhoneNumber,
                     "accountID": fakeAccountId,
+                    "groupID": fakeGroupId,
                     "token": fakeToken
                 },
                 "ifttt_source" : {
@@ -549,7 +549,7 @@ describe('Validation of phonenumber', ()=>{
                     "firstName": fakeFirstname,
                     "lastName": fakeLastname,
                     "insertion": fakeInsertion,
-                    "groupID": "string",
+                    "groupID": fakeGroupId,
                     "phoneNumber": fakePhoneNumber,
                     "accountID": fakeAccountId,
                     "token": fakeToken
@@ -803,7 +803,7 @@ describe('Validation of account id', ()=> {
                     "insertion": fakeInsertion,
                     "groupID": fakeGroupId,
                     "phoneNumber": fakePhoneNumber,
-                    "accountID": "string",
+                    "accountID": fakeAccountId,
                     "token": fakeToken
                 },
                 "user": {
@@ -929,7 +929,7 @@ describe('Validation of group id', ()=>{
                     "insertion": fakeInsertion,
                     "phoneNumber": fakePhoneNumber,
                     "accountID": fakeAccountId,
-                    "groupID" : "string",
+                    "groupID" : fakeGroupId,
                     "token": fakeToken
                 },
                 "user": {
@@ -1056,7 +1056,7 @@ describe('Validation of token', ()=>{
                     "phoneNumber": fakePhoneNumber,
                     "accountID": fakeAccountId,
                     "groupID" : fakeGroupId,
-                    "token": "string"
+                    "token": fakeToken
                 },
                 "user": {
                     "timezone": "America/Los_Angeles"

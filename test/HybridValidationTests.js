@@ -5,8 +5,8 @@ const server = require('../index');
 //Test constants
 const localIftttKey = '12345';
 const fakePhoneNumber = '0031612345678';
-const fakeCMToken = '1t2o3k4e5n';
-const fakeAppKey = '1s2h3a4r5e6d7k8e9y';
+const fakeCMToken = process.env.TEST_KEY_TOKEN || '0000000-0000-0000-0000-000000000000';
+const fakeAppKey = process.env.TEST_APPKEY || '1s2h3a4r5e6d7k8e9y';
 
 //call should function for starting point
 chai.should();
@@ -401,7 +401,7 @@ describe('Validation of reveiver', () => {
                 res.body.should.have.property('errors');
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('"receiver" with value "0031612345678abc" fails to match the required pattern: /([+]?[0-9]+)$/');
+                res.body.errors[0].message.should.equal('"receiver" with value "0031612345678abc" fails to match the required pattern: /^([+]?[0-9]+)$/');
                 done();
             });
     });
