@@ -7,6 +7,7 @@ const TestRoute = require('./routes/test_setup_route');
 const LanguageRoute = require('./routes/language_route');
 const hybridMessageRoute = require('./routes/hybrid_messaging_route');
 const addContactRoute = require('./routes/addContact_route');
+const inboundSmsRoute = require('./routes/inbound_sms_route');
 
 // Configure app, middleware and routes
 const app = express();
@@ -18,6 +19,7 @@ app.use('/api/ifttt/v1/test/setup', TestRoute);
 app.use('/api/ifttt/v1/actions/send_voice_message/fields/language/options',LanguageRoute);
 app.use('/api/ifttt/v1/actions/send_hybrid_message', hybridMessageRoute);
 app.use('/api/ifttt/v1/actions/add_contact', addContactRoute);
+app.use('/api/ifttt/v1/triggers/inbound_sms', inboundSmsRoute);
 
 //Catch all errors
 app.use((err, req, res, next) => {
