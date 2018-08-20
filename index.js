@@ -24,6 +24,7 @@ app.use('/api/ifttt/v1/actions/send_voice_message/fields/language/options',Langu
 app.use('/api/ifttt/v1/actions/send_hybrid_message', hybridMessageRoute);
 app.use('/api/ifttt/v1/actions/add_contact', addContactRoute);
 app.use('/api/ifttt/v1/triggers/inbound_sms', inboundSmsRoute);
+app.use('/api/cm/v1/triggers/inbound_sms', inboundSmsReplyRoute);
 
 //Catch all errors
 app.use((err, req, res, next) => {

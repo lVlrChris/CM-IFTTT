@@ -5,3 +5,5 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 router.post('/', auth, inboundSms.getInboundSms());
+
+module.exports = router;
