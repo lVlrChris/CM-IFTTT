@@ -10,10 +10,10 @@ module.exports = {
         let receiver = null;
         let specifiedSender = null;
 
-        if (typeof req.body.actionFields !== 'undefined') {
+        if (typeof req.body.triggerFields !== 'undefined') {
 
-            specifiedSender = req.body.actionFields.specified_sender || "";
-            receiver = req.body.actionFields.receiver || "";
+            specifiedSender = req.body.triggerFields.specified_sender || "";
+            receiver = req.body.triggerFields.receiver || "";
 
         } else {
             next(new ApiError('actionFields key not provided.', 400));
