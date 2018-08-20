@@ -51,7 +51,7 @@ module.exports = {
                         "id": "14b9-1fd2-acaa-5df5",
                         "timestamp": 1383597267
                     }
-                }
+                },
                 {
                     "receiver": "http://example.com/images/128",
                     "specified_sender": "banksy, brooklyn",
@@ -70,7 +70,7 @@ module.exports = {
                         "id": "14b9-1fd2-acaa-5df5",
                         "timestamp": 1383597267
                     }
-                }
+                },
                 {
                     "receiver": "http://example.com/images/128",
                     "specified_sender": "banksy, brooklyn",
