@@ -29,69 +29,6 @@ module.exports = {
             return;
         }
 
-        // let fakedata= {
-        //     "data": [
-        //
-        //         {
-        //             "receiver": "http://example.com/images/128",
-        //             "specified_sender": "banksy, brooklyn",
-        //             "posted_at": "2013-11-04T09:23:00-07:00",
-        //             "meta": {
-        //                 "id": "14b9-1fd2-acaa-5df5",
-        //                 "timestamp": 1383597267
-        //             }
-        //         },
-        //         {
-        //
-        //             "receiver": "http://example.com/images/128",
-        //             "specified_sender": "banksy, brooklyn",
-        //             "posted_at": "2013-11-04T09:23:00-07:00",
-        //             "meta": {
-        //                 "id": "14b9-1fd2-acaa-5df5",
-        //                 "timestamp": 1383597267
-        //             }
-        //         },
-        //         {
-        //             "receiver": "http://example.com/images/128",
-        //             "specified_sender": "banksy, brooklyn",
-        //             "posted_at": "2013-11-04T09:23:00-07:00",
-        //             "meta": {
-        //                 "id": "14b9-1fd2-acaa-5df5",
-        //                 "timestamp": 1383597267
-        //             }
-        //         },
-        //         {
-        //
-        //             "receiver": "http://example.com/images/128",
-        //             "specified_sender": "banksy, brooklyn",
-        //             "posted_at": "2013-11-04T09:23:00-07:00",
-        //             "meta": {
-        //                 "id": "14b9-1fd2-acaa-5df5",
-        //                 "timestamp": 1383597267
-        //             }
-        //         },
-        //         {
-        //             "receiver": "http://example.com/images/128",
-        //             "specified_sender": "banksy, brooklyn",
-        //             "posted_at": "2013-11-04T09:23:00-07:00",
-        //             "meta": {
-        //                 "id": "14b9-1fd2-acaa-5df5",
-        //                 "timestamp": 1383597267
-        //             }
-        //         },
-        //         {
-        //
-        //             "receiver": "http://example.com/images/128",
-        //             "specified_sender": "banksy, brooklyn",
-        //             "posted_at": "2013-11-04T09:23:00-07:00",
-        //             "meta": {
-        //                 "id": "14b9-1fd2-acaa-5df5",
-        //                 "timestamp": 1383597267
-        //             }
-        //         }
-        //     ]
-        // };
-
         let fakeData = {
             data : [
 
@@ -100,7 +37,6 @@ module.exports = {
 
         for (let i = 0; i < 50; i++) {
             fakeData.data.push({
-                "trigger_identity": "2cb79d6fca9b72d459f66bc733ae6f1a08ca03f0",
                             "receiver": "http://example.com/images/128",
                             "specified_sender": "banksy, brooklyn",
                             "created_at": "2013-11-04T09:23:00-07:00",
