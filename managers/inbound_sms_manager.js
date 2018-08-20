@@ -30,9 +30,47 @@ module.exports = {
             return;
         }
 
-        let fakedata2 = {
+        let fakedata= {
             "data": [
 
+                {
+                    "receiver": "http://example.com/images/128",
+                    "specified_sender": "banksy, brooklyn",
+                    "posted_at": "2013-11-04T09:23:00-07:00",
+                    "meta": {
+                        "id": "14b9-1fd2-acaa-5df5",
+                        "timestamp": 1383597267
+                    }
+                },
+                {
+
+                    "receiver": "http://example.com/images/128",
+                    "specified_sender": "banksy, brooklyn",
+                    "posted_at": "2013-11-04T09:23:00-07:00",
+                    "meta": {
+                        "id": "14b9-1fd2-acaa-5df5",
+                        "timestamp": 1383597267
+                    }
+                }
+                {
+                    "receiver": "http://example.com/images/128",
+                    "specified_sender": "banksy, brooklyn",
+                    "posted_at": "2013-11-04T09:23:00-07:00",
+                    "meta": {
+                        "id": "14b9-1fd2-acaa-5df5",
+                        "timestamp": 1383597267
+                    }
+                },
+                {
+
+                    "receiver": "http://example.com/images/128",
+                    "specified_sender": "banksy, brooklyn",
+                    "posted_at": "2013-11-04T09:23:00-07:00",
+                    "meta": {
+                        "id": "14b9-1fd2-acaa-5df5",
+                        "timestamp": 1383597267
+                    }
+                }
                 {
                     "receiver": "http://example.com/images/128",
                     "specified_sender": "banksy, brooklyn",
@@ -55,35 +93,14 @@ module.exports = {
             ]
         };
 
-        let fakedata1 = {
-            "data": [
-                {
-                    "receiver": "http://example.com/images/128",
-                    "specified_sender": "banksy, brooklyn",
-                    "posted_at": "2013-11-04T09:23:00-07:00",
-                    "meta": {
-                        "id": "14b9-1fd2-acaa-5df5",
-                        "timestamp": 1383597267
-                    }
-                }
-            ]
+        let respons = {
+
         };
 
-        if (limit === 0){
-            res.status(200).send({
-            data : [
+        for (let i = 0; i < limit; i++){
+            respons.append(fakedata[i]);
+        }
 
-            ]
-            })
-        }
-        if (limit === 1){
-            res.status(200).send(fakedata1)
-        }
-        if (limit === 2){
-            res.status(200).send(fakedata2)
-        }
-        else {
-            res.sendStatus(200)
-        }
+        res.status(200).send(respons);
     }
 };
