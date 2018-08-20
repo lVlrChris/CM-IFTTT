@@ -6,7 +6,7 @@ const IFTTTFormatter = require('../domain/IFTTTFormatter');
 module.exports = {
     getInboundSms(req, res, next) {
 
-        let limit = req.body.limit
+        let limit = req.body.limit || ""
 
         let receiver = null;
         let specifiedSender = null;
@@ -93,13 +93,10 @@ module.exports = {
             ]
         };
 
-        let respons = {
-
-        };
-
-        for (let i = 0; i < limit; i++){
-            respons.append(fakedata[i]);
+        if (limit === ""){
+            limit = 50;
         }
+        let respons = fakedata.slice(0,limit);
 
         res.status(200).send(respons);
     }
