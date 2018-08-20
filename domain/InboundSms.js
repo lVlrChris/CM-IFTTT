@@ -30,3 +30,5 @@ function validate(receiver){
     //Validate voice message and return result
     return joi.validate(inboundObject,schema);
 }
+
+module.exports = InboundSms;
