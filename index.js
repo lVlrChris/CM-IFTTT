@@ -10,6 +10,7 @@ const LanguageRoute = require('./routes/language_route');
 const hybridMessageRoute = require('./routes/hybrid_messaging_route');
 const addContactRoute = require('./routes/addContact_route');
 const inboundSmsRoute = require('./routes/inbound_sms_route');
+const inboundSmsReplyRoute = require('./routes/inbound_sms_reply_route');
 
 // Configure app, middleware and routes
 const app = express();
