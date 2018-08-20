@@ -30,6 +30,60 @@ module.exports = {
             return;
         }
 
-        res.sendStatus(200);
+        let fakedata2 = {
+            "data": [
+
+                {
+                    "receiver": "http://example.com/images/128",
+                    "specified_sender": "banksy, brooklyn",
+                    "posted_at": "2013-11-04T09:23:00-07:00",
+                    "meta": {
+                        "id": "14b9-1fd2-acaa-5df5",
+                        "timestamp": 1383597267
+                    }
+                },
+                {
+
+                    "receiver": "http://example.com/images/128",
+                    "specified_sender": "banksy, brooklyn",
+                    "posted_at": "2013-11-04T09:23:00-07:00",
+                    "meta": {
+                        "id": "14b9-1fd2-acaa-5df5",
+                        "timestamp": 1383597267
+                    }
+                }
+            ]
+        };
+
+        let fakedata1 = {
+            "data": [
+                {
+                    "receiver": "http://example.com/images/128",
+                    "specified_sender": "banksy, brooklyn",
+                    "posted_at": "2013-11-04T09:23:00-07:00",
+                    "meta": {
+                        "id": "14b9-1fd2-acaa-5df5",
+                        "timestamp": 1383597267
+                    }
+                }
+            ]
+        };
+
+        if (limit === 0){
+            res.status(200).send({
+            data : [
+
+            ]
+            })
+        }
+        if (limit === 1){
+            res.status(200).send(fakedata1)
+        }
+        if (limit === 2){
+            res.status(200).send(fakedata2)
+        }
+        else {
+            res.sendStatus(200)
+        }
     }
 };
