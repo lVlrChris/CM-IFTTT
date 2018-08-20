@@ -2,14 +2,17 @@ const joi = require('joi');
 const ApiError = require('../domain/ApiError');
 class InboundSms {
 
-    constructor(receiver){
+    constructor(receiver,specifiedSender){
 
-        const { error } = validate(receiver);
-        if(error) throw error;
+        try {
+            const {error} = validate(receiver,specifiedSender);
+            if (error) throw error;
 
-        this.receiver = receiver;
-    }catch (e) {
-        throw (new ApiError(e.details[0].message, 400));
+            this.receiver = receiver;
+            this.specifiedSender = specifiedSender
+        }catch (e) {
+            throw (new ApiError(e.details[0].message, 400));
+        }
     }
 
 
@@ -17,14 +20,16 @@ class InboundSms {
 }
 
 //Validate function for a voice object
-function validate(receiver){
-    //Voice object, used for checking if the object matches the schema
+function validate(receiver,specifiedSender){
+    //Voice object, used for specifiedSenderchecking if the object matches the schema
     const inboundObject = {
         receiver: receiver,
+        specifiedSender: specifiedSender
     };
 
     const schema = {
         receiver: joi.string().required(),
+        specifiedSender: joi.string().optional()
     };
 
     //Validate voice message and return result
