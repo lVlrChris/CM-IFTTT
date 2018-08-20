@@ -57,7 +57,9 @@ router.post('/', auth, (req, res) => {
                     number_validation:{
                         phoneNumber: fakeReceiver,
                         phoneToken: 'FakePhoneToken'
-                    },
+                    }
+                },
+                triggers:{
                     inbound_sms : {
                         receiver : "fake",
                         specified_sender : 'fake'
