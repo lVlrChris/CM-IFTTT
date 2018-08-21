@@ -19,7 +19,7 @@ class InboundSms {
 
 }
 
-//Validate function for a voice object
+//Validate function for a InboundSms object
 function validate(receiver,specifiedSender){
     //Voice object, used for specifiedSenderchecking if the object matches the schema
     const inboundObject = {
