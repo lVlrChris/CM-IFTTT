@@ -3,32 +3,54 @@ const db = require('./db_connection');
 module.exports = {
     //Create inbound sms entry
     createInboundSms(inboundReplySms) {
-
-        const queryText = `INSERT INTO inbound_reply_sms (replyid, receiver, sender, message, reference, productkey) 
-        VALUES ($1, $2, $3, $4, $5, $6) RETURNING inbound_reply_sms.id`;
+        const queryText = `INSERT INTO inbound_reply_sms (replyid, receiver, sender, message, reference, productkey, datesend) 
+        VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING inbound_reply_sms.id`;
         const values = [inboundReplySms.replyId,
         inboundReplySms.receiver,
         inboundReplySms.sender,
         inboundReplySms.message,
         inboundReplySms.reference,
-        inboundReplySms.productKey];
+        inboundReplySms.productKey,
+        inboundReplySms.datesend];
 
         db.query(queryText, values, (err, res) => {
             if(err) {
                 console.log(err.stack);
             } else {
                 console.log(res.rows);
+                //TODO return rowid's
             }
         });
     },
 
     //Get all inbound sms entries (from a certain user account)
-    getInboundSms() {
+    getAllInboundSms(productKey) {
+        const queryText = `SELECT * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 ORDER BY inbound_reply_sms.datesend DESC LIMIT 50`;
+        const values = [productKey];
 
+        db.query(queryText, values, (err, res) => {
+            if(err) {
+                console.log(err.stack);
+            } else {
+                console.log(res.rows);
+                //TODO return rows as objects
+            }
+        });
     },
 
     //Get inbound sms entries from a specified sender (from a certain user account)
-    getInboundSms(sender) {
+    getInboundSms(productKey, sender) {
+        const queryText = `SELECT * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 AND inbound_reply_sms.sender = $2 
+        ORDER BY inbound_reply_sms.datesend DESC LIMIT 50`;
+        const values = [productKey, sender];
 
+        db.query(queryText, values, (err, res) => {
+            if (err) {
+                console.log(err.stack);
+            } else {
+                console.log(res.rows);
+                //TODO return rows as objects
+            }
+        })
     }
 };

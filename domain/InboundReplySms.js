@@ -2,9 +2,9 @@ const ApiError = require('./ApiError');
 const joi = require('joi');
 
 class InboundReplySms {
-    constructor(replyId, receiver, sender, message, reference, productKey){
+    constructor(replyId, receiver, sender, message, reference, productKey, datesend){
         try {
-            const {error} = validate(replyId, receiver, sender, message, reference, productKey);
+            const {error} = validate(replyId, receiver, sender, message, reference, productKey, datesend);
             if (error) throw error;
 
             this.replyId = replyId;
@@ -12,7 +12,8 @@ class InboundReplySms {
             this.sender = sender;
             this.message = message;
             this.reference = reference;
-            this.productKey = productKey
+            this.productKey = productKey;
+            this.datesend = datesend;
         } catch (e) {
             throw (new ApiError(e.details[0].message, 400));
         }
@@ -20,7 +21,7 @@ class InboundReplySms {
 }
 
 //Validator for the InboundReplySms object
-function validate(replyId, receiver, sender, message, reference, productKey) {
+function validate(replyId, receiver, sender, message, reference, productKey, datesend) {
     //Check object with chema
     const inboundReplySmsObject = {
         replyId: replyId,
@@ -28,7 +29,8 @@ function validate(replyId, receiver, sender, message, reference, productKey) {
         sender: sender,
         message: message,
         reference: reference,
-        productKey: productKey
+        productKey: productKey,
+        datesend: datesend,
     };
 
     const schema = {
@@ -37,7 +39,8 @@ function validate(replyId, receiver, sender, message, reference, productKey) {
         sender: joi.string().required(),
         message: joi.string().required(),
         reference: joi.string().required(),
-        productKey: joi.string().required()
+        productKey: joi.string().required(),
+        datesend: joi.date().iso()
     };
 
     return joi.validate(inboundReplySmsObject, schema);
