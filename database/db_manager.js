@@ -1,4 +1,5 @@
 const db = require('./db_connection');
+const InboundReplySms = require('../domain/InboundReplySms');
 
 module.exports = {
     //Create inbound sms entry
@@ -18,7 +19,6 @@ module.exports = {
                 console.log(err.stack);
             } else {
                 console.log(res.rows);
-                //TODO return rowid's
             }
         });
     },
@@ -28,13 +28,32 @@ module.exports = {
         const queryText = `SELECT * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 ORDER BY inbound_reply_sms.datesend DESC LIMIT 50`;
         const values = [productKey];
 
-        db.query(queryText, values, (err, res) => {
-            if(err) {
-                console.log(err.stack);
-            } else {
-                console.log(res.rows);
-                //TODO return rows as objects
-            }
+        return new Promise((resolve, reject) => {
+
+            db.query(queryText, values, (err, res) => {
+                if (err) {
+                    //TODO: Reject with ApiError?
+                    reject(err.stack);
+                    console.log(err.stack);
+                } else {
+                    let results = [];
+
+                    //Loop through results and create objects for every row.
+                    for (let i = 0; i < res.rows.length; i++) {
+                        const resultObject = new InboundReplySms(res.rows[i].replyid,
+                            res.rows[i].receiver,
+                            res.rows[i].sender,
+                            res.rows[i].message,
+                            res.rows[i].reference,
+                            res.rows[i].productkey,
+                            res.rows[i].datesend);
+
+                        results.push(resultObject);
+                    }
+
+                    resolve(results);
+                }
+            });
         });
     },
 
@@ -44,13 +63,32 @@ module.exports = {
         ORDER BY inbound_reply_sms.datesend DESC LIMIT 50`;
         const values = [productKey, sender];
 
-        db.query(queryText, values, (err, res) => {
-            if (err) {
-                console.log(err.stack);
-            } else {
-                console.log(res.rows);
-                //TODO return rows as objects
-            }
-        })
+        return new Promise((resolve, reject) => {
+
+            db.query(queryText, values, (err, res) => {
+                if (err) {
+                    //TODO: Reject with ApiError?
+                    reject(err.stack);
+                    console.log(err.stack);
+                } else {
+                    let results = [];
+
+                    //Loop through results and create objects for every row.
+                    for (let i = 0; i < res.rows.length; i++) {
+                        const resultObject = new InboundReplySms(res.rows[i].replyid,
+                            res.rows[i].receiver,
+                            res.rows[i].sender,
+                            res.rows[i].message,
+                            res.rows[i].reference,
+                            res.rows[i].productkey,
+                            res.rows[i].datesend);
+
+                        results.push(resultObject);
+                    }
+
+                    resolve(results);
+                }
+            });
+        });
     }
 };
