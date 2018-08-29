@@ -11,10 +11,8 @@ module.exports = {
         let specifiedSender = null;
 
         if (typeof req.body.triggerFields !== 'undefined') {
-
             specifiedSender = req.body.triggerFields.specified_sender || "";
             receiver = req.body.triggerFields.receiver || "";
-
         } else {
             next(new ApiError('triggerFields key not provided.', 400));
             return;
@@ -29,11 +27,7 @@ module.exports = {
             return;
         }
 
-        let fakeData = {
-            data : [
-
-              ]
-        };
+        let fakeData = { data : [] };
 
         for (let i = 0; i < 50; i++) {
             fakeData.data.push({
@@ -50,17 +44,11 @@ module.exports = {
         console.log("fakedatalength = " + fakeData.data.length);
 
         let limit = req.body.limit;
-
-
         if (limit === undefined){
             limit = 50;
         }
-        let response = {
-            data : [
 
-            ]
-        };
-
+        let response = { data : [] };
         console.log("limit is " +  limit);
         for (let i = 0; i < limit; i++) {
             if (fakeData.data.length > i){
