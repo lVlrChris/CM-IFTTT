@@ -26,7 +26,9 @@ module.exports = {
 
     //Get all inbound sms entries (from a certain user account)
     getAllInboundSms(productKey, limit) {
-        const queryText = `SELECT * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 ORDER BY inbound_reply_sms.datesend DESC LIMIT $2`;
+        const queryText = `SELECT id, replyid, receiver, sender, message, reference, productkey, trim(both '"' from to_json(datesend)::text) as datesend 
+        FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 ORDER BY inbound_reply_sms.datesend DESC LIMIT $2;`;
+        //const queryText = `SELECT * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 ORDER BY inbound_reply_sms.datesend DESC LIMIT $2`;
         const values = [productKey, limit];
 
         return new Promise((resolve, reject) => {
@@ -58,8 +60,10 @@ module.exports = {
 
     //Get inbound sms entries from a specified sender (from a certain user account)
     getInboundSms(productKey, sender, limit) {
-        const queryText = `SELECT * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 AND inbound_reply_sms.sender = $2 
-        ORDER BY inbound_reply_sms.datesend DESC LIMIT $3`;
+        const queryText = `SELECT id, replyid, receiver, sender, message, reference, productkey, trim(both '"' from to_json(datesend)::text) as datesend 
+        FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 AND inbound_reply_sms.sender = $2 ORDER BY inbound_reply_sms.datesend DESC LIMIT $3;`;
+        //const queryText = `SELECT * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 AND inbound_reply_sms.sender = $2
+        //ORDER BY inbound_reply_sms.datesend DESC LIMIT $3`;
         const values = [productKey, sender, limit];
 
         return new Promise((resolve, reject) => {
