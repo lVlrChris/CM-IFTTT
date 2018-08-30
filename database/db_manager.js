@@ -1,5 +1,6 @@
 const db = require('./db_connection');
 const InboundReplySms = require('../domain/InboundReplySms');
+const ApiError = require('../domain/ApiError');
 
 module.exports = {
     //Create inbound sms entry
@@ -25,16 +26,14 @@ module.exports = {
 
     //Get all inbound sms entries (from a certain user account)
     getAllInboundSms(productKey) {
-        const queryText = `SELECT * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 ORDER BY inbound_reply_sms.datesend DESC LIMIT 50`;
+        const queryText = `SELEC * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 ORDER BY inbound_reply_sms.datesend DESC LIMIT 50`;
         const values = [productKey];
 
         return new Promise((resolve, reject) => {
 
             db.query(queryText, values, (err, res) => {
                 if (err) {
-                    //TODO: Reject with ApiError?
-                    reject(err.stack);
-                    console.log(err.stack);
+                    reject(new ApiError(err.message, 500));
                 } else {
                     let results = [];
 
@@ -67,9 +66,7 @@ module.exports = {
 
             db.query(queryText, values, (err, res) => {
                 if (err) {
-                    //TODO: Reject with ApiError?
-                    reject(err.stack);
-                    console.log(err.stack);
+                    reject(new ApiError(err.message, 500));
                 } else {
                     let results = [];
 
