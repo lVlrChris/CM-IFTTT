@@ -25,9 +25,9 @@ module.exports = {
     },
 
     //Get all inbound sms entries (from a certain user account)
-    getAllInboundSms(productKey) {
-        const queryText = `SELEC * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 ORDER BY inbound_reply_sms.datesend DESC LIMIT 50`;
-        const values = [productKey];
+    getAllInboundSms(productKey, limit) {
+        const queryText = `SELECT * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 ORDER BY inbound_reply_sms.datesend DESC LIMIT $2`;
+        const values = [productKey, limit];
 
         return new Promise((resolve, reject) => {
 
@@ -57,10 +57,10 @@ module.exports = {
     },
 
     //Get inbound sms entries from a specified sender (from a certain user account)
-    getInboundSms(productKey, sender) {
+    getInboundSms(productKey, sender, limit) {
         const queryText = `SELECT * FROM inbound_reply_sms WHERE inbound_reply_sms.productkey = $1 AND inbound_reply_sms.sender = $2 
-        ORDER BY inbound_reply_sms.datesend DESC LIMIT 50`;
-        const values = [productKey, sender];
+        ORDER BY inbound_reply_sms.datesend DESC LIMIT $3`;
+        const values = [productKey, sender, limit];
 
         return new Promise((resolve, reject) => {
 
