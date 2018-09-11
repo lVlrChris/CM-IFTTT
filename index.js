@@ -1,6 +1,7 @@
 // Require modules
 const express = require('express');
 const bodyParser = require('body-parser');
+require('body-parser-xml')(bodyParser);
 const OAuth2Route = require('./routes/oauth2_route');
 const SmsRoute = require('./routes/sms_route');
 const VoiceRoute = require('./routes/voice_route');
@@ -16,6 +17,7 @@ const inboundSmsReplyRoute = require('./routes/inbound_sms_reply_route');
 const app = express();
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.xml());
 app.use('/api/ifttt/v1/oauth2', OAuth2Route);
 app.use('/api/ifttt/v1/actions/send_sms', SmsRoute);
 app.use('/api/ifttt/v1/actions/send_voice_message', VoiceRoute);
