@@ -23,26 +23,30 @@ chai.use(chaiHttp);
 
 describe('Validation of the actionFields key', () => {
     it('should respond status 400 when the actionFields key is not provided', (done) => {
-        chai.request(server)
-            .post(contactEndpoint)
-            .set('IFTTT-Service-Key', validIftttKey)
-            .send({
-                "ifttt_source": {
-                    "id": "2",
-                    "url": "https://ifttt.com/myrecipes/personal/2"
-                },
-                "user": {
-                    "timezone": "Pacific Time (US & Canada)"
-                }
-            })
-            .end(function (err, res) {
-                res.should.have.status(400);
-                res.body.should.have.property('errors');
-                res.body.errors[0].should.have.property('status');
-                res.body.errors[0].should.have.property('message');
-                res.body.errors[0].message.should.equal('actionFields missing in body.');
-                done();
-            });
+        new Promise((resolve => {
+            chai.request(server)
+                .post(contactEndpoint)
+                .set('IFTTT-Service-Key', validIftttKey)
+                .send({
+                    "ifttt_source": {
+                        "id": "2",
+                        "url": "https://ifttt.com/myrecipes/personal/2"
+                    },
+                    "user": {
+                        "timezone": "Pacific Time (US & Canada)"
+                    }
+                })
+                .end(function (err, res) {
+                    res.should.have.status(400);
+                    res.body.should.have.property('errors');
+                    res.body.errors[0].should.have.property('status');
+                    res.body.errors[0].should.have.property('message');
+                    res.body.errors[0].message.should.equal('actionFields missing in body.');
+                    resolve();
+                });
+        })).then(() => {
+            done();
+        });
     });
     it('should respond status 200 when actionFields is provided', (done) => {
         chai.request(server)
