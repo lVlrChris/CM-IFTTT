@@ -44,9 +44,7 @@ describe('Validation of the actionFields key', () => {
                     res.body.errors[0].message.should.equal('actionFields missing in body.');
                     resolve();
                 });
-        })).then(() => {
-            done();
-        });
+        })).then(done)
     });
     it('should respond status 200 when actionFields is provided', (done) => {
         chai.request(server)
