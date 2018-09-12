@@ -7,6 +7,7 @@ const smsEndpoint = "/api/ifttt/v1/actions/send_sms";
 const validIftttKey = '12345';
 const fakePhoneNumber = '0031612345678';
 const fakeToken = process.env.TEST_KEY_TOKEN || '0000000-0000-0000-0000-000000000000';
+const fakeCMToken = '1234567-0000-0000-0000-000000000000';
 const fakeBody = "Testeroni";
 
 //Using the chai package to call .should on responses
@@ -658,7 +659,7 @@ describe('Validation of token',()=>{
                 done();
             });
     });
-    it('should respond status 200 when using a string as token', (done)=> {
+    it('should respond status 400 when using an invalid token', (done)=> {
         chai.request(server)
             .post(smsEndpoint)
             .set('IFTTT-Service-Key', validIftttKey)
@@ -667,7 +668,7 @@ describe('Validation of token',()=>{
                     "sender" : fakePhoneNumber,
                     "body" : fakeBody,
                     "receiver" : fakePhoneNumber,
-                    "token" : fakeToken
+                    "token" : fakeCMToken
                 },
                 "ifttt_source" : {
                     "id" : "test",
@@ -675,10 +676,61 @@ describe('Validation of token',()=>{
                 }
             })
             .end(function (err, res) {
-                res.should.have.status(200);
-                res.body.should.have.property('data');
-                res.body.data[0].should.have.property('id');
-                res.body.data[0].should.have.property('url');
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('Invalid product token.');
+                done();
+            });
+    });
+    it('should respond status 400 when using invalid guid token', (done)=> {
+        chai.request(server)
+            .post(smsEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : fakePhoneNumber,
+                    "body" : fakeBody,
+                    "receiver" : fakePhoneNumber,
+                    "token" : 'a'
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('Invalid product token.');
+                done();
+            });
+    });
+    it('should respond status 200 when using a valid token', (done)=>{
+        chai.request(server)
+            .post(smsEndpoint)
+            .set('IFTTT-Service-Key', validIftttKey)
+            .send({
+                "actionFields" : {
+                    "sender" : fakePhoneNumber,
+                    "body" : fakeBody,
+                    "receiver" : fakePhoneNumber,
+                    "token" : fakeCMToken
+                },
+                "ifttt_source" : {
+                    "id" : "test",
+                    "url" : "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('Invalid product token.');
                 done();
             });
     });

@@ -6,7 +6,7 @@ const server = require('../index');
 const localIftttKey = '12345';
 const fakePhoneNumber = '0031612345678';
 const fakeCMToken = '0000000-0000-0000-0000-000000000000';
-
+const fakeGUIDCMToken = '1234567-0000-0000-0000-000000000000';
 //call should function for starting point
 chai.should();
 
@@ -795,6 +795,68 @@ describe('Validation of token', () => {
                 res.body.errors[0].should.have.property('status');
                 res.body.errors[0].should.have.property('message');
                 res.body.errors[0].message.should.equal('"token" must be a string');
+                done();
+            });
+    });
+
+    it('Should respond with status 400 when using an invalid CM token', (done)=> {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_voice_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "body": "De man",
+                    "receiver": fakePhoneNumber,
+                    "language": "nl-NL",
+                    "token": fakeGUIDCMToken
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('Authorization failed');
+                done();
+            });
+    });
+
+    it('Should respond with status 400 when using an invalid GUID token', (done)=> {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_voice_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "body": "De man",
+                    "receiver": fakePhoneNumber,
+                    "language": "nl-NL",
+                    "token": 'zzzzzzzz-zzzzzz'
+                },
+                "user": {
+                    "timezone": "America/Los_Angeles"
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('Authorization failed');
                 done();
             });
     });

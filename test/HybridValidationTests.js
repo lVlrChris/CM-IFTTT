@@ -7,6 +7,7 @@ const localIftttKey = '12345';
 const fakePhoneNumber = '0031612345678';
 const fakeCMToken = process.env.TEST_KEY_TOKEN || '0000000-0000-0000-0000-000000000000';
 const fakeAppKey = process.env.TEST_APPKEY || '1s2h3a4r5e6d7k8e9y';
+const fakeGUIDCMToken = '1234567-0000-0000-0000-000000000000';
 
 //call should function for starting point
 chai.should();
@@ -713,6 +714,68 @@ describe('Validation of token', () => {
     });
 
     //Check if field has correct datatype
+    it('Should respond with status 400 when token has an incorrect datatype', (done) => {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "receiver": "0031687654321",
+                    "body": "This is a sample message",
+                    "token": fakeGUIDCMToken,
+                    "appKey": fakeAppKey
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                },
+                "user": {
+                    "timezone": "Pacific Time (US & Canada)"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('Invalid product token.');
+                done();
+            });
+    });
+
+    it('Should respond with status 400 when token has an incorrect datatype', (done) => {
+        chai.request(server)
+            .post('/api/ifttt/v1/actions/send_hybrid_message')
+            .set('IFTTT-Service-Key', localIftttKey)
+            .send({
+                "actionFields": {
+                    "sender": fakePhoneNumber,
+                    "receiver": "0031687654321",
+                    "body": "This is a sample message",
+                    "token": 12345,
+                    "appKey": fakeAppKey
+                },
+                "ifttt_source": {
+                    "id": "test",
+                    "url": "test"
+                },
+                "user": {
+                    "timezone": "Pacific Time (US & Canada)"
+                }
+            })
+            .end(function (err, res) {
+                res.should.have.status(400);
+                res.should.be.json;
+                res.body.should.have.property('errors');
+                res.body.errors[0].should.have.property('status');
+                res.body.errors[0].should.have.property('message');
+                res.body.errors[0].message.should.equal('"token" must be a string');
+                done();
+            });
+    });
+
     it('Should respond with status 400 when token has an incorrect datatype', (done) => {
         chai.request(server)
             .post('/api/ifttt/v1/actions/send_hybrid_message')
